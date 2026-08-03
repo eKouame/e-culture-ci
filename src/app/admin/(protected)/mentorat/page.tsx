@@ -10,7 +10,7 @@ import { REGIONS_CI } from "@/lib/regions";
 import { STATUT_MENTORAT_LABELS, TYPE_SPECTACLE_LABELS } from "@/lib/labels";
 
 export const metadata: Metadata = {
-  title: "Mentorat — Espace ministère | e-Culture CI",
+  title: "Mentorat — Espace admin | e-Culture CI",
 };
 
 const PAGE_SIZE = 25;

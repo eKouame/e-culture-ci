@@ -45,7 +45,7 @@ export function Header() {
             href="/admin"
             className="ml-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
           >
-            Espace ministère
+            Espace admin
           </Link>
         </nav>
 
@@ -82,7 +82,7 @@ export function Header() {
             onClick={() => setOpen(false)}
             className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted hover:bg-black/5"
           >
-            Espace ministère
+            Espace admin
           </Link>
         </nav>
       )}
