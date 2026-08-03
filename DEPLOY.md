@@ -50,8 +50,7 @@ la vraie base Neon.
 2. Cliquez sur **Add New → Project**, puis sélectionnez le dépôt
    `e-culture-ci` que vous venez de pousser sur GitHub.
 3. Vercel détecte automatiquement Next.js — laissez les réglages de build par
-   défaut (`npm run build` est déjà configuré dans `package.json` pour lancer
-   les migrations Prisma automatiquement à chaque déploiement).
+   défaut.
 4. Avant de cliquer sur **Deploy**, ouvrez la section **Environment
    Variables** et ajoutez :
    - `DATABASE_URL` → la même valeur que dans votre `.env` local (connexion
@@ -62,11 +61,13 @@ la vraie base Neon.
      défaut existe)
    - `ADMIN_SEED_PASSWORD` → mot de passe admin (recommandé : changez la
      valeur par défaut pour la production)
-5. Cliquez sur **Deploy**. Au premier déploiement, les tables sont créées
-   automatiquement (`prisma migrate deploy` fait partie du build).
-6. Une fois déployé, exécutez le seed **une seule fois** contre la base de
-   production pour créer le compte admin (depuis votre machine, avec
-   `DATABASE_URL` pointant vers Neon) :
+5. Avant de cliquer sur Deploy, assurez-vous d'avoir déjà appliqué les
+   migrations sur la base de production depuis votre machine (voir
+   ci-dessous) — le build Vercel ne le fait plus automatiquement.
+6. Cliquez sur **Deploy**.
+7. Si ce n'est pas déjà fait, exécutez le seed **une seule fois** contre la
+   base de production pour créer le compte admin (depuis votre machine,
+   avec `.env` pointant vers Neon) :
    ```bash
    npx prisma db seed
    ```
@@ -82,10 +83,26 @@ attacher un nom de domaine que vous possédez déjà, ou utiliser le sous-domain
 Le script `build` (`package.json`) exécute, dans l'ordre :
 
 ```
-prisma generate && prisma migrate deploy && next build
+prisma generate && next build
 ```
 
-Donc chaque nouveau `git push` sur la branche connectée à Vercel régénère le
-client Prisma, applique les migrations manquantes sur la base Neon, puis
-construit l'application. Aucune action manuelle n'est nécessaire après la
-mise en place initiale.
+Chaque nouveau `git push` sur la branche connectée à Vercel régénère donc le
+client Prisma et reconstruit l'application — mais **n'applique pas les
+migrations**. C'est volontaire : `prisma migrate deploy` a besoin d'un
+verrou (advisory lock) sur la base, et les instances Neon gratuites peuvent
+être en veille (auto-suspend), ce qui fait souvent dépasser le délai de 10
+secondes que s'accorde Prisma pour l'obtenir — d'où des échecs de build
+intermittents (`P1002`) sans rapport avec le code.
+
+## Appliquer une migration après une modification du schéma
+
+Quand `prisma/schema.prisma` change, avant de pousser sur GitHub :
+
+```bash
+npm run db:migrate
+```
+
+(équivalent à `prisma migrate deploy`, à lancer avec `.env` pointant vers
+Neon — utilise `DIRECT_URL`, pas `DATABASE_URL`, pour éviter le problème de
+verrou ci-dessus). Une fois la migration confirmée appliquée, poussez le
+code : le déploiement Vercel n'aura plus qu'à builder l'application.

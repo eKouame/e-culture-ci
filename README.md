@@ -51,7 +51,8 @@ Voir [DEPLOY.md](DEPLOY.md) pour le guide complet pas-à-pas (Neon + GitHub + Ve
 
 ```bash
 npx prisma studio   # explorer la base de données
-npm run build        # build de production (génère le client, applique les migrations, build Next.js)
+npm run build        # build de production (génère le client, build Next.js)
+npm run db:migrate    # applique les migrations en attente (à lancer après un changement de schema.prisma)
 npm run lint          # ESLint
 ```
 
