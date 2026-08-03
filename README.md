@@ -59,6 +59,7 @@ npm run lint          # ESLint
 
 | Variable | Description | Défaut |
 |---|---|---|
-| `DATABASE_URL` | Connexion Postgres (Neon) | — (obligatoire) |
+| `DATABASE_URL` | Connexion Postgres (Neon), mode **pooled** — utilisée par l'app | — (obligatoire) |
+| `DIRECT_URL` | Connexion Postgres (Neon), mode **direct** — utilisée par la CLI Prisma pour les migrations | — (obligatoire) |
 | `ADMIN_SEED_EMAIL` | Email admin créé par le seed | `admin@culture.gouv.ci` |
 | `ADMIN_SEED_PASSWORD` | Mot de passe admin créé par le seed | `ChangeMoi123!` |

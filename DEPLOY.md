@@ -14,6 +14,11 @@ place.
    `postgresql://user:password@ep-xxxx-pooler.region.aws.neon.tech/dbname?sslmode=require`).
 4. Collez cette valeur dans `.env` à la racine du projet, dans la variable
    `DATABASE_URL`.
+5. Toujours sur la même page, basculez sur la connexion **sans** "-pooler"
+   dans le nom d'hôte (souvent appelée "Direct connection") et collez-la
+   dans `DIRECT_URL`. Cette seconde variable est nécessaire uniquement pour
+   les migrations (`prisma migrate deploy` échoue sur la connexion pooled
+   avec l'erreur P1002 — advisory lock non supporté).
 
 ## 2. Initialiser la base localement
 
@@ -49,8 +54,10 @@ la vraie base Neon.
    les migrations Prisma automatiquement à chaque déploiement).
 4. Avant de cliquer sur **Deploy**, ouvrez la section **Environment
    Variables** et ajoutez :
-   - `DATABASE_URL` → la même valeur que dans votre `.env` local (la
-     connection string Neon)
+   - `DATABASE_URL` → la même valeur que dans votre `.env` local (connexion
+     **pooled**, avec `-pooler`)
+   - `DIRECT_URL` → la connexion **directe** (sans `-pooler`), nécessaire aux
+     migrations
    - `ADMIN_SEED_EMAIL` → email du compte admin (optionnel, une valeur par
      défaut existe)
    - `ADMIN_SEED_PASSWORD` → mot de passe admin (recommandé : changez la

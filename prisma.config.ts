@@ -10,6 +10,9 @@ export default defineConfig({
     seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    // `migrate deploy` a besoin d'une connexion directe (non-pooled) pour
+    // pouvoir poser un advisory lock — la connexion pooled Neon échoue avec
+    // l'erreur P1002 (timeout) sur cette opération.
+    url: process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"],
   },
 });
