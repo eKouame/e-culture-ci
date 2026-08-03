@@ -1,0 +1,150 @@
+// e-Culture CI — modèle de données
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum StatutOrientation {
+  EXEMPTE
+  PROFESSIONNEL
+}
+
+enum TypeSpectacle {
+  CONCERT
+  THEATRE
+  DANSE
+  HUMOUR
+  FESTIVAL
+  CEREMONIE_TRADITIONNELLE
+  EVENEMENT_SPORTIF_CULTUREL
+  AUTRE
+}
+
+enum TypeActivite {
+  OCCASIONNEL
+  REGULIER
+}
+
+enum StatutDossier {
+  RECU
+  EN_EXAMEN
+  VALIDE
+  REJETE
+}
+
+enum StatutMentorat {
+  EN_ATTENTE
+  JUMELE
+  CLOTURE
+}
+
+model Counter {
+  key   String @id
+  value Int    @default(0)
+}
+
+model Declaration {
+  id     String @id @default(cuid())
+  numero String @unique
+
+  organisateurNom        String
+  organisateurPrenom     String?
+  organisateurTelephone  String
+  organisateurEmail      String?
+  organisateurStructure  String?
+
+  typeSpectacle      TypeSpectacle
+  typeSpectacleAutre String?
+  titreEvenement     String?
+  dateEvenement      DateTime
+  lieu               String
+  commune            String
+  region             String
+  jaugeEstimee       Int
+  entreePayante      Boolean @default(false)
+
+  statutOrientation StatutOrientation?
+
+  statutDossier StatutDossier @default(RECU)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([dateEvenement])
+  @@index([region])
+}
+
+model Immatriculation {
+  id     String @id @default(cuid())
+  numero String @unique
+
+  typeDemandeur  String
+  nomComplet     String
+  raisonSociale  String?
+  numeroCNI      String?
+  dateNaissance  DateTime?
+
+  telephone String
+  email     String?
+  adresse   String
+  commune   String
+  region    String
+
+  typeActivite        TypeActivite
+  domainesActivite    String
+  anneeDebutActivite  Int?
+  descriptionActivite String?
+  piecesFournies      String?
+
+  statutDossier StatutDossier @default(RECU)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([region])
+}
+
+model MentoratDemande {
+  id     String @id @default(cuid())
+  numero String @unique
+
+  nomComplet String
+  telephone  String
+  email      String?
+  commune    String
+  region     String
+
+  profilActuel         String
+  typeSpectacleInteret TypeSpectacle
+  disponibilite        String?
+
+  statutDemande StatutMentorat @default(EN_ATTENTE)
+  noteAdmin     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  nom          String?
+  createdAt    DateTime @default(now())
+
+  sessions AdminSession[]
+}
+
+model AdminSession {
+  id          String   @id @default(cuid())
+  adminUserId String
+  token       String   @unique
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  adminUser AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+}
