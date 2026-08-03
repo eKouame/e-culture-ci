@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DeclarationForm } from "./DeclarationForm";
 
 export const metadata: Metadata = {
-  title: "Déclaration Express | e-Culture CI",
+  title: "Préparer ma déclaration | e-Culture CI",
 };
 
 export default async function DeclarationPage({
@@ -19,13 +19,14 @@ export default async function DeclarationPage({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary">Déclaration Express</p>
+      <p className="text-sm font-semibold text-primary">Préparer ma déclaration</p>
       <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        Déclarez votre événement
+        Renseigne ton événement
       </h1>
       <p className="mt-3 text-muted">
-        Gratuit et rapide (environ 3 minutes). Vous recevrez un récépissé
-        numérique à présenter en mairie ou en préfecture.
+        Gratuit et rapide (environ 3 minutes). Tu repartiras avec une
+        attestation de déclaration e-Culture CI : une fiche claire à garder
+        sous la main pour tes démarches.
       </p>
 
       <div className="mt-8">

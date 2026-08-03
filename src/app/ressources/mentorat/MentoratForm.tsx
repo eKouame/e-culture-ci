@@ -38,7 +38,7 @@ export function MentoratForm() {
     });
 
     if (!res.ok) {
-      setSubmitError("Une erreur est survenue. Veuillez réessayer.");
+      setSubmitError("Une erreur est survenue. Réessaie dans un instant.");
       return;
     }
 
@@ -51,12 +51,12 @@ export function MentoratForm() {
       <Card className="border-secondary/30 bg-secondary-light">
         <span className="text-2xl">🤝</span>
         <h2 className="mt-2 text-lg font-bold text-secondary-dark">
-          Votre demande a bien été enregistrée
+          Ta demande a bien été enregistrée
         </h2>
         <p className="mt-1.5 text-sm text-foreground">
-          Référence de votre demande : <strong>{result.numero}</strong>. Un
-          professionnel licencié pourra vous contacter prochainement pour
-          organiser votre parrainage (5 spectacles supervisés).
+          Référence de ta demande : <strong>{result.numero}</strong>. Un
+          professionnel licencié pourra te contacter prochainement pour
+          organiser ton parrainage (5 spectacles supervisés).
         </p>
       </Card>
     );
@@ -86,7 +86,7 @@ export function MentoratForm() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Select
           label="Région"
-          placeholder="Sélectionnez votre région"
+          placeholder="Sélectionne ta région"
           options={regionOptions}
           error={errors.region?.message}
           {...register("region")}
@@ -98,21 +98,21 @@ export function MentoratForm() {
         />
       </div>
       <Select
-        label="Type de spectacle qui vous intéresse"
+        label="Type de spectacle qui t'intéresse"
         placeholder="Choisissez un type"
         options={typeSpectacleOptions}
         error={errors.typeSpectacleInteret?.message}
         {...register("typeSpectacleInteret")}
       />
       <Textarea
-        label="Votre profil actuel"
-        hint="Votre expérience, les événements déjà organisés, votre niveau de départ..."
+        label="Ton profil actuel"
+        hint="Ton expérience, les événements déjà organisés, ton niveau de départ..."
         error={errors.profilActuel?.message}
         {...register("profilActuel")}
       />
       <Textarea
         label="Disponibilité (facultatif)"
-        hint="À partir de quand pourriez-vous commencer à être accompagné(e) ?"
+        hint="À partir de quand pourrais-tu commencer à être accompagné(e) ?"
         error={errors.disponibilite?.message}
         {...register("disponibilite")}
       />

@@ -132,22 +132,22 @@ function Resultat({
       <Card className="border-secondary/30 bg-secondary-light">
         <span className="text-3xl">✅</span>
         <h2 className="mt-2 text-xl font-extrabold text-secondary-dark">
-          Bonne nouvelle : vous êtes exempté(e)
+          Bonne nouvelle : tu es sans doute exempté(e)
         </h2>
         <p className="mt-2 text-sm text-foreground">
-          D&apos;après vos réponses, votre activité relève des événements
+          D&apos;après tes réponses, ton activité relève des événements
           occasionnels à but socio-éducatif, sportif, philanthropique ou de
-          promotion culturelle. Vous n&apos;avez ni licence
-          (5 000 000 FCFA) ni caution bancaire (5 000 000 FCFA) à payer.
+          promotion culturelle. Tu n&apos;as ni licence (5 000 000 FCFA) ni
+          caution bancaire (5 000 000 FCFA) à payer.
         </p>
         <p className="mt-2 text-sm text-foreground">
-          Il vous suffit de faire une <strong>déclaration gratuite</strong> de
-          votre événement pour être en règle et obtenir un récépissé à
-          présenter à la mairie ou à la préfecture.
+          Prépare une <strong>déclaration gratuite</strong> de ton événement
+          et repars avec une fiche récapitulative claire à garder sous la
+          main pour tes démarches auprès de ta mairie.
         </p>
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <LinkButton href={declarationHref} size="lg">
-            Faire ma Déclaration Express →
+            Préparer ma déclaration →
           </LinkButton>
           <button
             type="button"
@@ -173,22 +173,22 @@ function Resultat({
     <Card className="border-primary/30 bg-primary-light">
       <span className="text-3xl">🎫</span>
       <h2 className="mt-2 text-xl font-extrabold text-primary-dark">
-        Vous relevez du régime des acteurs professionnels
+        Tu relèves sans doute du régime des acteurs professionnels
       </h2>
       <p className="mt-2 text-sm text-foreground">
-        D&apos;après vos réponses, vous devez obtenir une licence
+        D&apos;après tes réponses, tu devras obtenir une licence
         (5 000 000 FCFA) et constituer une caution bancaire
         (5 000 000 FCFA), conformément à l&apos;article 10 du décret de
-        2021.
+        2021 — à confirmer auprès du ministère de la Culture.
       </p>
       <p className="mt-2 text-sm text-foreground">
-        Si vous démarrez votre activité, vous pouvez d&apos;abord vous faire
+        Si tu démarres ton activité, tu peux d&apos;abord te faire
         accompagner par un professionnel agréé (parrainage — 5 spectacles
         supervisés) avant d&apos;opérer en autonomie.
       </p>
       <div className="mt-4 flex flex-col gap-2 sm:flex-row">
         <LinkButton href="/immatriculation" size="lg">
-          M&apos;immatriculer
+          Rejoindre l&apos;annuaire
         </LinkButton>
         <LinkButton href="/ressources/mentorat" variant="outline" size="lg">
           Trouver un mentor

@@ -5,9 +5,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "e-Culture CI | Guichet Unique de Déclaration et d'Orientation",
+  title: "e-Culture CI | Outil indépendant d'orientation — spectacle vivant",
   description:
-    "Orientez-vous, déclarez votre événement ou immatriculez-vous auprès du ministère de la Culture — pour les acteurs du spectacle vivant en Côte d'Ivoire.",
+    "Comprends la réglementation du spectacle vivant, vérifie ta situation et prépare tes démarches — un outil indépendant pour les organisateurs en Côte d'Ivoire.",
 };
 
 export default function RootLayout({

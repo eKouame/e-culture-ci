@@ -7,31 +7,31 @@ const MODULES = [
     emoji: "🧭",
     title: "Suis-je concerné ?",
     description:
-      "Répondez à 4 questions simples pour savoir en 1 minute si vous devez payer une licence, ou si vous en êtes exempté.",
+      "Réponds à quelques questions simples pour voir en 1 minute si la licence te concerne — ou si, sans doute, tu n'es pas concerné.",
     cta: "Faire le test",
   },
   {
     href: "/declaration",
     emoji: "📝",
-    title: "Déclaration Express",
+    title: "Préparer ma déclaration",
     description:
-      "Déclarez gratuitement votre événement en 3 minutes et obtenez un récépissé numérique à présenter en mairie.",
-    cta: "Déclarer un événement",
+      "Renseigne ton événement en quelques minutes et repars avec ta fiche récapitulative e-Culture CI : un document clair qui résume ta situation, à garder sous la main quand tu iras voir ta mairie.",
+    cta: "Préparer ma déclaration",
   },
   {
     href: "/immatriculation",
     emoji: "📋",
-    title: "Immatriculation",
+    title: "Rejoindre l'annuaire des organisateurs",
     description:
-      "Enregistrez-vous individuellement ou en association au registre du ministère de la Culture.",
-    cta: "M'immatriculer",
+      "Inscris-toi, seul ou en association, dans l'annuaire e-Culture CI des organisateurs. Tu te rends visible auprès de la communauté et tu te prépares aux démarches officielles à venir.",
+    cta: "Rejoindre l'annuaire",
   },
   {
     href: "/ressources",
     emoji: "📚",
     title: "Centre de Ressources",
     description:
-      "Comprenez la réglementation en langage simple et trouvez un mentor pour démarrer votre activité.",
+      "Comprends la réglementation en langage simple, et trouve un mentor pour bien démarrer.",
     cta: "Consulter les ressources",
   },
 ];
@@ -42,20 +42,29 @@ export default function Home() {
       <section className="border-b border-border bg-gradient-to-b from-primary-light to-transparent">
         <div className="mx-auto max-w-5xl px-4 py-12 text-center sm:px-6 sm:py-16">
           <p className="mx-auto mb-4 inline-block rounded-full bg-secondary-light px-4 py-1.5 text-sm font-semibold text-secondary-dark">
-            70 à 90 % des organisateurs occasionnels sont exemptés de licence
+            Beaucoup d&apos;organisateurs occasionnels ne sont pas concernés
+            par la licence. Vérifie ton cas en 1 minute.
           </p>
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
             e-Culture CI
           </h1>
           <p className="mx-auto mt-2 max-w-2xl text-lg text-muted">
-            Le Guichet Unique de Déclaration et d&apos;Orientation pour les
-            acteurs du spectacle vivant, partout en Côte d&apos;Ivoire.
+            Comprendre les règles du spectacle vivant et préparer tes
+            démarches — partout en Côte d&apos;Ivoire.
           </p>
+
+          <p className="mx-auto mt-5 max-w-2xl rounded-lg border border-border bg-surface px-4 py-3 text-left text-sm text-muted sm:text-center">
+            e-Culture CI est un outil indépendant d&apos;orientation, encore
+            en test. Il t&apos;aide à comprendre la réglementation et à
+            préparer tes démarches. Il ne délivre aucun document officiel et
+            ne remplace ni ta mairie ni le ministère de la Culture.
+          </p>
+
           <p className="mx-auto mt-4 max-w-2xl text-sm text-muted">
-            Vous organisez un concert, une cérémonie, un festival ou un
-            spectacle occasionnel ? Découvrez en 1 minute si vous devez une
-            licence, déclarez votre événement gratuitement, et faites-vous
-            connaître auprès du ministère.
+            Tu organises un concert, une cérémonie, un festival ou un
+            spectacle occasionnel ? En 1 minute, vois si la licence te
+            concerne, prépare ta déclaration, et trouve les bonnes infos pour
+            démarrer sans te tromper.
           </p>
           <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <LinkButton href="/suis-je-concerne" size="lg">

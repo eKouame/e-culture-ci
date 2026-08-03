@@ -6,8 +6,8 @@ import { useState } from "react";
 
 const NAV_ITEMS = [
   { href: "/suis-je-concerne", label: "Suis-je concerné ?" },
-  { href: "/declaration", label: "Déclaration Express" },
-  { href: "/immatriculation", label: "Immatriculation" },
+  { href: "/declaration", label: "Ma déclaration" },
+  { href: "/immatriculation", label: "Annuaire" },
   { href: "/ressources", label: "Ressources" },
 ];
 
@@ -41,12 +41,6 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/admin"
-            className="ml-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
-          >
-            Espace ministère
-          </Link>
         </nav>
 
         <button
@@ -77,13 +71,6 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/admin"
-            onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted hover:bg-black/5"
-          >
-            Espace ministère
-          </Link>
         </nav>
       )}
     </header>

@@ -13,8 +13,8 @@ export default function SuisJeConcernePage() {
         Suis-je concerné ?
       </h1>
       <p className="mt-3 text-muted">
-        Répondez à 4 questions simples pour savoir immédiatement si vous
-        devez une licence, ou si vous en êtes exempté(e).
+        Réponds à quelques questions simples pour voir en 1 minute si la
+        licence te concerne — ou si, sans doute, tu n&apos;es pas concerné.
       </p>
 
       <div className="mt-8">

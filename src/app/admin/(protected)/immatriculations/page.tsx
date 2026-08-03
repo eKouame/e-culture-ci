@@ -8,7 +8,7 @@ import { REGIONS_CI } from "@/lib/regions";
 import { TYPE_DEMANDEUR_OPTIONS } from "@/lib/labels";
 
 export const metadata: Metadata = {
-  title: "Immatriculations — Espace ministère | e-Culture CI",
+  title: "Immatriculations — Espace admin | e-Culture CI",
 };
 
 const PAGE_SIZE = 25;

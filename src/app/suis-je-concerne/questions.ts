@@ -15,7 +15,7 @@ export const QUESTION_FREQUENCE: {
   title: string;
   options: QuestionOption<ReponseFrequence>[];
 } = {
-  title: "À quelle fréquence organisez-vous des spectacles vivants ?",
+  title: "À quelle fréquence organises-tu des spectacles vivants ?",
   options: [
     {
       value: "occasionnel",
@@ -34,7 +34,7 @@ export const QUESTION_FINALITE: {
   title: string;
   options: QuestionOption<ReponseFinalite>[];
 } = {
-  title: "Quel est le but principal de vos événements ?",
+  title: "Quel est le but principal de tes événements ?",
   options: [
     {
       value: "socio_educatif",
@@ -54,7 +54,7 @@ export const QUESTION_STRUCTURE: {
   title: string;
   options: QuestionOption<ReponseStructure>[];
 } = {
-  title: "Comment organisez-vous vos événements ?",
+  title: "Comment organises-tu tes événements ?",
   options: [
     {
       value: "individuel_association",
@@ -73,7 +73,7 @@ export const QUESTION_JAUGE: {
   title: string;
   options: QuestionOption<ReponseJauge>[];
 } = {
-  title: "Quelle est la jauge estimée de votre événement ?",
+  title: "Quelle est la jauge estimée de ton événement ?",
   options: [
     { value: "moins_100", label: "Moins de 100 spectateurs" },
     { value: "100_500", label: "Entre 100 et 500 spectateurs" },

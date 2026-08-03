@@ -13,10 +13,10 @@ export default function MentoratPage() {
         Mentorat &amp; parrainage (Licence B)
       </h1>
       <p className="mt-3 text-muted">
-        Pour démarrer votre activité en toute autonomie, la réglementation
+        Pour démarrer ton activité en toute autonomie, la réglementation
         exige de réaliser 5 spectacles sous la supervision d&apos;un
-        professionnel déjà titulaire d&apos;une licence. Décrivez votre
-        profil ci-dessous, nous vous mettrons en relation avec un mentor.
+        professionnel déjà titulaire d&apos;une licence. Décris ton profil
+        ci-dessous, on te mettra en relation avec un mentor.
       </p>
 
       <div className="mt-8">
