@@ -25,7 +25,7 @@ export function AdminNav({ adminNom }: { adminNom: string | null }) {
       <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-            Espace admin
+            Espace ministère
           </p>
           {adminNom && (
             <p className="text-sm font-medium text-foreground">{adminNom}</p>

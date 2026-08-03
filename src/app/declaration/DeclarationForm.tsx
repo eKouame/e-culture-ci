@@ -54,12 +54,12 @@ export function DeclarationForm({
     });
 
     if (!res.ok) {
-      setSubmitError("Une erreur est survenue. Réessaie dans un instant.");
+      setSubmitError("Une erreur est survenue. Veuillez réessayer.");
       return;
     }
 
     const json = await res.json();
-    router.push(`/declaration/attestation/${json.id}`);
+    router.push(`/declaration/recepisse/${json.id}`);
   }
 
   return (
@@ -132,7 +132,7 @@ export function DeclarationForm({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Select
           label="Région"
-          placeholder="Sélectionne ta région"
+          placeholder="Sélectionnez votre région"
           options={regionOptions}
           error={errors.region?.message}
           {...register("region")}
@@ -171,7 +171,7 @@ export function DeclarationForm({
       </div>
 
       <Button type="submit" size="lg" disabled={isSubmitting} className="mt-2">
-        {isSubmitting ? "Envoi en cours…" : "Générer mon attestation"}
+        {isSubmitting ? "Envoi en cours…" : "Déclarer mon événement"}
       </Button>
       {submitError && (
         <p className="text-sm font-medium text-danger">{submitError}</p>

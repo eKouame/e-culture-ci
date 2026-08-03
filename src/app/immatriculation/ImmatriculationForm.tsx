@@ -49,7 +49,7 @@ export function ImmatriculationForm() {
     });
 
     if (!res.ok) {
-      setSubmitError("Une erreur est survenue. Réessaie dans un instant.");
+      setSubmitError("Une erreur est survenue. Veuillez réessayer.");
       return;
     }
 
@@ -60,7 +60,7 @@ export function ImmatriculationForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <RadioGroup
-        label="Tu t'inscris en tant que"
+        label="Vous vous immatriculez en tant que"
         error={errors.typeDemandeur?.message}
         options={TYPE_DEMANDEUR_OPTIONS.map((v) => ({ value: v, label: v }))}
         registerProps={register("typeDemandeur")}
@@ -124,7 +124,7 @@ export function ImmatriculationForm() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Select
           label="Région"
-          placeholder="Sélectionne ta région"
+          placeholder="Sélectionnez votre région"
           options={regionOptions}
           error={errors.region?.message}
           {...register("region")}
@@ -140,7 +140,7 @@ export function ImmatriculationForm() {
         Activité
       </h2>
       <RadioGroup
-        label="Fréquence de ton activité"
+        label="Fréquence de votre activité"
         error={errors.typeActivite?.message}
         options={[
           { value: "OCCASIONNEL", label: "Occasionnelle" },
@@ -172,19 +172,19 @@ export function ImmatriculationForm() {
         />
       </div>
       <Textarea
-        label="Description de ton activité (facultatif)"
+        label="Description de votre activité (facultatif)"
         error={errors.descriptionActivite?.message}
         {...register("descriptionActivite")}
       />
       <Textarea
-        label="Pièces que tu peux fournir (facultatif)"
-        hint="Ex : statuts d'association, attestation de déclaration e-Culture CI, pièce d'identité..."
+        label="Pièces que vous pouvez fournir (facultatif)"
+        hint="Ex : statuts d'association, récépissé de déclaration, pièce d'identité..."
         error={errors.piecesFournies?.message}
         {...register("piecesFournies")}
       />
 
       <Button type="submit" size="lg" disabled={isSubmitting} className="mt-2">
-        {isSubmitting ? "Envoi en cours…" : "Rejoindre l'annuaire"}
+        {isSubmitting ? "Envoi en cours…" : "M'immatriculer"}
       </Button>
       {submitError && (
         <p className="text-sm font-medium text-danger">{submitError}</p>

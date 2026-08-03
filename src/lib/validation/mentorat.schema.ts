@@ -11,7 +11,7 @@ export const mentoratSchema = z.object({
   profilActuel: z
     .string()
     .trim()
-    .min(10, "Décris brièvement ton expérience actuelle"),
+    .min(10, "Décrivez brièvement votre expérience actuelle"),
   typeSpectacleInteret: z.enum(TYPE_SPECTACLE_VALUES),
   disponibilite: z.string().trim().optional().or(z.literal("")),
 });

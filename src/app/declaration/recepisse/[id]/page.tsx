@@ -6,7 +6,7 @@ import { LinkButton } from "@/components/ui/Button";
 import { TYPE_SPECTACLE_LABELS } from "@/lib/labels";
 
 export const metadata: Metadata = {
-  title: "Attestation de déclaration | e-Culture CI",
+  title: "Récépissé de déclaration | e-Culture CI",
 };
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", {
@@ -15,7 +15,7 @@ const dateFormat = new Intl.DateTimeFormat("fr-FR", {
   year: "numeric",
 });
 
-export default async function AttestationPage({
+export default async function RecepissePage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -45,7 +45,7 @@ export default async function AttestationPage({
         <div className="flex items-start justify-between border-b border-border pb-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-              Attestation de déclaration e-Culture CI
+              Récépissé numérique de déclaration
             </p>
             <p className="text-lg font-bold text-foreground">e-Culture CI</p>
           </div>
@@ -92,10 +92,11 @@ export default async function AttestationPage({
         </dl>
 
         <p className="mt-6 border-t border-border pt-4 text-xs text-muted">
-          Cette attestation résume ta déclaration auprès de e-Culture CI,
-          outil indépendant d&apos;orientation. Ce n&apos;est pas un document
-          officiel — garde-la sous la main pour préparer tes démarches
-          auprès de ta mairie ou du ministère de la Culture.
+          Ce récépissé atteste qu&apos;une déclaration a été enregistrée
+          auprès du Guichet Unique e-Culture CI, conformément à
+          l&apos;article 10 du décret de 2021 relatif au spectacle vivant. Il
+          peut être présenté aux autorités locales (mairie, préfecture) à
+          l&apos;appui de votre événement.
         </p>
       </div>
 

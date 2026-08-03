@@ -23,11 +23,11 @@ export default function RessourcesPage() {
         <Card>
           <span className="text-2xl">✅</span>
           <h2 className="mt-2 text-base font-bold text-secondary-dark">
-            Si tu organises occasionnellement
+            Si vous organisez occasionnellement
           </h2>
           <p className="mt-1.5 text-sm text-muted">
             Mariages, funérailles, fêtes de quartier, tournois, festivals
-            communautaires, sensibilisation... tu es très probablement
+            communautaires, sensibilisation... vous êtes très probablement
             exempté(e) de licence et de caution bancaire. Une simple
             déclaration gratuite suffit.
           </p>
@@ -35,11 +35,11 @@ export default function RessourcesPage() {
         <Card>
           <span className="text-2xl">🎫</span>
           <h2 className="mt-2 text-base font-bold text-primary">
-            Si le spectacle est ton métier
+            Si le spectacle est votre métier
           </h2>
           <p className="mt-1.5 text-sm text-muted">
-            Si l&apos;organisation de spectacles est ton activité
-            professionnelle principale, tu devras obtenir une licence
+            Si l&apos;organisation de spectacles est votre activité
+            professionnelle principale, vous devez obtenir une licence
             (5 000 000 FCFA) et constituer une caution bancaire de garantie
             (5 000 000 FCFA) — au total 10 000 000 FCFA, versés à un
             établissement bancaire, pas directement au ministère.
@@ -72,7 +72,7 @@ export default function RessourcesPage() {
           </h2>
           <p className="mt-1.5 text-sm text-muted">
             Toutes les réponses détaillées sur les licences, la déclaration
-            et l&apos;inscription à l&apos;annuaire.
+            et l&apos;immatriculation.
           </p>
           <LinkButton href="/ressources/faq" variant="outline" className="mt-4">
             Voir la FAQ
@@ -83,9 +83,9 @@ export default function RessourcesPage() {
             Mentorat &amp; parrainage (Licence B)
           </h2>
           <p className="mt-1.5 text-sm text-muted">
-            Tu débutes ? La réglementation exige de réaliser 5 spectacles
+            Vous débutez ? La réglementation exige de réaliser 5 spectacles
             sous la supervision d&apos;un professionnel licencié avant
-            d&apos;opérer en autonomie. Trouve un mentor.
+            d&apos;opérer en autonomie. Trouvez un mentor.
           </p>
           <LinkButton href="/ressources/mentorat" variant="outline" className="mt-4">
             Trouver un mentor

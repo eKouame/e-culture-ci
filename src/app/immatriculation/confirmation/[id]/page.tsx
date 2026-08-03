@@ -6,7 +6,7 @@ import { LinkButton } from "@/components/ui/Button";
 import { TYPE_ACTIVITE_LABELS } from "@/lib/labels";
 
 export const metadata: Metadata = {
-  title: "Confirmation d'inscription | e-Culture CI",
+  title: "Confirmation d'immatriculation | e-Culture CI",
 };
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", {
@@ -33,7 +33,7 @@ export default async function ConfirmationImmatriculationPage({
     <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
       <div className="no-print mb-6 flex items-center justify-between">
         <span className="rounded-full bg-secondary-light px-3 py-1 text-sm font-semibold text-secondary-dark">
-          ✅ Inscription enregistrée
+          ✅ Immatriculation enregistrée
         </span>
         <PrintButton />
       </div>
@@ -42,12 +42,12 @@ export default async function ConfirmationImmatriculationPage({
         <div className="flex items-start justify-between border-b border-border pb-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-              Inscription à l&apos;annuaire e-Culture CI
+              Confirmation d&apos;immatriculation
             </p>
             <p className="text-lg font-bold text-foreground">e-Culture CI</p>
           </div>
           <div className="text-right">
-            <p className="text-xs text-muted">Numéro d&apos;inscription</p>
+            <p className="text-xs text-muted">Numéro d&apos;immatriculation</p>
             <p className="text-lg font-extrabold text-primary">
               {immatriculation.numero}
             </p>
@@ -79,10 +79,10 @@ export default async function ConfirmationImmatriculationPage({
         </dl>
 
         <p className="mt-6 border-t border-border pt-4 text-xs text-muted">
-          Cette confirmation atteste que ton inscription a bien été
-          enregistrée dans l&apos;annuaire e-Culture CI, outil indépendant
-          d&apos;orientation. Ce n&apos;est pas une immatriculation
-          officielle auprès du ministère de la Culture.
+          Cette confirmation atteste que votre demande d&apos;immatriculation
+          a été enregistrée auprès du ministère de la Culture via le Guichet
+          Unique e-Culture CI. Votre dossier sera examiné par les services
+          compétents.
         </p>
       </div>
 

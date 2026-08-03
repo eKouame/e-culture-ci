@@ -6,16 +6,12 @@ export const metadata: Metadata = {
 
 const FAQ = [
   {
-    q: "e-Culture CI est-il un site officiel du ministère ?",
-    a: "Non. e-Culture CI est un outil indépendant, encore en test, qui t'aide à comprendre la réglementation et à préparer tes démarches. Il ne délivre aucun document officiel et ne remplace ni ta mairie ni le ministère de la Culture.",
-  },
-  {
     q: "Qui est exempté de licence et de caution bancaire ?",
     a: "D'après l'article 10 du décret de 2021, les organisateurs occasionnels dont l'événement a un but socio-éducatif, sportif, philanthropique ou de promotion de la culture locale (mariage, funérailles, fête de quartier, tournoi, festival régional, sensibilisation, etc.) sont exemptés de licence et de caution bancaire. C'est le cas de la majorité des promoteurs du pays profond.",
   },
   {
     q: "Si je suis exempté, dois-je quand même faire quelque chose ?",
-    a: "Oui : une déclaration gratuite et rapide (3 minutes) via le module « Préparer ma déclaration ». Elle t'aide à disposer d'un suivi clair de ton événement, et tu repars avec une attestation de déclaration e-Culture CI à garder sous la main pour tes démarches en mairie.",
+    a: "Oui : une déclaration gratuite et rapide (3 minutes) via le module « Déclaration Express ». Elle permet à l'État de disposer de statistiques fiables sur le secteur informel, et vous obtenez un récépissé numérique à présenter en mairie ou préfecture pour légitimer votre événement.",
   },
   {
     q: "Combien coûte la licence pour les professionnels ?",
@@ -26,16 +22,16 @@ const FAQ = [
     a: "Non, c'est une rumeur infondée. Ce montant ne concerne que les 10 à 30 % d'acteurs dont le spectacle est l'activité professionnelle principale. Les organisateurs occasionnels à but socio-éducatif ou culturel en sont exemptés.",
   },
   {
-    q: "Pourquoi rejoindre l'annuaire e-Culture CI ?",
-    a: "L'annuaire rassemble les acteurs souvent isolés — regroupés informellement sur des groupes WhatsApp — dans une liste commune. Ça te rend visible auprès de la communauté et te prépare aux démarches d'immatriculation officielle auprès du ministère, quand tu seras prêt.",
+    q: "Pourquoi dois-je m'immatriculer au ministère ?",
+    a: "L'immatriculation transforme les acteurs isolés — souvent regroupés informellement sur des groupes WhatsApp — en interlocuteurs officiels et reconnus. Elle est indispensable pour participer aux politiques publiques du secteur et bénéficier d'un accompagnement.",
   },
   {
     q: "Qu'est-ce que le parrainage (Licence B) ?",
-    a: "Un promoteur qui débute doit réaliser 5 spectacles sous la supervision d'un professionnel déjà titulaire d'une licence, avant de pouvoir opérer en toute autonomie. Le module Mentorat te met en relation avec un professionnel licencié pour t'accompagner.",
+    a: "Un promoteur qui débute doit réaliser 5 spectacles sous la supervision d'un professionnel déjà titulaire d'une licence, avant de pouvoir opérer en toute autonomie. Le module Mentorat vous met en relation avec un professionnel licencié pour vous accompagner.",
   },
   {
     q: "Les résultats du test « Suis-je concerné ? » sont-ils officiels ?",
-    a: "Non, ils sont indicatifs. Ils te donnent une orientation rapide basée sur tes réponses, mais seule l'administration peut rendre une décision officielle sur ton dossier.",
+    a: "Non, ils sont indicatifs. Ils vous donnent une orientation rapide basée sur vos réponses, mais seule l'administration peut rendre une décision officielle sur votre dossier.",
   },
 ];
 

@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { Card } from "@/components/ui/Card";
 
 export const metadata: Metadata = {
-  title: "Tableau de bord — Espace admin | e-Culture CI",
+  title: "Tableau de bord — Espace ministère | e-Culture CI",
 };
 
 export default async function AdminDashboardPage() {
