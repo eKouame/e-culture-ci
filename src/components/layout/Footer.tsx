@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="no-print mt-12 border-t border-border bg-surface">
       <div className="mx-auto max-w-5xl px-4 py-8 text-sm text-muted sm:px-6">
         <p className="font-medium text-foreground">
-          e-Culture CI — Guichet Unique de Déclaration et d&apos;Orientation
+          e-Culture CI — Comprendre et préparer vos démarches du spectacle vivant
         </p>
         <p className="mt-2 rounded-lg border border-border bg-black/[0.02] px-3 py-2 text-xs">
           ℹ️ {INDEPENDENCE_DISCLAIMER}

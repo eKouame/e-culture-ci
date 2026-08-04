@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { DisclaimerBar } from "@/components/layout/DisclaimerBar";
 
 const SITE_URL = "https://e-culture-ci.vercel.app";
-const SITE_TITLE = "e-Culture CI | Guichet Unique de Déclaration et d'Orientation";
+const SITE_TITLE = "e-Culture CI | Comprendre et préparer vos démarches du spectacle vivant";
 const SITE_DESCRIPTION =
   "Orientez-vous, déclarez votre événement ou immatriculez-vous auprès du ministère de la Culture — pour les acteurs du spectacle vivant en Côte d'Ivoire.";
 

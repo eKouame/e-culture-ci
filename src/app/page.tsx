@@ -48,8 +48,8 @@ export default function Home() {
             e-Culture CI
           </h1>
           <p className="mx-auto mt-2 max-w-2xl text-lg text-muted">
-            Le Guichet Unique de Déclaration et d&apos;Orientation pour les
-            acteurs du spectacle vivant, partout en Côte d&apos;Ivoire.
+            Comprendre et préparer vos démarches du spectacle vivant, partout
+            en Côte d&apos;Ivoire.
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-muted">
             Vous organisez un concert, une cérémonie, un festival ou un
