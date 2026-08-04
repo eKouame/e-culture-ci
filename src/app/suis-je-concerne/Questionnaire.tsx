@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
 import { OptionCard } from "@/components/questionnaire/OptionCard";
 import { ProgressBar } from "@/components/questionnaire/ProgressBar";
 import {
@@ -129,7 +130,8 @@ function Resultat({
 
   if (statut === "EXEMPTE") {
     return (
-      <Card className="border-secondary/30 bg-secondary-light">
+      <>
+        <Card className="border-secondary/30 bg-secondary-light">
         <span className="text-3xl">✅</span>
         <h2 className="mt-2 text-xl font-extrabold text-secondary-dark">
           Bonne nouvelle : vous êtes exempté(e)
@@ -166,10 +168,13 @@ function Resultat({
           .
         </p>
       </Card>
+      <NextStepsNotice leadIn="Votre orientation est prête." />
+      </>
     );
   }
 
   return (
+    <>
     <Card className="border-primary/30 bg-primary-light">
       <span className="text-3xl">🎫</span>
       <h2 className="mt-2 text-xl font-extrabold text-primary-dark">
@@ -210,5 +215,7 @@ function Resultat({
         .
       </p>
     </Card>
+      <NextStepsNotice leadIn="Votre orientation est prête." />
+      </>
   );
 }

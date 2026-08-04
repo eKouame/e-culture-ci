@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { PrintButton } from "@/components/ui/PrintButton";
 import { LinkButton } from "@/components/ui/Button";
+import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
 import { TYPE_ACTIVITE_LABELS } from "@/lib/labels";
 
 export const metadata: Metadata = {
@@ -84,6 +85,8 @@ export default async function ConfirmationImmatriculationPage({
           dossier sera examiné et transmis aux services compétents.
         </p>
       </div>
+
+      <NextStepsNotice leadIn="Votre dossier est prêt." />
 
       <div className="no-print mt-6 flex flex-col gap-2 sm:flex-row">
         <LinkButton href="/" variant="outline">

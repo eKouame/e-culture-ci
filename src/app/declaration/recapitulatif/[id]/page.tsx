@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { PrintButton } from "@/components/ui/PrintButton";
 import { LinkButton } from "@/components/ui/Button";
+import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
 import { TYPE_SPECTACLE_LABELS } from "@/lib/labels";
 
 export const metadata: Metadata = {
@@ -98,6 +99,8 @@ export default async function RecapitulatifPage({
           démarches auprès des autorités locales (mairie, préfecture).
         </p>
       </div>
+
+      <NextStepsNotice />
 
       <div className="no-print mt-6 flex flex-col gap-2 sm:flex-row">
         <LinkButton href="/" variant="outline">
