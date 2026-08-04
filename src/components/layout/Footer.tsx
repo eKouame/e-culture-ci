@@ -1,3 +1,5 @@
+import { INDEPENDENCE_DISCLAIMER } from "@/lib/disclaimer";
+
 export function Footer() {
   return (
     <footer className="no-print mt-12 border-t border-border bg-surface">
@@ -5,7 +7,10 @@ export function Footer() {
         <p className="font-medium text-foreground">
           e-Culture CI — Guichet Unique de Déclaration et d&apos;Orientation
         </p>
-        <p className="mt-1">
+        <p className="mt-2 rounded-lg border border-border bg-black/[0.02] px-3 py-2 text-xs">
+          ℹ️ {INDEPENDENCE_DISCLAIMER}
+        </p>
+        <p className="mt-3">
           Plateforme d&apos;accompagnement des acteurs du spectacle vivant, en
           application du décret de 2021 relatif au spectacle vivant en Côte
           d&apos;Ivoire.

@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { DisclaimerBar } from "@/components/layout/DisclaimerBar";
 
 const SITE_URL = "https://e-culture-ci.vercel.app";
 const SITE_TITLE = "e-Culture CI | Guichet Unique de Déclaration et d'Orientation";
@@ -38,6 +39,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="h-full antialiased">
       <body className="flex min-h-full flex-col">
+        <DisclaimerBar />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
