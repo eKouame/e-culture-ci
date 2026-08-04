@@ -93,10 +93,9 @@ export default async function RecapitulatifPage({
 
         <p className="mt-6 border-t border-border pt-4 text-xs text-muted">
           Ce récapitulatif atteste qu&apos;une déclaration a été enregistrée
-          auprès du Guichet Unique e-Culture CI, conformément à
-          l&apos;article 10 du décret de 2021 relatif au spectacle vivant.
-          Conservez-le pour vos démarches auprès des autorités locales
-          (mairie, préfecture).
+          auprès de e-Culture CI, conformément à l&apos;article 10 du décret
+          de 2021 relatif au spectacle vivant. Conservez-le pour vos
+          démarches auprès des autorités locales (mairie, préfecture).
         </p>
       </div>
 

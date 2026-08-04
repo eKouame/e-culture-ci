@@ -22,7 +22,7 @@ async function main() {
     create: {
       email: adminEmail,
       passwordHash,
-      nom: "Administrateur — Ministère de la Culture",
+      nom: "Administrateur — Autorité locale (Mairie, Préfecture)",
     },
   });
 
