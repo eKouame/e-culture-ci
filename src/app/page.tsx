@@ -48,14 +48,15 @@ export default function Home() {
             e-Culture CI
           </h1>
           <p className="mx-auto mt-2 max-w-2xl text-lg text-muted">
-            Comprendre et préparer vos démarches du spectacle vivant, partout
-            en Côte d&apos;Ivoire.
+            L&apos;assistant qui vous aide à comprendre la réglementation du
+            spectacle vivant et à préparer vos démarches, partout en Côte
+            d&apos;Ivoire.
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-muted">
             Vous organisez un concert, une cérémonie, un festival ou un
-            spectacle occasionnel ? Découvrez en 1 minute si vous devez une
-            licence, déclarez votre événement gratuitement, et faites-vous
-            connaître auprès du ministère.
+            spectacle ? Découvrez en 1 minute si une licence vous concerne,
+            préparez votre déclaration, et sachez où effectuer vos démarches
+            officielles.
           </p>
           <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <LinkButton href="/suis-je-concerne" size="lg">
