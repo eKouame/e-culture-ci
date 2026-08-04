@@ -81,8 +81,8 @@ export default async function ConfirmationImmatriculationPage({
 
         <p className="mt-6 border-t border-border pt-4 text-xs text-muted">
           Cette confirmation atteste que votre demande d&apos;immatriculation
-          a été enregistrée auprès du Guichet Unique e-Culture CI. Votre
-          dossier sera examiné et transmis aux services compétents.
+          a été enregistrée auprès de e-Culture CI. Votre dossier est prêt
+          pour être transmis aux autorités locales (mairie, préfecture).
         </p>
       </div>
 
