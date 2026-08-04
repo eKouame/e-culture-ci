@@ -141,13 +141,13 @@ function Resultat({
           (5 000 000 FCFA) ni caution bancaire (5 000 000 FCFA) à payer.
         </p>
         <p className="mt-2 text-sm text-foreground">
-          Il vous suffit de faire une <strong>déclaration gratuite</strong> de
-          votre événement pour être en règle et obtenir un récépissé à
-          présenter à la mairie ou à la préfecture.
+          Il vous suffit de préparer une <strong>déclaration gratuite</strong>{" "}
+          de votre événement et d&apos;obtenir un récapitulatif clair à
+          conserver pour effectuer votre déclaration officielle.
         </p>
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <LinkButton href={declarationHref} size="lg">
-            Faire ma Déclaration Express →
+            Préparer ma déclaration →
           </LinkButton>
           <button
             type="button"

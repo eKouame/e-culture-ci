@@ -13,10 +13,10 @@ const MODULES = [
   {
     href: "/declaration",
     emoji: "📝",
-    title: "Déclaration Express",
+    title: "Préparer ma déclaration",
     description:
-      "Déclarez gratuitement votre événement en 3 minutes et obtenez un récépissé numérique à présenter en mairie.",
-    cta: "Déclarer un événement",
+      "Renseignez les informations de votre événement en 3 minutes et obtenez un récapitulatif clair à conserver pour effectuer votre déclaration officielle.",
+    cta: "Préparer ma déclaration",
   },
   {
     href: "/immatriculation",

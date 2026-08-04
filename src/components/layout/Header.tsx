@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const NAV_ITEMS = [
   { href: "/suis-je-concerne", label: "Suis-je concerné ?" },
-  { href: "/declaration", label: "Déclaration Express" },
+  { href: "/declaration", label: "Ma déclaration" },
   { href: "/immatriculation", label: "Immatriculation" },
   { href: "/ressources", label: "Ressources" },
 ];

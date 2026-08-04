@@ -171,7 +171,7 @@ export function DeclarationForm({
       </div>
 
       <Button type="submit" size="lg" disabled={isSubmitting} className="mt-2">
-        {isSubmitting ? "Envoi en cours…" : "Déclarer mon événement"}
+        {isSubmitting ? "Envoi en cours…" : "Préparer ma déclaration"}
       </Button>
       {submitError && (
         <p className="text-sm font-medium text-danger">{submitError}</p>

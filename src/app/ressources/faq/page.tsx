@@ -11,7 +11,7 @@ const FAQ = [
   },
   {
     q: "Si je suis exempté, dois-je quand même faire quelque chose ?",
-    a: "Oui : une déclaration gratuite et rapide (3 minutes) via le module « Déclaration Express ». Elle permet à l'État de disposer de statistiques fiables sur le secteur informel, et vous obtenez un récépissé numérique à présenter en mairie ou préfecture pour légitimer votre événement.",
+    a: "Oui : une déclaration gratuite et rapide (3 minutes) via le module « Préparer ma déclaration ». Elle permet à l'État de disposer de statistiques fiables sur le secteur informel, et vous obtenez un récapitulatif clair à conserver pour effectuer votre déclaration officielle.",
   },
   {
     q: "Combien coûte la licence pour les professionnels ?",
