@@ -4,10 +4,30 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
+const SITE_URL = "https://e-culture-ci.vercel.app";
+const SITE_TITLE = "e-Culture CI | Guichet Unique de Déclaration et d'Orientation";
+const SITE_DESCRIPTION =
+  "Orientez-vous, déclarez votre événement ou immatriculez-vous auprès du ministère de la Culture — pour les acteurs du spectacle vivant en Côte d'Ivoire.";
+
 export const metadata: Metadata = {
-  title: "e-Culture CI | Guichet Unique de Déclaration et d'Orientation",
-  description:
-    "Orientez-vous, déclarez votre événement ou immatriculez-vous auprès du ministère de la Culture — pour les acteurs du spectacle vivant en Côte d'Ivoire.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: "Dois-tu payer une licence pour ton spectacle ?",
+    description:
+      "Découvre ta situation en 1 minute et déclare gratuitement ton événement — e-Culture CI.",
+    url: SITE_URL,
+    siteName: "e-Culture CI",
+    locale: "fr_CI",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dois-tu payer une licence pour ton spectacle ?",
+    description:
+      "Découvre ta situation en 1 minute et déclare gratuitement ton événement — e-Culture CI.",
+  },
 };
 
 export default function RootLayout({
