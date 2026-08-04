@@ -21,10 +21,10 @@ const MODULES = [
   {
     href: "/immatriculation",
     emoji: "📋",
-    title: "Immatriculation",
+    title: "Préparer mon immatriculation",
     description:
-      "Enregistrez-vous individuellement ou en association au registre du ministère de la Culture.",
-    cta: "M'immatriculer",
+      "Rassemblez et organisez les pièces nécessaires pour vous enregistrer, seul ou en association, auprès du ministère de la Culture.",
+    cta: "Préparer mon dossier",
   },
   {
     href: "/ressources",

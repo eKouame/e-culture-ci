@@ -188,7 +188,7 @@ function Resultat({
       </p>
       <div className="mt-4 flex flex-col gap-2 sm:flex-row">
         <LinkButton href="/immatriculation" size="lg">
-          M&apos;immatriculer
+          Préparer mon dossier
         </LinkButton>
         <LinkButton href="/ressources/mentorat" variant="outline" size="lg">
           Trouver un mentor

@@ -178,13 +178,13 @@ export function ImmatriculationForm() {
       />
       <Textarea
         label="Pièces que vous pouvez fournir (facultatif)"
-        hint="Ex : statuts d'association, récépissé de déclaration, pièce d'identité..."
+        hint="Ex : statuts d'association, récapitulatif de déclaration e-Culture CI, pièce d'identité..."
         error={errors.piecesFournies?.message}
         {...register("piecesFournies")}
       />
 
       <Button type="submit" size="lg" disabled={isSubmitting} className="mt-2">
-        {isSubmitting ? "Envoi en cours…" : "M'immatriculer"}
+        {isSubmitting ? "Envoi en cours…" : "Préparer mon dossier"}
       </Button>
       {submitError && (
         <p className="text-sm font-medium text-danger">{submitError}</p>

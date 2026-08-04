@@ -59,7 +59,7 @@ export function DeclarationForm({
     }
 
     const json = await res.json();
-    router.push(`/declaration/recepisse/${json.id}`);
+    router.push(`/declaration/recapitulatif/${json.id}`);
   }
 
   return (
