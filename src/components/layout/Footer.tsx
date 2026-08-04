@@ -24,6 +24,20 @@ export function Footer() {
           </a>
           .
         </p>
+        <nav className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-border pt-4 text-xs">
+          <a href="/mentions-legales" className="underline hover:text-primary">
+            Mentions légales
+          </a>
+          <a href="/confidentialite" className="underline hover:text-primary">
+            Politique de confidentialité
+          </a>
+          <a
+            href="/conditions-utilisation"
+            className="underline hover:text-primary"
+          >
+            Conditions d&apos;utilisation
+          </a>
+        </nav>
       </div>
     </footer>
   );
