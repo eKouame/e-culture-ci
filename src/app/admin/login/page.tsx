@@ -14,7 +14,7 @@ export default function AdminLoginPage() {
         Connexion
       </h1>
       <p className="mt-2 text-sm text-muted">
-        Réservé aux agents du ministère de la Culture.
+        Réservé aux autorités locales (Mairie, Préfecture).
       </p>
       <Card className="mt-6">
         <LoginForm />
