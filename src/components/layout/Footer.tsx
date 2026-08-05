@@ -11,9 +11,9 @@ export function Footer() {
           ℹ️ {INDEPENDENCE_DISCLAIMER}
         </p>
         <p className="mt-3">
-          Plateforme d&apos;accompagnement des acteurs du spectacle vivant, en
-          application du décret de 2021 relatif au spectacle vivant en Côte
-          d&apos;Ivoire.
+          Plateforme d&apos;accompagnement des acteurs du spectacle vivant,
+          pour vous aider à comprendre le décret de 2021 relatif au
+          spectacle vivant en Côte d&apos;Ivoire.
         </p>
         <p className="mt-3 text-xs">
           Les résultats du module &laquo;&nbsp;Suis-je concerné&nbsp;?&nbsp;&raquo;

@@ -41,9 +41,16 @@ export default function Home() {
     <div>
       <section className="border-b border-border bg-gradient-to-b from-primary-light to-transparent">
         <div className="mx-auto max-w-5xl px-4 py-12 text-center sm:px-6 sm:py-16">
-          <p className="mx-auto mb-4 inline-block rounded-full bg-secondary-light px-4 py-1.5 text-sm font-semibold text-secondary-dark">
-            70 à 90 % des organisateurs occasionnels sont exemptés de licence
-          </p>
+          <div className="mx-auto mb-4 flex flex-col items-center gap-1">
+            <p className="inline-block rounded-full bg-secondary-light px-4 py-1.5 text-sm font-semibold text-secondary-dark">
+              70 à 90 % des organisateurs occasionnels sont exemptés de
+              licence
+            </p>
+            <p className="text-xs text-muted">
+              Selon le directeur juridique du ministère de la Culture, le 2
+              août 2026.
+            </p>
+          </div>
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
             e-Culture CI
           </h1>

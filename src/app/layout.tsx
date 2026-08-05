@@ -8,16 +8,15 @@ import { DisclaimerBar } from "@/components/layout/DisclaimerBar";
 const SITE_URL = "https://e-culture-ci.vercel.app";
 const SITE_TITLE = "e-Culture CI | Comprendre et préparer vos démarches du spectacle vivant";
 const SITE_DESCRIPTION =
-  "Orientez-vous, déclarez votre événement ou immatriculez-vous auprès du ministère de la Culture — pour les acteurs du spectacle vivant en Côte d'Ivoire.";
+  "Comprendre et préparer vos démarches du spectacle vivant, partout en Côte d'Ivoire : vérifiez si une licence vous concerne, préparez votre déclaration ou votre immatriculation — un outil indépendant.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   openGraph: {
-    title: "Dois-tu payer une licence pour ton spectacle ?",
-    description:
-      "Découvre ta situation en 1 minute et déclare gratuitement ton événement — e-Culture CI.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: SITE_URL,
     siteName: "e-Culture CI",
     locale: "fr_CI",
@@ -25,9 +24,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dois-tu payer une licence pour ton spectacle ?",
-    description:
-      "Découvre ta situation en 1 minute et déclare gratuitement ton événement — e-Culture CI.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "e-Culture CI — Dois-tu payer une licence pour ton spectacle ? Découvre-le en 1 minute.";
+  "e-Culture CI — Une licence est-elle nécessaire pour votre spectacle ? Découvrez-le en 1 minute.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -69,7 +69,7 @@ export default function OpengraphImage() {
               maxWidth: 980,
             }}
           >
-            Dois-tu payer une licence pour ton spectacle ?
+            Une licence est-elle nécessaire pour votre spectacle ?
           </div>
           <div
             style={{
@@ -79,8 +79,8 @@ export default function OpengraphImage() {
               maxWidth: 880,
             }}
           >
-            Découvre ta situation en 1 minute et déclare gratuitement ton
-            événement.
+            Découvrez votre situation en 1 minute et préparez gratuitement
+            votre déclaration.
           </div>
         </div>
 
