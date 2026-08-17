@@ -45,6 +45,17 @@ export default function ConfidentialitePage() {
             relation. Ces informations servent uniquement à ces finalités et
             à l&apos;amélioration du service.
           </p>
+          <p className="mt-2">
+            Sur la page dédiée aux communes (
+            <a href="/communes" className="underline hover:text-primary">
+              e-culture-ci.vercel.app/communes
+            </a>
+            ), le formulaire de contact collecte votre nom, votre fonction,
+            le nom de votre commune, votre email, et, si vous le souhaitez,
+            votre téléphone et un message. Ces informations servent
+            uniquement à vous recontacter au sujet d&apos;une démonstration
+            ou d&apos;un partenariat.
+          </p>
         </section>
 
         <section>

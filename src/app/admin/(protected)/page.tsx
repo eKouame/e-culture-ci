@@ -17,11 +17,13 @@ export default async function AdminDashboardPage() {
     declarationsCeMois,
     totalImmatriculations,
     mentoratEnAttente,
+    communesNouvelles,
   ] = await Promise.all([
     prisma.declaration.count(),
     prisma.declaration.count({ where: { createdAt: { gte: startOfMonth } } }),
     prisma.immatriculation.count(),
     prisma.mentoratDemande.count({ where: { statutDemande: "EN_ATTENTE" } }),
+    prisma.demandeCommune.count({ where: { statut: "NOUVELLE" } }),
   ]);
 
   const stats = [
@@ -44,6 +46,11 @@ export default async function AdminDashboardPage() {
       label: "Demandes de mentorat en attente",
       value: mentoratEnAttente,
       href: "/admin/mentorat",
+    },
+    {
+      label: "Demandes de communes (nouvelles)",
+      value: communesNouvelles,
+      href: "/admin/communes",
     },
   ];
 

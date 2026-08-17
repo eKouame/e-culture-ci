@@ -44,6 +44,14 @@ enum StatutMentorat {
   CLOTURE
 }
 
+enum StatutDemandeCommune {
+  NOUVELLE
+  CONTACTEE
+  EN_DISCUSSION
+  PILOTE
+  CLOTUREE
+}
+
 model Counter {
   key   String @id
   value Int    @default(0)
@@ -127,6 +135,27 @@ model MentoratDemande {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model DemandeCommune {
+  id     String @id @default(cuid())
+  numero String @unique
+
+  nom          String
+  fonction     String
+  commune      String
+  email        String
+  telephone    String?
+  message      String?
+  consentement Boolean @default(false)
+
+  statut    StatutDemandeCommune @default(NOUVELLE)
+  noteAdmin String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([commune])
 }
 
 model AdminUser {

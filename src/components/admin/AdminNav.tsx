@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: "/admin/declarations", label: "Déclarations" },
   { href: "/admin/immatriculations", label: "Immatriculations" },
   { href: "/admin/mentorat", label: "Mentorat" },
+  { href: "/admin/communes", label: "Communes" },
 ];
 
 export function AdminNav({ adminNom }: { adminNom: string | null }) {

@@ -42,8 +42,14 @@ export function Header() {
             </Link>
           ))}
           <Link
+            href="/communes"
+            className="ml-2 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-primary-light"
+          >
+            Vous êtes une mairie ? →
+          </Link>
+          <Link
             href="/admin"
-            className="ml-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
+            className="rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
           >
             Espace admin
           </Link>
@@ -77,6 +83,13 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/communes"
+            onClick={() => setOpen(false)}
+            className="rounded-lg px-3 py-2.5 text-sm font-medium text-primary hover:bg-primary-light"
+          >
+            Vous êtes une mairie ? →
+          </Link>
           <Link
             href="/admin"
             onClick={() => setOpen(false)}
