@@ -46,5 +46,9 @@ next-env.d.ts
 # skill reference docs auto-installed by `prisma init`, not needed in the repo
 /.agents/
 /.windsurf/
+/.codex/
 /.claude/skills/
 skills-lock.json
+
+# impeccable skill local state (config, live-mode session, critique archive)
+/.impeccable/
