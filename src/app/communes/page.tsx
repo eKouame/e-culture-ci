@@ -26,30 +26,28 @@ export const metadata: Metadata = {
 const BENEFICES = [
   {
     titre: "Un guichet allégé",
-    texte:
-      "Les organisateurs arrivent préparés, avec une fiche récapitulative claire.",
+    texte: "Les organisateurs arrivent préparés.",
   },
   {
-    titre: "De la visibilité sur votre territoire",
+    titre: "De la visibilité accrue",
     texte: "Vous voyez les événements déclarés dans la commune.",
   },
   {
     titre: "Un pas vers la formalisation",
-    texte:
-      "La première marche étant simple et gratuite, l'informel revient vers vous.",
+    texte: "L'informel revient vers vous, simplement.",
   },
   {
-    titre: "Une image de commune moderne",
+    titre: "Une image moderne",
     texte: "Un service concret, à l'écoute, sans lourdeur.",
   },
 ];
 
 const ETAPES = [
-  "Un échange pour comprendre vos règles locales (pièces, délais, éventuelles redevances).",
-  "Une adaptation de l'outil à votre commune : critères, formulaire, identité visuelle.",
-  "Une courte prise en main pour votre agent d'accueil — l'essentiel en une demi-heure.",
-  "La mise en service : votre service d'orientation est en ligne, prêt pour vos administrés.",
-];
+  ["Comprendre", "vos règles locales (pièces, délais, redevances)."],
+  ["Adapter", "l'outil : critères, formulaire, identité visuelle."],
+  ["Former", "votre agent d'accueil — l'essentiel en une demi-heure."],
+  ["Mettre en service", ": votre outil est en ligne, prêt pour vos administrés."],
+] as const;
 
 export default function CommunesPage() {
   return (
@@ -64,9 +62,8 @@ export default function CommunesPage() {
             Un service culturel de proximité pour votre commune
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-lg text-[#6b6b6b]">
-            e-Culture CI : orienter les organisateurs de spectacles de votre
-            territoire, alléger votre guichet, mieux connaître ce qui s&apos;y
-            passe.
+            e-Culture CI : orienter, alléger votre guichet, mieux connaître
+            votre territoire.
           </p>
           <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <a
@@ -90,12 +87,10 @@ export default function CommunesPage() {
         <section>
           <h2 className="text-2xl font-bold text-[#1c1917]">Le constat</h2>
           <p className="mt-3 leading-relaxed text-[#3f3f3f]">
-            Depuis la réforme du spectacle vivant, vos administrés sont
-            perdus : beaucoup pensent qu&apos;un concert de quartier ou une
-            cérémonie exige une licence à plusieurs millions. Résultat — un
-            guichet qui réexplique sans cesse les mêmes règles, des
-            événements qui se tiennent sans que vous en soyez informés, et un
-            secteur qui reste dans l&apos;informel.
+            Depuis la réforme, vos administrés sont perdus : beaucoup pensent
+            qu&apos;un concert de quartier exige une licence à plusieurs
+            millions. Résultat — un guichet saturé, des événements informels,
+            une perte de visibilité territoriale.
           </p>
         </section>
 
@@ -104,13 +99,14 @@ export default function CommunesPage() {
           <h2 className="text-2xl font-bold text-[#1c1917]">
             Ce que Service Monde propose
           </h2>
+          <p className="mt-1 font-medium text-[#B5771F]">
+            e-Culture CI : orienter, alléger, formaliser.
+          </p>
           <p className="mt-3 leading-relaxed text-[#3f3f3f]">
-            Service Monde, cabinet de design territorial, conçoit des
-            services de proximité pour les collectivités. Nous proposons
-            d&apos;installer e-Culture CI comme service local de votre
-            commune : un outil en ligne, à vos couleurs, où l&apos;organisateur
-            comprend s&apos;il est concerné, prépare son dossier, et se
-            présente à votre guichet en sachant ce qu&apos;il doit apporter.
+            Nous installons e-Culture CI comme service local de votre
+            commune : un outil à vos couleurs, où l&apos;organisateur
+            comprend s&apos;il est concerné, prépare son dossier, et sait
+            quoi apporter à votre guichet.
           </p>
         </section>
 
@@ -143,10 +139,8 @@ export default function CommunesPage() {
             </p>
             <p className="mt-2 leading-relaxed text-[#3f3f3f]">
               Il oriente et prépare. Votre mairie reste la seule autorité :
-              c&apos;est vous qui recevez la déclaration, délivrez le document
-              officiel et accordez l&apos;autorisation. L&apos;outil vous
-              amène des dossiers propres et des administrés informés — il
-              vous alimente, il ne vous remplace pas.
+              c&apos;est elle qui reçoit, délivre et autorise. L&apos;outil
+              l&apos;alimente, il ne la remplace pas.
             </p>
           </div>
         </section>
@@ -157,12 +151,15 @@ export default function CommunesPage() {
             Comment ça se met en place
           </h2>
           <ol className="mt-5 flex flex-col gap-4">
-            {ETAPES.map((etape, i) => (
-              <li key={etape} className="flex gap-4">
+            {ETAPES.map(([verbe, legende], i) => (
+              <li key={verbe} className="flex gap-4">
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1B5E4A] text-sm font-bold text-white">
                   {i + 1}
                 </span>
-                <p className="pt-1 text-[#3f3f3f]">{etape}</p>
+                <p className="pt-1 text-[#3f3f3f]">
+                  <span className="font-bold text-[#1c1917]">{verbe}</span>{" "}
+                  {legende}
+                </p>
               </li>
             ))}
           </ol>
@@ -174,11 +171,9 @@ export default function CommunesPage() {
             Qui est Service Monde
           </h2>
           <p className="mt-3 leading-relaxed text-[#3f3f3f]">
-            Service Monde est un cabinet de design territorial : nous
-            concevons des services de proximité pour les collectivités,
-            pensés pour être simples à adopter et utiles dès le premier jour.
-            e-Culture CI est le premier de ces services, dédié au spectacle
-            vivant.
+            Un cabinet de design territorial : des services de proximité
+            pour les collectivités, simples à adopter, utiles dès le premier
+            jour. e-Culture CI est le premier de ces services.
           </p>
         </section>
 
@@ -186,11 +181,10 @@ export default function CommunesPage() {
         <section className="mt-12 rounded-xl bg-[#1B5E4A] p-7 text-white sm:p-9">
           <h2 className="text-2xl font-bold">Devenez commune pilote</h2>
           <p className="mt-3 leading-relaxed text-white/90">
-            e-Culture CI est en phase de test, et nous cherchons quelques
-            communes volontaires pour le construire avec nous.
-            L&apos;engagement est léger, gratuit, et vous pouvez commencer
-            petit — sur un seul type d&apos;événement — pour voir. Vous
-            seriez ainsi parmi les premières à en montrer l&apos;exemple.
+            e-Culture CI est en phase de test. Nous cherchons quelques
+            communes volontaires pour le construire avec nous — engagement
+            léger, gratuit, vous pouvez commencer petit. Soyez parmi les
+            premières à en montrer l&apos;exemple.
           </p>
           <a
             href="#formulaire"
