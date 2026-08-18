@@ -91,6 +91,23 @@ export default function RessourcesPage() {
             Trouver un mentor
           </LinkButton>
         </Card>
+        <Card className="sm:col-span-2">
+          <h2 className="text-base font-bold text-foreground">
+            Propriété intellectuelle
+          </h2>
+          <p className="mt-1.5 text-sm text-muted">
+            Musique, texte, chorégraphie, nom de festival, logo... Comprenez
+            ce qui est protégé, par qui, et vers qui vous tourner (BURIDA,
+            OIPI).
+          </p>
+          <LinkButton
+            href="/ressources/propriete-intellectuelle"
+            variant="outline"
+            className="mt-4"
+          >
+            Découvrir
+          </LinkButton>
+        </Card>
       </div>
     </div>
   );
