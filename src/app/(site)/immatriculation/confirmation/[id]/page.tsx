@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { PrintButton } from "@/components/ui/PrintButton";
 import { LinkButton } from "@/components/ui/Button";
 import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
+import { Stamp } from "@/components/ui/Stamp";
 import { TYPE_ACTIVITE_LABELS } from "@/lib/labels";
 
 export const metadata: Metadata = {
@@ -32,14 +33,12 @@ export default async function ConfirmationImmatriculationPage({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-      <div className="no-print mb-6 flex items-center justify-between">
-        <span className="rounded-full bg-secondary-light px-3 py-1 text-sm font-semibold text-secondary-dark">
-          ✅ Immatriculation enregistrée
-        </span>
+      <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3">
+        <Stamp>Enregistrée</Stamp>
         <PrintButton />
       </div>
 
-      <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+      <div className="dog-ear ledger-lines rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">
@@ -51,7 +50,7 @@ export default async function ConfirmationImmatriculationPage({
           </div>
           <div className="text-right">
             <p className="text-xs text-muted">Référence de dossier</p>
-            <p className="text-base font-bold text-foreground">
+            <p className="tabular-ref text-base font-bold text-foreground">
               {immatriculation.numero}
             </p>
           </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
+import { Stamp } from "@/components/ui/Stamp";
 import { OptionCard } from "@/components/questionnaire/OptionCard";
 import { ProgressBar } from "@/components/questionnaire/ProgressBar";
 import {
@@ -131,9 +132,9 @@ function Resultat({
   if (statut === "EXEMPTE") {
     return (
       <>
-        <Card className="border-secondary/30 bg-secondary-light">
-        <span className="text-3xl">✅</span>
-        <h2 className="mt-2 text-xl font-extrabold text-secondary-dark">
+        <Card dogEar className="border-secondary/30 bg-secondary-light">
+        <Stamp>Exempté(e)</Stamp>
+        <h2 className="mt-3 text-xl font-extrabold text-secondary-dark">
           Bonne nouvelle : vous êtes exempté(e)
         </h2>
         <p className="mt-2 max-w-prose text-sm text-foreground">
@@ -175,12 +176,12 @@ function Resultat({
 
   return (
     <>
-    <Card className="border-primary/30 bg-primary-light">
-      <span className="text-3xl">🎫</span>
-      <h2 className="mt-2 text-xl font-extrabold text-primary-dark">
+    <Card dogEar className="border-primary/30 bg-primary-light">
+      <Stamp tone="primary">Professionnel</Stamp>
+      <h2 className="mt-3 text-xl font-extrabold text-primary-dark">
         Vous relevez du régime des acteurs professionnels
       </h2>
-      <p className="mt-2 max-w-prose text-sm text-foreground">
+      <p className="mt-4 max-w-prose text-sm text-foreground">
         D&apos;après vos réponses, vous devez obtenir une licence
         (5 000 000 FCFA) et constituer une caution bancaire
         (5 000 000 FCFA), conformément à l&apos;article 10 du décret de

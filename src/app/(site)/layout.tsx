@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { DisclaimerBar } from "@/components/layout/DisclaimerBar";
+import { IndependenceModal } from "@/components/layout/IndependenceModal";
 
 export default function SiteLayout({
   children,
@@ -9,7 +9,7 @@ export default function SiteLayout({
 }) {
   return (
     <>
-      <DisclaimerBar />
+      <IndependenceModal />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

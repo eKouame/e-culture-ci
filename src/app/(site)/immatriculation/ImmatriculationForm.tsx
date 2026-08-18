@@ -114,7 +114,10 @@ export function ImmatriculationForm() {
     <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
       <ProgressBar step={step} total={STEPS.length} label="Étape" />
 
-      <div className="flex flex-col gap-4">
+      <div
+        key={step}
+        className="page-turn dog-ear ledger-lines flex flex-col gap-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6"
+      >
         <h2 className="text-sm font-bold uppercase tracking-wide text-muted">
           {STEPS[step].title}
         </h2>

@@ -1,5 +1,6 @@
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Stamp } from "@/components/ui/Stamp";
 
 const MODULES = [
   {
@@ -41,29 +42,26 @@ export default function Home() {
     <div>
       <section className="border-b border-border bg-gradient-to-b from-primary-light to-transparent">
         <div className="mx-auto max-w-5xl px-4 py-12 text-center sm:px-6 sm:py-16">
-          <div className="mx-auto mb-4 flex flex-col items-center gap-1">
-            <p className="inline-block rounded-full bg-secondary-light px-4 py-1.5 text-sm font-semibold text-secondary-dark">
-              70 à 90 % des organisateurs occasionnels sont exemptés de
-              licence
+          <div className="mx-auto mb-5 flex flex-col items-center gap-2">
+            <Stamp className="!px-5 !py-2.5 text-base">70–90 %</Stamp>
+            <p className="max-w-xs text-sm font-semibold text-secondary-dark">
+              des organisateurs occasionnels sont exemptés de licence
             </p>
             <p className="text-xs text-muted">
               Selon le directeur juridique du ministère de la Culture, le 2
               août 2026.
             </p>
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+          <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             e-Culture CI
           </h1>
-          <p className="mx-auto mt-2 max-w-prose text-lg text-muted">
-            L&apos;assistant qui vous aide à comprendre la réglementation du
-            spectacle vivant et à préparer vos démarches, partout en Côte
-            d&apos;Ivoire.
+          <p className="mx-auto mt-3 max-w-prose text-xl font-medium text-foreground">
+            Comprenez la réglementation du spectacle vivant et préparez vos
+            démarches, partout en Côte d&apos;Ivoire.
           </p>
-          <p className="mx-auto mt-4 max-w-prose text-sm text-muted">
-            Vous organisez un concert, une cérémonie, un festival ou un
-            spectacle ? Découvrez en 1 minute si une licence vous concerne,
-            préparez votre déclaration, et sachez où effectuer vos démarches
-            officielles.
+          <p className="mx-auto mt-2.5 max-w-prose text-sm text-muted">
+            Concert, cérémonie, festival, spectacle : découvrez en 1 minute
+            si une licence vous concerne.
           </p>
           <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <LinkButton href="/suis-je-concerne" size="lg">
@@ -79,7 +77,7 @@ export default function Home() {
       <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {MODULES.map((m) => (
-            <Card key={m.href} className="flex flex-col">
+            <Card key={m.href} dogEar className="ledger-lines flex flex-col">
               <span className="text-3xl">{m.emoji}</span>
               <h2 className="mt-3 text-lg font-bold text-foreground">
                 {m.title}

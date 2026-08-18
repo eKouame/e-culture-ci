@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Button, LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
+import { Stamp } from "@/components/ui/Stamp";
 import { REGIONS_CI } from "@/lib/regions";
 import { TYPE_SPECTACLE_LABELS } from "@/lib/labels";
 
@@ -50,13 +51,14 @@ export function MentoratForm() {
   if (result) {
     return (
       <div>
-        <Card className="border-secondary/30 bg-secondary-light">
-          <span className="text-2xl">🤝</span>
-          <h2 className="mt-2 text-lg font-bold text-secondary-dark">
+        <Card dogEar className="ledger-lines border-secondary/30 bg-secondary-light">
+          <Stamp>Enregistrée</Stamp>
+          <h2 className="mt-3 text-lg font-bold text-secondary-dark">
             Votre demande a bien été enregistrée
           </h2>
           <p className="mt-1.5 max-w-prose text-sm text-foreground">
-            Référence de votre demande : <strong>{result.numero}</strong>. Un
+            Référence de votre demande :{" "}
+            <strong className="tabular-ref">{result.numero}</strong>. Un
             professionnel licencié pourra vous contacter prochainement pour
             organiser votre parrainage (5 spectacles supervisés).
           </p>
@@ -80,59 +82,61 @@ export function MentoratForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <Input
-        label="Nom complet"
-        error={errors.nomComplet?.message}
-        {...register("nomComplet")}
-      />
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <div className="dog-ear ledger-lines flex flex-col gap-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
         <Input
-          label="Téléphone"
-          type="tel"
-          error={errors.telephone?.message}
-          {...register("telephone")}
+          label="Nom complet"
+          error={errors.nomComplet?.message}
+          {...register("nomComplet")}
         />
-        <Input
-          label="Email (facultatif)"
-          type="email"
-          error={errors.email?.message}
-          {...register("email")}
-        />
-      </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Input
+            label="Téléphone"
+            type="tel"
+            error={errors.telephone?.message}
+            {...register("telephone")}
+          />
+          <Input
+            label="Email (facultatif)"
+            type="email"
+            error={errors.email?.message}
+            {...register("email")}
+          />
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Select
+            label="Région"
+            placeholder="Sélectionnez votre région"
+            options={regionOptions}
+            error={errors.region?.message}
+            {...register("region")}
+          />
+          <Input
+            label="Commune / Localité"
+            error={errors.commune?.message}
+            {...register("commune")}
+          />
+        </div>
         <Select
-          label="Région"
-          placeholder="Sélectionnez votre région"
-          options={regionOptions}
-          error={errors.region?.message}
-          {...register("region")}
+          label="Type de spectacle qui vous intéresse"
+          placeholder="Choisissez un type"
+          options={typeSpectacleOptions}
+          error={errors.typeSpectacleInteret?.message}
+          {...register("typeSpectacleInteret")}
         />
-        <Input
-          label="Commune / Localité"
-          error={errors.commune?.message}
-          {...register("commune")}
+        <Textarea
+          label="Votre profil actuel"
+          hint="Votre expérience, les événements déjà organisés, votre niveau de départ..."
+          error={errors.profilActuel?.message}
+          {...register("profilActuel")}
+        />
+        <Textarea
+          label="Disponibilité (facultatif)"
+          hint="À partir de quand pourriez-vous commencer à être accompagné(e) ?"
+          error={errors.disponibilite?.message}
+          {...register("disponibilite")}
         />
       </div>
-      <Select
-        label="Type de spectacle qui vous intéresse"
-        placeholder="Choisissez un type"
-        options={typeSpectacleOptions}
-        error={errors.typeSpectacleInteret?.message}
-        {...register("typeSpectacleInteret")}
-      />
-      <Textarea
-        label="Votre profil actuel"
-        hint="Votre expérience, les événements déjà organisés, votre niveau de départ..."
-        error={errors.profilActuel?.message}
-        {...register("profilActuel")}
-      />
-      <Textarea
-        label="Disponibilité (facultatif)"
-        hint="À partir de quand pourriez-vous commencer à être accompagné(e) ?"
-        error={errors.disponibilite?.message}
-        {...register("disponibilite")}
-      />
       <Button type="submit" size="lg" disabled={isSubmitting}>
         {isSubmitting ? "Envoi en cours…" : "Envoyer ma demande de mentorat"}
       </Button>
