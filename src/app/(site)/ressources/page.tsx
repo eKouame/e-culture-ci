@@ -52,13 +52,14 @@ export default function RessourcesPage() {
           ⚠️ La rumeur à ne pas croire
         </h2>
         <p className="mt-1.5 max-w-prose text-sm text-foreground">
-          Une rumeur affirme que <strong>tout le monde</strong> devrait payer
-          jusqu&apos;à <strong>10 000 000 FCFA</strong> pour organiser un
-          événement. C&apos;est faux pour la grande majorité des acteurs : ce
-          montant ne concerne que les professionnels dont le spectacle est
-          l&apos;activité principale — pas les organisateurs occasionnels à
-          but socio-éducatif, sportif, philanthropique ou de promotion de la
-          culture locale.
+          Une rumeur affirme que <strong>tout le monde</strong>{" "}
+          devrait payer jusqu&apos;à{" "}
+          <strong>10 000 000 FCFA</strong>{" "}
+          pour organiser un événement. C&apos;est faux pour la grande
+          majorité des acteurs : ce montant ne concerne que les
+          professionnels dont le spectacle est l&apos;activité principale —
+          pas les organisateurs occasionnels à but socio-éducatif, sportif,
+          philanthropique ou de promotion de la culture locale.
         </p>
         <LinkButton href="/suis-je-concerne" size="md" className="mt-4">
           Vérifier ma situation
@@ -66,6 +67,23 @@ export default function RessourcesPage() {
       </Card>
 
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Card className="sm:col-span-2">
+          <h2 className="text-base font-bold text-foreground">
+            Les fondamentaux du spectacle vivant
+          </h2>
+          <p className="mt-1.5 text-sm text-muted">
+            Nouveau dans le secteur ? Comprenez le vocabulaire, la chaîne de
+            production et les métiers (producteur, tourneur, diffuseur,
+            technique...) avant d&apos;aller plus loin.
+          </p>
+          <LinkButton
+            href="/ressources/fondamentaux"
+            variant="outline"
+            className="mt-4"
+          >
+            Découvrir
+          </LinkButton>
+        </Card>
         <Card>
           <h2 className="text-base font-bold text-foreground">
             Questions fréquentes
