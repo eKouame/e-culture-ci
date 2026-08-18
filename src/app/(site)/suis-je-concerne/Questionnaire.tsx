@@ -82,7 +82,7 @@ export function Questionnaire() {
         <button
           type="button"
           onClick={goBack}
-          className="self-start text-sm font-medium text-muted hover:text-primary"
+          className="self-start text-sm font-medium text-muted hover:text-primary-dark"
         >
           ← Question précédente
         </button>
@@ -136,13 +136,13 @@ function Resultat({
         <h2 className="mt-2 text-xl font-extrabold text-secondary-dark">
           Bonne nouvelle : vous êtes exempté(e)
         </h2>
-        <p className="mt-2 text-sm text-foreground">
+        <p className="mt-2 max-w-prose text-sm text-foreground">
           D&apos;après vos réponses, votre activité relève des événements
           occasionnels à but socio-éducatif, sportif, philanthropique ou de
           promotion culturelle. Vous n&apos;avez ni licence
           (5 000 000 FCFA) ni caution bancaire (5 000 000 FCFA) à payer.
         </p>
-        <p className="mt-2 text-sm text-foreground">
+        <p className="mt-2 max-w-prose text-sm text-foreground">
           Il vous suffit de préparer une <strong>déclaration gratuite</strong>{" "}
           de votre événement et d&apos;obtenir un récapitulatif clair à
           conserver pour effectuer votre déclaration officielle.
@@ -154,7 +154,7 @@ function Resultat({
           <button
             type="button"
             onClick={onRestart}
-            className="text-sm font-medium text-muted hover:text-primary"
+            className="text-sm font-medium text-muted hover:text-primary-dark"
           >
             Recommencer le test
           </button>
@@ -180,13 +180,13 @@ function Resultat({
       <h2 className="mt-2 text-xl font-extrabold text-primary-dark">
         Vous relevez du régime des acteurs professionnels
       </h2>
-      <p className="mt-2 text-sm text-foreground">
+      <p className="mt-2 max-w-prose text-sm text-foreground">
         D&apos;après vos réponses, vous devez obtenir une licence
         (5 000 000 FCFA) et constituer une caution bancaire
         (5 000 000 FCFA), conformément à l&apos;article 10 du décret de
         2021.
       </p>
-      <p className="mt-2 text-sm text-foreground">
+      <p className="mt-2 max-w-prose text-sm text-foreground">
         Si vous démarrez votre activité, vous pouvez d&apos;abord vous faire
         accompagner par un professionnel agréé (parrainage — 5 spectacles
         supervisés) avant d&apos;opérer en autonomie.
@@ -202,7 +202,7 @@ function Resultat({
       <button
         type="button"
         onClick={onRestart}
-        className="mt-3 text-sm font-medium text-muted hover:text-primary"
+        className="mt-3 text-sm font-medium text-muted hover:text-primary-dark"
       >
         Recommencer le test
       </button>

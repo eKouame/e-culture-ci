@@ -19,13 +19,14 @@ export default async function DeclarationPage({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary">Préparer ma déclaration</p>
+      <p className="text-sm font-semibold text-primary-dark">Préparer ma déclaration</p>
       <h1 className="mt-1 text-3xl font-extrabold text-foreground">
         Renseignez les informations de votre événement
       </h1>
-      <p className="mt-3 text-muted">
-        En 3 minutes. Vous obtiendrez un récapitulatif clair à conserver
-        pour effectuer votre déclaration officielle.
+      <p className="mt-3 max-w-prose text-muted">
+        En 3 minutes, réparties en 3 étapes simples. Vous obtiendrez un
+        récapitulatif clair à conserver pour effectuer votre déclaration
+        officielle.
       </p>
 
       <div className="mt-8">

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function MentionsLegalesPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary">e-Culture CI</p>
+      <p className="text-sm font-semibold text-primary-dark">e-Culture CI</p>
       <h1 className="mt-1 text-3xl font-extrabold text-foreground">
         Mentions légales
       </h1>
@@ -21,7 +21,7 @@ export default function MentionsLegalesPage() {
             Le site e-Culture CI (
             <a
               href="https://e-culture-ci.vercel.app"
-              className="underline hover:text-primary"
+              className="underline hover:text-primary-dark"
             >
               https://e-culture-ci.vercel.app
             </a>
@@ -32,7 +32,7 @@ export default function MentionsLegalesPage() {
             Contact :{" "}
             <a
               href="mailto:servicemonde77@gmail.com"
-              className="underline hover:text-primary"
+              className="underline hover:text-primary-dark"
             >
               servicemonde77@gmail.com
             </a>
@@ -63,7 +63,7 @@ export default function MentionsLegalesPage() {
             Walnut, CA 91789, États-Unis —{" "}
             <a
               href="https://vercel.com"
-              className="underline hover:text-primary"
+              className="underline hover:text-primary-dark"
             >
               vercel.com
             </a>

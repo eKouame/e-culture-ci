@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function ConfidentialitePage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary">e-Culture CI</p>
+      <p className="text-sm font-semibold text-primary-dark">e-Culture CI</p>
       <h1 className="mt-1 text-3xl font-extrabold text-foreground">
         Politique de confidentialité
       </h1>
@@ -25,7 +25,7 @@ export default function ConfidentialitePage() {
             Contact :{" "}
             <a
               href="mailto:servicemonde77@gmail.com"
-              className="underline hover:text-primary"
+              className="underline hover:text-primary-dark"
             >
               servicemonde77@gmail.com
             </a>
@@ -47,7 +47,7 @@ export default function ConfidentialitePage() {
           </p>
           <p className="mt-2">
             Sur la page dédiée aux communes (
-            <a href="/communes" className="underline hover:text-primary">
+            <a href="/communes" className="underline hover:text-primary-dark">
               e-culture-ci.vercel.app/communes
             </a>
             ), le formulaire de contact collecte votre nom, votre fonction,
@@ -113,7 +113,7 @@ export default function ConfidentialitePage() {
             Pour l&apos;exercer, écrivez à{" "}
             <a
               href="mailto:servicemonde77@gmail.com"
-              className="underline hover:text-primary"
+              className="underline hover:text-primary-dark"
             >
               servicemonde77@gmail.com
             </a>
@@ -131,7 +131,7 @@ export default function ConfidentialitePage() {
             auprès de l&apos;Autorité de protection (
             <a
               href="https://www.artci.ci"
-              className="underline hover:text-primary"
+              className="underline hover:text-primary-dark"
             >
               ARTCI
             </a>

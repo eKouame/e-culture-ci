@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 export default function RessourcesPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary">Centre de ressources</p>
+      <p className="text-sm font-semibold text-primary-dark">Centre de ressources</p>
       <h1 className="mt-1 text-3xl font-extrabold text-foreground">
         La réglementation expliquée simplement
       </h1>
-      <p className="mt-3 text-muted">
+      <p className="mt-3 max-w-prose text-muted">
         Le décret de 2021 sur le spectacle vivant a été mal communiqué au
         départ, ce qui a créé beaucoup de confusion et de peur sur le
         terrain. Voici, en langage simple, ce que dit réellement le texte.
@@ -34,7 +34,7 @@ export default function RessourcesPage() {
         </Card>
         <Card>
           <span className="text-2xl">🎫</span>
-          <h2 className="mt-2 text-base font-bold text-primary">
+          <h2 className="mt-2 text-base font-bold text-primary-dark">
             Si le spectacle est votre métier
           </h2>
           <p className="mt-1.5 text-sm text-muted">
@@ -51,7 +51,7 @@ export default function RessourcesPage() {
         <h2 className="text-base font-bold text-danger">
           ⚠️ La rumeur à ne pas croire
         </h2>
-        <p className="mt-1.5 text-sm text-foreground">
+        <p className="mt-1.5 max-w-prose text-sm text-foreground">
           Une rumeur affirme que <strong>tout le monde</strong> devrait payer
           jusqu&apos;à <strong>10 000 000 FCFA</strong> pour organiser un
           événement. C&apos;est faux pour la grande majorité des acteurs : ce
