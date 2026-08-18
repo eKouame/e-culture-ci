@@ -54,12 +54,12 @@ export default function Home() {
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
             e-Culture CI
           </h1>
-          <p className="mx-auto mt-2 max-w-2xl text-lg text-muted">
+          <p className="mx-auto mt-2 max-w-prose text-lg text-muted">
             L&apos;assistant qui vous aide à comprendre la réglementation du
             spectacle vivant et à préparer vos démarches, partout en Côte
             d&apos;Ivoire.
           </p>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-muted">
+          <p className="mx-auto mt-4 max-w-prose text-sm text-muted">
             Vous organisez un concert, une cérémonie, un festival ou un
             spectacle ? Découvrez en 1 minute si une licence vous concerne,
             préparez votre déclaration, et sachez où effectuer vos démarches

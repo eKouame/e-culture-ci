@@ -34,7 +34,7 @@ export function Header() {
               href={item.href}
               className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-black/5 ${
                 pathname?.startsWith(item.href)
-                  ? "text-primary"
+                  ? "text-primary-dark"
                   : "text-foreground"
               }`}
             >
@@ -43,7 +43,7 @@ export function Header() {
           ))}
           <Link
             href="/communes"
-            className="ml-2 rounded-lg px-3 py-2 text-sm font-medium text-primary hover:bg-primary-light"
+            className="ml-2 rounded-lg px-3 py-2 text-sm font-medium text-primary-dark hover:bg-primary-light"
           >
             Vous êtes une mairie ? →
           </Link>
@@ -76,7 +76,7 @@ export function Header() {
               onClick={() => setOpen(false)}
               className={`rounded-lg px-3 py-2.5 text-sm font-medium ${
                 pathname?.startsWith(item.href)
-                  ? "bg-primary-light text-primary"
+                  ? "bg-primary-light text-primary-dark"
                   : "text-foreground hover:bg-black/5"
               }`}
             >
@@ -86,7 +86,7 @@ export function Header() {
           <Link
             href="/communes"
             onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-primary hover:bg-primary-light"
+            className="rounded-lg px-3 py-2.5 text-sm font-medium text-primary-dark hover:bg-primary-light"
           >
             Vous êtes une mairie ? →
           </Link>

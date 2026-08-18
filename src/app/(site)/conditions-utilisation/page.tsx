@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function ConditionsUtilisationPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary">e-Culture CI</p>
+      <p className="text-sm font-semibold text-primary-dark">e-Culture CI</p>
       <h1 className="mt-1 text-3xl font-extrabold text-foreground">
         Conditions d&apos;utilisation
       </h1>
@@ -98,7 +98,7 @@ export default function ConditionsUtilisationPage() {
             Pour toute question :{" "}
             <a
               href="mailto:servicemonde77@gmail.com"
-              className="underline hover:text-primary"
+              className="underline hover:text-primary-dark"
             >
               servicemonde77@gmail.com
             </a>

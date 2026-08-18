@@ -38,7 +38,7 @@ const FAQ = [
 export default function FaqPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary">Centre de ressources</p>
+      <p className="text-sm font-semibold text-primary-dark">Centre de ressources</p>
       <h1 className="mt-1 text-3xl font-extrabold text-foreground">
         Questions fréquentes
       </h1>
@@ -52,12 +52,12 @@ export default function FaqPage() {
             <summary className="cursor-pointer list-none text-sm font-semibold text-foreground marker:content-none">
               <span className="flex items-center justify-between gap-3">
                 {item.q}
-                <span className="shrink-0 text-primary transition-transform group-open:rotate-45">
+                <span className="shrink-0 text-primary-dark transition-transform group-open:rotate-45">
                   +
                 </span>
               </span>
             </summary>
-            <p className="mt-2.5 text-sm text-muted">{item.a}</p>
+            <p className="mt-2.5 max-w-prose text-sm text-muted">{item.a}</p>
           </details>
         ))}
       </div>

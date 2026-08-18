@@ -7,8 +7,9 @@ import { mentoratSchema, MentoratInput } from "@/lib/validation/mentorat.schema"
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
-import { Button } from "@/components/ui/Button";
+import { Button, LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
 import { REGIONS_CI } from "@/lib/regions";
 import { TYPE_SPECTACLE_LABELS } from "@/lib/labels";
 
@@ -48,17 +49,33 @@ export function MentoratForm() {
 
   if (result) {
     return (
-      <Card className="border-secondary/30 bg-secondary-light">
-        <span className="text-2xl">🤝</span>
-        <h2 className="mt-2 text-lg font-bold text-secondary-dark">
-          Votre demande a bien été enregistrée
-        </h2>
-        <p className="mt-1.5 text-sm text-foreground">
-          Référence de votre demande : <strong>{result.numero}</strong>. Un
-          professionnel licencié pourra vous contacter prochainement pour
-          organiser votre parrainage (5 spectacles supervisés).
-        </p>
-      </Card>
+      <div>
+        <Card className="border-secondary/30 bg-secondary-light">
+          <span className="text-2xl">🤝</span>
+          <h2 className="mt-2 text-lg font-bold text-secondary-dark">
+            Votre demande a bien été enregistrée
+          </h2>
+          <p className="mt-1.5 max-w-prose text-sm text-foreground">
+            Référence de votre demande : <strong>{result.numero}</strong>. Un
+            professionnel licencié pourra vous contacter prochainement pour
+            organiser votre parrainage (5 spectacles supervisés).
+          </p>
+        </Card>
+
+        <NextStepsNotice
+          leadIn="Votre demande de mentorat est enregistrée."
+          body="Un professionnel licencié vous contactera pour organiser votre parrainage. e-Culture CI facilite la mise en relation ; il ne s'agit pas d'une démarche officielle auprès du ministère."
+        />
+
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+          <LinkButton href="/" variant="outline">
+            Retour à l&apos;accueil
+          </LinkButton>
+          <LinkButton href="/ressources" variant="ghost">
+            Voir les ressources
+          </LinkButton>
+        </div>
+      </div>
     );
   }
 

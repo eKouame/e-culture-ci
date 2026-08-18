@@ -42,17 +42,19 @@ export default async function RecapitulatifPage({
         <PrintButton />
       </div>
 
-      <div className="rounded-xl border-2 border-border bg-surface p-6 sm:p-8">
-        <div className="flex items-start justify-between border-b border-border pb-4">
+      <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-              Récapitulatif de déclaration
+              Récapitulatif de préparation
             </p>
-            <p className="text-lg font-bold text-foreground">e-Culture CI</p>
+            <p className="mt-1 text-sm font-medium text-primary-dark">
+              Document non officiel, préparé avec e-Culture CI
+            </p>
           </div>
           <div className="text-right">
             <p className="text-xs text-muted">Référence</p>
-            <p className="text-lg font-extrabold text-primary">
+            <p className="text-base font-bold text-foreground">
               {declaration.numero}
             </p>
           </div>
@@ -92,11 +94,10 @@ export default async function RecapitulatifPage({
           </Field>
         </dl>
 
-        <p className="mt-6 border-t border-border pt-4 text-xs text-muted">
-          Ce récapitulatif atteste qu&apos;une déclaration a été enregistrée
-          auprès de e-Culture CI, conformément à l&apos;article 10 du décret
-          de 2021 relatif au spectacle vivant. Conservez-le pour vos
-          démarches auprès des autorités locales (mairie, préfecture).
+        <p className="mt-6 max-w-prose border-t border-border pt-4 text-xs text-muted">
+          Ce récapitulatif vous aide à préparer votre démarche ; il ne
+          remplace aucun document officiel. Conservez-le pour vos échanges
+          avec les autorités locales (mairie, préfecture).
         </p>
       </div>
 

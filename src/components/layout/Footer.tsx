@@ -19,21 +19,21 @@ export function Footer() {
           Les résultats du module &laquo;&nbsp;Suis-je concerné&nbsp;?&nbsp;&raquo;
           sont indicatifs et ne constituent pas une décision administrative.
           Pour toute question, consultez le{" "}
-          <a href="/ressources/faq" className="underline hover:text-primary">
+          <a href="/ressources/faq" className="underline hover:text-primary-dark">
             centre de ressources
           </a>
           .
         </p>
         <nav className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-border pt-4 text-xs">
-          <a href="/mentions-legales" className="underline hover:text-primary">
+          <a href="/mentions-legales" className="underline hover:text-primary-dark">
             Mentions légales
           </a>
-          <a href="/confidentialite" className="underline hover:text-primary">
+          <a href="/confidentialite" className="underline hover:text-primary-dark">
             Politique de confidentialité
           </a>
           <a
             href="/conditions-utilisation"
-            className="underline hover:text-primary"
+            className="underline hover:text-primary-dark"
           >
             Conditions d&apos;utilisation
           </a>
