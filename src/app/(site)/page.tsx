@@ -1,5 +1,6 @@
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Stamp } from "@/components/ui/Stamp";
 
 const MODULES = [
   {
@@ -41,10 +42,10 @@ export default function Home() {
     <div>
       <section className="border-b border-border bg-gradient-to-b from-primary-light to-transparent">
         <div className="mx-auto max-w-5xl px-4 py-12 text-center sm:px-6 sm:py-16">
-          <div className="mx-auto mb-4 flex flex-col items-center gap-1">
-            <p className="inline-block rounded-full bg-secondary-light px-4 py-1.5 text-sm font-semibold text-secondary-dark">
-              70 à 90 % des organisateurs occasionnels sont exemptés de
-              licence
+          <div className="mx-auto mb-5 flex flex-col items-center gap-2">
+            <Stamp className="!px-5 !py-2.5 text-base">70–90 %</Stamp>
+            <p className="max-w-xs text-sm font-semibold text-secondary-dark">
+              des organisateurs occasionnels sont exemptés de licence
             </p>
             <p className="text-xs text-muted">
               Selon le directeur juridique du ministère de la Culture, le 2
@@ -79,7 +80,7 @@ export default function Home() {
       <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {MODULES.map((m) => (
-            <Card key={m.href} className="flex flex-col">
+            <Card key={m.href} dogEar className="ledger-lines flex flex-col">
               <span className="text-3xl">{m.emoji}</span>
               <h2 className="mt-3 text-lg font-bold text-foreground">
                 {m.title}
