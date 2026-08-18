@@ -52,19 +52,16 @@ export default function Home() {
               août 2026.
             </p>
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+          <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             e-Culture CI
           </h1>
-          <p className="mx-auto mt-2 max-w-prose text-lg text-muted">
-            L&apos;assistant qui vous aide à comprendre la réglementation du
-            spectacle vivant et à préparer vos démarches, partout en Côte
-            d&apos;Ivoire.
+          <p className="mx-auto mt-3 max-w-prose text-xl font-medium text-foreground">
+            Comprenez la réglementation du spectacle vivant et préparez vos
+            démarches, partout en Côte d&apos;Ivoire.
           </p>
-          <p className="mx-auto mt-4 max-w-prose text-sm text-muted">
-            Vous organisez un concert, une cérémonie, un festival ou un
-            spectacle ? Découvrez en 1 minute si une licence vous concerne,
-            préparez votre déclaration, et sachez où effectuer vos démarches
-            officielles.
+          <p className="mx-auto mt-2.5 max-w-prose text-sm text-muted">
+            Concert, cérémonie, festival, spectacle : découvrez en 1 minute
+            si une licence vous concerne.
           </p>
           <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <LinkButton href="/suis-je-concerne" size="lg">
