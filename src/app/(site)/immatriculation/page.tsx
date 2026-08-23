@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { ImmatriculationForm } from "./ImmatriculationForm";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Préparer mon immatriculation | e-Culture CI",
-};
+  description:
+    "Rassemblez et organisez les pièces nécessaires pour vous enregistrer, seul ou en association, auprès du ministère de la Culture.",
+  path: "/immatriculation",
+});
 
 export default function ImmatriculationPage() {
   return (

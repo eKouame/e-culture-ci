@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "FAQ | e-Culture CI",
-};
+  description:
+    "Toutes les réponses sur la licence, la déclaration et l'immatriculation pour le spectacle vivant en Côte d'Ivoire.",
+  path: "/ressources/faq",
+});
 
 const FAQ = [
   {

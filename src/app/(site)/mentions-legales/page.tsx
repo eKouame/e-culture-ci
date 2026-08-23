@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Mentions légales | e-Culture CI",
-};
+  description:
+    "Mentions légales de e-Culture CI, éditeur indépendant du secteur du spectacle vivant en Côte d'Ivoire.",
+  path: "/mentions-legales",
+});
 
 export default function MentionsLegalesPage() {
   return (

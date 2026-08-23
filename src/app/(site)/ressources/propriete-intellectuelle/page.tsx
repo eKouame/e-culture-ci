@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Card } from "@/components/ui/Card";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Propriété intellectuelle | e-Culture CI",
   description:
     "Comprendre les bases de la propriété intellectuelle dans le spectacle vivant en Côte d'Ivoire : droit d'auteur, droits voisins, marques — et vers qui se tourner (BURIDA, OIPI).",
-};
+  path: "/ressources/propriete-intellectuelle",
+});
 
 const LIENS = {
   burida: "https://www.buridaci.com",
