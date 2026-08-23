@@ -6,10 +6,14 @@ import { LinkButton } from "@/components/ui/Button";
 import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
 import { Stamp } from "@/components/ui/Stamp";
 import { TYPE_ACTIVITE_LABELS } from "@/lib/labels";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Confirmation d'immatriculation | e-Culture CI",
-};
+  description:
+    "Dossier de préparation e-Culture CI — document non officiel, prêt à être transmis aux autorités locales.",
+  path: "/immatriculation/confirmation",
+});
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", {
   day: "2-digit",

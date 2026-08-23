@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Politique de confidentialité | e-Culture CI",
-};
+  description:
+    "Politique de confidentialité de e-Culture CI : quelles données sont collectées, pourquoi, et comment les faire supprimer.",
+  path: "/confidentialite",
+});
 
 export default function ConfidentialitePage() {
   return (

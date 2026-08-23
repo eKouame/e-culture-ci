@@ -6,10 +6,14 @@ import { LinkButton } from "@/components/ui/Button";
 import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
 import { Stamp } from "@/components/ui/Stamp";
 import { TYPE_SPECTACLE_LABELS } from "@/lib/labels";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Récapitulatif de déclaration | e-Culture CI",
-};
+  description:
+    "Récapitulatif de préparation e-Culture CI — document non officiel, à conserver pour vos démarches auprès des autorités locales.",
+  path: "/declaration/recapitulatif",
+});
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", {
   day: "2-digit",

@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Centre de Ressources | e-Culture CI",
-};
+  description:
+    "La réglementation du spectacle vivant expliquée simplement, et le centre de ressources pour aller plus loin.",
+  path: "/ressources",
+});
 
 export default function RessourcesPage() {
   return (

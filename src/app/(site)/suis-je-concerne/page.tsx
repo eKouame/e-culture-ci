@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { Questionnaire } from "./Questionnaire";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Suis-je concerné ? | e-Culture CI",
-};
+  description:
+    "Répondez à 4 questions simples pour savoir en 1 minute si vous devez une licence, ou si vous en êtes exempté(e).",
+  path: "/suis-je-concerne",
+});
 
 export default function SuisJeConcernePage() {
   return (

@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { DeclarationForm } from "./DeclarationForm";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Préparer ma déclaration | e-Culture CI",
-};
+  description:
+    "Renseignez les informations de votre événement en 3 minutes et obtenez un récapitulatif clair à conserver pour votre déclaration officielle.",
+  path: "/declaration",
+});
 
 export default async function DeclarationPage({
   searchParams,

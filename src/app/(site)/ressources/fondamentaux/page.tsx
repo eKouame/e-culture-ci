@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Les fondamentaux du spectacle vivant | e-Culture CI",
   description:
     "Comprendre le spectacle vivant en Côte d'Ivoire : la chaîne de production, les métiers du secteur (producteur, tourneur, diffuseur, technique...) et comment ils s'articulent.",
-};
+  path: "/ressources/fondamentaux",
+});
 
 const SOMMAIRE = [
   { id: "c-est-quoi", label: "C'est quoi, le spectacle vivant ?" },
