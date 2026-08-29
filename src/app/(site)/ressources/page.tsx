@@ -88,6 +88,23 @@ export default function RessourcesPage() {
             Découvrir
           </LinkButton>
         </Card>
+        <Card className="sm:col-span-2">
+          <h2 className="text-base font-bold text-foreground">
+            De la note d&apos;intention au budget
+          </h2>
+          <p className="mt-1.5 text-sm text-muted">
+            Un projet en tête ? Estimez vos dépenses, réunissez vos
+            recettes et calculez votre point d&apos;équilibre avant de vous
+            lancer.
+          </p>
+          <LinkButton
+            href="/ressources/budget"
+            variant="outline"
+            className="mt-4"
+          >
+            Découvrir
+          </LinkButton>
+        </Card>
         <Card>
           <h2 className="text-base font-bold text-foreground">
             Questions fréquentes
