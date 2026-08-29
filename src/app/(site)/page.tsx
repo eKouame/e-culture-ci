@@ -60,7 +60,7 @@ export default function Home() {
 
           <p className="mx-auto mt-10 max-w-sm text-xs leading-relaxed text-muted">
             <span className="font-semibold text-secondary-dark">70–90 %</span>{" "}
-            des organisateurs occasionnels sont exemptés de licence — selon le
+            des organisateurs occasionnels sont exemptés de licence. Selon le
             directeur juridique du ministère de la Culture, le 2 août 2026.
           </p>
         </div>
