@@ -30,8 +30,8 @@ export function Footer() {
               />
             </div>
             <p className="mt-3 text-sm text-muted">
-              Comprendre et préparer vos démarches du spectacle vivant,
-              partout en Côte d&apos;Ivoire.
+              Service culturel de proximité pour comprendre et préparer vos
+              démarches du spectacle vivant, partout en Côte d&apos;Ivoire.
             </p>
             <a
               href="https://www.facebook.com/profile.php?id=61592840133412&sk=about"
