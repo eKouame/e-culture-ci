@@ -20,9 +20,14 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
           <div className="col-span-2 sm:col-span-1">
             <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-                eC
-              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/avatar.svg"
+                alt=""
+                className="h-8 w-8 rounded-lg"
+                width={32}
+                height={32}
+              />
               <span className="font-bold text-foreground">e-Culture CI</span>
             </div>
             <p className="mt-3 text-sm text-muted">
