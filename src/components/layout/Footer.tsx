@@ -28,7 +28,14 @@ export function Footer() {
                 width={32}
                 height={32}
               />
-              <span className="font-bold text-foreground">e-Culture CI</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo-wordmark-color.svg"
+                alt="e-Culture CI"
+                className="h-5 w-auto"
+                width={144}
+                height={50}
+              />
             </div>
             <p className="mt-3 text-sm text-muted">
               Comprendre et préparer vos démarches du spectacle vivant,

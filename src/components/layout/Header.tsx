@@ -27,9 +27,14 @@ export function Header() {
             width={36}
             height={36}
           />
-          <span className="text-base font-bold text-foreground">
-            e-Culture CI
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-wordmark-color.svg"
+            alt="e-Culture CI"
+            className="h-6 w-auto"
+            width={173}
+            height={60}
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
