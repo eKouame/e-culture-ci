@@ -19,12 +19,22 @@ export function Header() {
     <header className="no-print sticky top-0 z-40 border-b border-border bg-surface/95 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-            eC
-          </span>
-          <span className="text-base font-bold text-foreground">
-            e-Culture CI
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/avatar.svg"
+            alt=""
+            className="h-9 w-9 rounded-lg"
+            width={36}
+            height={36}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-wordmark-color.svg"
+            alt="e-Culture CI"
+            className="h-6 w-auto"
+            width={173}
+            height={60}
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

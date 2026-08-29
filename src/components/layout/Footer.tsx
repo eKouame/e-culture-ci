@@ -20,10 +20,22 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
           <div className="col-span-2 sm:col-span-1">
             <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-                eC
-              </span>
-              <span className="font-bold text-foreground">e-Culture CI</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/avatar.svg"
+                alt=""
+                className="h-8 w-8 rounded-lg"
+                width={32}
+                height={32}
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo-wordmark-color.svg"
+                alt="e-Culture CI"
+                className="h-5 w-auto"
+                width={144}
+                height={50}
+              />
             </div>
             <p className="mt-3 text-sm text-muted">
               Comprendre et préparer vos démarches du spectacle vivant,
