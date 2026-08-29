@@ -1,7 +1,29 @@
 import type { Metadata } from "next";
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { ParcoursCarousel } from "@/components/ressources/ParcoursCarousel";
 import { pageMetadata } from "@/lib/metadata";
+
+const PARCOURS = [
+  {
+    href: "/ressources/fondamentaux",
+    titre: "Les fondamentaux du spectacle vivant",
+    description:
+      "Comprenez le vocabulaire, la chaîne de production et les métiers du secteur.",
+  },
+  {
+    href: "/ressources/note-intention",
+    titre: "De l'idée à la note d'intention",
+    description:
+      "Un framework en 5 questions pour clarifier votre projet.",
+  },
+  {
+    href: "/ressources/budget",
+    titre: "De la note d'intention au budget",
+    description:
+      "Estimez vos dépenses, réunissez vos recettes, et vérifiez que ça tient debout.",
+  },
+];
 
 export const metadata: Metadata = pageMetadata({
   title: "Centre de Ressources | e-Culture CI",
@@ -70,58 +92,42 @@ export default function RessourcesPage() {
         </LinkButton>
       </Card>
 
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card className="sm:col-span-2">
-          <h2 className="text-base font-bold text-foreground">
-            Les fondamentaux du spectacle vivant
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Nouveau dans le secteur ? Comprenez le vocabulaire, la chaîne de
-            production et les métiers (producteur, tourneur, diffuseur,
-            technique...) avant d&apos;aller plus loin.
-          </p>
-          <LinkButton
-            href="/ressources/fondamentaux"
-            variant="outline"
-            className="mt-4"
-          >
-            Découvrir
-          </LinkButton>
-        </Card>
-        <Card className="sm:col-span-2">
-          <h2 className="text-base font-bold text-foreground">
-            De l&apos;idée à la note d&apos;intention
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Une idée en tête ? Un framework en 5 questions pour la
-            transformer en note d&apos;intention claire, prête à montrer à
-            un partenaire.
-          </p>
-          <LinkButton
-            href="/ressources/note-intention"
-            variant="outline"
-            className="mt-4"
-          >
-            Découvrir
-          </LinkButton>
-        </Card>
-        <Card className="sm:col-span-2">
-          <h2 className="text-base font-bold text-foreground">
-            De la note d&apos;intention au budget
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Un projet en tête ? Estimez vos dépenses, réunissez vos
-            recettes et calculez votre point d&apos;équilibre avant de vous
-            lancer.
-          </p>
-          <LinkButton
-            href="/ressources/budget"
-            variant="outline"
-            className="mt-4"
-          >
-            Découvrir
-          </LinkButton>
-        </Card>
+      <div className="mt-10">
+        <h2 className="text-xl font-bold text-foreground">
+          Lancer votre projet, étape par étape
+        </h2>
+        <p className="mt-1.5 max-w-prose text-sm text-muted">
+          Trois ressources pensées pour se suivre : comprendre le secteur,
+          poser votre intention, puis chiffrer votre budget.
+        </p>
+        <div className="mt-4">
+          <ParcoursCarousel>
+            {PARCOURS.map((p, i) => (
+              <Card
+                key={p.href}
+                className="w-[82%] shrink-0 snap-center sm:w-auto"
+              >
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-sm font-bold text-primary-dark">
+                  {i + 1}
+                </span>
+                <h3 className="mt-3 text-base font-bold text-foreground">
+                  {p.titre}
+                </h3>
+                <p className="mt-1.5 text-sm text-muted">{p.description}</p>
+                <LinkButton
+                  href={p.href}
+                  variant="outline"
+                  className="mt-4"
+                >
+                  Découvrir
+                </LinkButton>
+              </Card>
+            ))}
+          </ParcoursCarousel>
+        </div>
+      </div>
+
+      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <h2 className="text-base font-bold text-foreground">
             Questions fréquentes
