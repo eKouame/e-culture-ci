@@ -21,19 +21,11 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/avatar.svg"
-            alt=""
-            className="h-9 w-9 rounded-lg"
-            width={36}
-            height={36}
-          />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo-wordmark-color.svg"
+            src="/logo-wordmark-dark.svg"
             alt="e-Culture CI"
-            className="h-6 w-auto"
-            width={173}
-            height={60}
+            className="h-12 w-auto"
+            width={346}
+            height={120}
           />
         </Link>
 
