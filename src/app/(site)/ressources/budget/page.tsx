@@ -142,11 +142,18 @@ export default function BudgetPage() {
           Pourquoi passer au budget
         </h2>
         <p className="mt-3 max-w-prose text-muted">
-          Dans la ressource précédente, vous avez transformé une idée en
-          note d&apos;intention : ce que vous voulez faire, pourquoi, pour
-          qui, comment, et pourquoi ici et maintenant. Vous imaginiez «
-          Cour commune » — une soirée de contes et de musique dans une cour
-          de quartier, un dimanche en fin d&apos;après-midi.
+          Dans{" "}
+          <Link
+            href="/ressources/note-intention"
+            className="font-medium text-primary-dark underline"
+          >
+            la ressource précédente
+          </Link>
+          , vous avez transformé une idée en note d&apos;intention : ce que
+          vous voulez faire, pourquoi, pour qui, comment, et pourquoi ici et
+          maintenant. Vous imaginiez « Cour commune » — une soirée de
+          contes et de musique dans une cour de quartier, un dimanche en
+          fin d&apos;après-midi.
         </p>
         <p className="mt-3 max-w-prose text-muted">
           La note d&apos;intention dit ce que vous voulez faire. Le budget

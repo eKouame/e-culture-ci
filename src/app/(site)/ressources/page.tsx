@@ -90,6 +90,23 @@ export default function RessourcesPage() {
         </Card>
         <Card className="sm:col-span-2">
           <h2 className="text-base font-bold text-foreground">
+            De l&apos;idée à la note d&apos;intention
+          </h2>
+          <p className="mt-1.5 text-sm text-muted">
+            Une idée en tête ? Un framework en 5 questions pour la
+            transformer en note d&apos;intention claire, prête à montrer à
+            un partenaire.
+          </p>
+          <LinkButton
+            href="/ressources/note-intention"
+            variant="outline"
+            className="mt-4"
+          >
+            Découvrir
+          </LinkButton>
+        </Card>
+        <Card className="sm:col-span-2">
+          <h2 className="text-base font-bold text-foreground">
             De la note d&apos;intention au budget
           </h2>
           <p className="mt-1.5 text-sm text-muted">
