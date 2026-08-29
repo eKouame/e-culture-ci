@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { INDEPENDENCE_DISCLAIMER } from "@/lib/disclaimer";
 import { Button } from "@/components/ui/Button";
 
 const STORAGE_KEY = "ecci-independence-seen";
+
+const MODAL_DISCLAIMER =
+  "e-Culture CI est un service d'information indépendant, sans lien officiel avec le ministère de la Culture. Il vous aide à comprendre la réglementation et à préparer vos démarches. Il ne les remplace pas et ne délivre aucun document officiel.";
 
 export function IndependenceModal() {
   const [open, setOpen] = useState(false);
@@ -63,7 +65,7 @@ export function IndependenceModal() {
           À savoir avant de commencer
         </p>
         <p className="mt-3 text-sm leading-relaxed text-foreground">
-          {INDEPENDENCE_DISCLAIMER}
+          {MODAL_DISCLAIMER}
         </p>
         <Button size="lg" className="mt-5 w-full" onClick={dismiss}>
           J&apos;ai compris
