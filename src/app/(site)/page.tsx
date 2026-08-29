@@ -32,7 +32,7 @@ const MODULES = [
     emoji: "📚",
     title: "Centre de Ressources",
     description:
-      "Comprenez la réglementation en langage simple et trouvez un mentor pour démarrer votre activité.",
+      "6 guides pratiques pour comprendre le secteur, lancer votre projet, chiffrer votre budget et connaître vos droits.",
     cta: "Consulter les ressources",
   },
 ];
