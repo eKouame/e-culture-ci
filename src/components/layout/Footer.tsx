@@ -30,11 +30,11 @@ export function Footer() {
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo-wordmark-color.svg"
+                src="/logo-wordmark-dark.svg"
                 alt="e-Culture CI"
-                className="h-5 w-auto"
-                width={144}
-                height={50}
+                className="h-10 w-auto"
+                width={288}
+                height={100}
               />
             </div>
             <p className="mt-3 text-sm text-muted">

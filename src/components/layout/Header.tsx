@@ -29,11 +29,11 @@ export function Header() {
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logo-wordmark-color.svg"
+            src="/logo-wordmark-dark.svg"
             alt="e-Culture CI"
-            className="h-6 w-auto"
-            width={173}
-            height={60}
+            className="h-12 w-auto"
+            width={346}
+            height={120}
           />
         </Link>
 
