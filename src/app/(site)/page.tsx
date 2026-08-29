@@ -1,6 +1,5 @@
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Stamp } from "@/components/ui/Stamp";
 
 const MODULES = [
   {
@@ -42,24 +41,11 @@ export default function Home() {
     <div>
       <section className="border-b border-border bg-gradient-to-b from-primary-light to-transparent">
         <div className="mx-auto max-w-5xl px-4 py-12 text-center sm:px-6 sm:py-16">
-          <div className="mx-auto mb-5 flex flex-col items-center gap-2">
-            <Stamp className="!px-5 !py-2.5 text-base">70–90 %</Stamp>
-            <p className="max-w-xs text-sm font-semibold text-secondary-dark">
-              des organisateurs occasionnels sont exemptés de licence
-            </p>
-            <p className="text-xs text-muted">
-              Selon le directeur juridique du ministère de la Culture, le 2
-              août 2026.
-            </p>
-          </div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            e-Culture CI
-          </h1>
-          <p className="mx-auto mt-3 max-w-prose text-xl font-medium text-foreground">
+          <h1 className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             Comprenez la réglementation du spectacle vivant et préparez vos
             démarches, partout en Côte d&apos;Ivoire.
-          </p>
-          <p className="mx-auto mt-2.5 max-w-prose text-sm text-muted">
+          </h1>
+          <p className="mx-auto mt-3 max-w-prose text-sm text-muted">
             Concert, cérémonie, festival, spectacle : découvrez en 1 minute
             si une licence vous concerne.
           </p>
@@ -71,6 +57,12 @@ export default function Home() {
               Comprendre la réglementation
             </LinkButton>
           </div>
+
+          <p className="mx-auto mt-10 max-w-sm text-xs leading-relaxed text-muted">
+            <span className="font-semibold text-secondary-dark">70–90 %</span>{" "}
+            des organisateurs occasionnels sont exemptés de licence — selon le
+            directeur juridique du ministère de la Culture, le 2 août 2026.
+          </p>
         </div>
       </section>
 
