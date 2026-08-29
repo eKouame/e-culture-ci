@@ -21,7 +21,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logo-wordmark-color.svg"
+            src="/logo-wordmark-color-outline.svg"
             alt="e-Culture CI"
             className="h-12 w-auto"
             width={346}
