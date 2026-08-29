@@ -158,11 +158,17 @@ model DemandeCommune {
   @@index([commune])
 }
 
+enum FlashInfoType {
+  INTERNE
+  EXTERNE
+}
+
 model FlashInfo {
-  id     String  @id @default(cuid())
+  id     String        @id @default(cuid())
   titre  String
   lien   String?
-  actif  Boolean @default(false)
+  type   FlashInfoType @default(INTERNE)
+  actif  Boolean       @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

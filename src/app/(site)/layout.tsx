@@ -9,16 +9,17 @@ export default async function SiteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const flashInfo = await prisma.flashInfo.findFirst({
+  const flashInfos = await prisma.flashInfo.findMany({
     where: { actif: true },
     orderBy: { updatedAt: "desc" },
-    select: { id: true, titre: true, lien: true },
+    take: 4,
+    select: { id: true, titre: true, lien: true, type: true },
   });
 
   return (
     <>
       <IndependenceModal />
-      <FlashInfoBanner flashInfo={flashInfo} />
+      <FlashInfoBanner items={flashInfos} />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

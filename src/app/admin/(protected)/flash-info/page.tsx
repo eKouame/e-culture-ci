@@ -19,16 +19,25 @@ export default async function AdminFlashInfoPage() {
   const items = await prisma.flashInfo.findMany({
     orderBy: { createdAt: "desc" },
   });
+  const actifsCount = items.filter((i) => i.actif).length;
 
   return (
     <div>
       <h1 className="text-2xl font-extrabold text-foreground">Flash info</h1>
       <p className="mt-1.5 max-w-prose text-sm text-muted">
-        Un seul flash info actif à la fois : il s&apos;affiche en bandeau
-        discret et fermable en haut de toutes les pages citoyennes.
-        L&apos;activation d&apos;un nouvel item désactive automatiquement le
-        précédent.
+        Jusqu&apos;à 3 ou 4 flash infos actifs en même temps : ils défilent
+        automatiquement dans la bannière, en haut des pages citoyennes.
+        Marquez chacun <strong>Interne</strong> (ressources, nouveautés du
+        site) ou <strong>Externe</strong> (actualité du secteur) pour que
+        les visiteurs distinguent les deux d&apos;un coup d&apos;œil.
       </p>
+      {actifsCount > 4 && (
+        <p className="mt-2 max-w-prose text-sm font-medium text-primary-dark">
+          {actifsCount} flash infos sont actifs en ce moment — au-delà de 4,
+          la bannière devient longue à parcourir. Pensez à en désactiver
+          quelques-uns.
+        </p>
+      )}
 
       <Card className="mt-6">
         <h2 className="text-base font-bold text-foreground">
@@ -39,8 +48,32 @@ export default async function AdminFlashInfoPage() {
           <Input
             name="lien"
             label="Lien (facultatif)"
-            placeholder="/ressources/faq ou https://..."
+            placeholder="/ressources/budget ou https://..."
           />
+          <fieldset className="flex flex-col gap-2">
+            <legend className="text-sm font-medium text-foreground">Type</legend>
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2 text-sm text-foreground">
+                <input
+                  type="radio"
+                  name="type"
+                  value="INTERNE"
+                  defaultChecked
+                  className="h-4 w-4 accent-orange-600"
+                />
+                Interne (site)
+              </label>
+              <label className="flex items-center gap-2 text-sm text-foreground">
+                <input
+                  type="radio"
+                  name="type"
+                  value="EXTERNE"
+                  className="h-4 w-4 accent-orange-600"
+                />
+                Externe (secteur)
+              </label>
+            </div>
+          </fieldset>
           <Button type="submit" className="self-start">
             Créer
           </Button>
@@ -54,9 +87,12 @@ export default async function AdminFlashInfoPage() {
         {items.map((item) => (
           <Card key={item.id} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge tone={item.actif ? "success" : "neutral"}>
                   {item.actif ? "Actif" : "Inactif"}
+                </Badge>
+                <Badge tone={item.type === "EXTERNE" ? "warning" : "neutral"}>
+                  {item.type === "EXTERNE" ? "Externe" : "Interne"}
                 </Badge>
                 <p className="font-medium text-foreground">{item.titre}</p>
               </div>

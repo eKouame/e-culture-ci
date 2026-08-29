@@ -14,10 +14,12 @@ export async function creerFlashInfo(formData: FormData) {
 
   const titre = String(formData.get("titre") ?? "").trim();
   const lienRaw = String(formData.get("lien") ?? "").trim();
+  const typeRaw = String(formData.get("type") ?? "INTERNE");
+  const type = typeRaw === "EXTERNE" ? "EXTERNE" : "INTERNE";
   if (!titre) return;
 
   await prisma.flashInfo.create({
-    data: { titre, lien: lienRaw || null },
+    data: { titre, lien: lienRaw || null, type },
   });
 
   revalidateFlashInfo();
@@ -29,16 +31,10 @@ export async function activerFlashInfo(formData: FormData) {
   const id = String(formData.get("id") ?? "");
   if (!id) return;
 
-  await prisma.$transaction([
-    prisma.flashInfo.updateMany({
-      where: { actif: true },
-      data: { actif: false },
-    }),
-    prisma.flashInfo.update({
-      where: { id },
-      data: { actif: true },
-    }),
-  ]);
+  await prisma.flashInfo.update({
+    where: { id },
+    data: { actif: true },
+  });
 
   revalidateFlashInfo();
 }
