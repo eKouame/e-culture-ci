@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { OgBrandBadge } from "@/lib/og-badge";
 
 export const alt =
   "e-Culture CI — De l'idée à la note d'intention : un framework en 5 questions pour lancer votre projet de spectacle.";
@@ -21,27 +22,7 @@ export default function OpengraphImage() {
         }}
       >
         {/* Marque */}
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 68,
-              height: 68,
-              borderRadius: 16,
-              background: "#e8590c",
-              color: "#ffffff",
-              fontSize: 30,
-              fontWeight: 700,
-            }}
-          >
-            eC
-          </div>
-          <div style={{ fontSize: 32, fontWeight: 700, color: "#1c1917" }}>
-            e-Culture CI
-          </div>
-        </div>
+        <OgBrandBadge />
 
         {/* Accroche */}
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
