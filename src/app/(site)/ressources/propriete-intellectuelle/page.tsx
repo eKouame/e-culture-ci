@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata: Metadata = pageMetadata({
   title: "Propriété intellectuelle | e-Culture CI",
   description:
-    "Comprendre les bases de la propriété intellectuelle dans le spectacle vivant en Côte d'Ivoire : droit d'auteur, droits voisins, marques — et vers qui se tourner (BURIDA, OIPI).",
+    "Comprendre les bases de la propriété intellectuelle dans le spectacle vivant en Côte d'Ivoire : droit d'auteur, droits voisins, droit à l'image, marques — et vers qui se tourner (BURIDA, OIPI).",
   path: "/ressources/propriete-intellectuelle",
 });
 
@@ -16,7 +16,13 @@ const LIENS = {
   wipolex: "https://www.wipo.int/wipolex/fr/",
 };
 
-const FAQ = [
+type FaqItem = {
+  q: string;
+  a: string;
+  lien?: { label: string; href: string };
+};
+
+const FAQ: FaqItem[] = [
   {
     q: "Je monte un concert avec des reprises. Dois-je payer des droits ?",
     a: "Oui. Dès que vous diffusez en public des œuvres que vous n'avez pas créées — reprises, playback, musique en fond de soirée — vous devez demander une autorisation et payer une redevance. En Côte d'Ivoire, le BURIDA est le seul habilité à la gérer. À anticiper avant l'événement, pas après.",
@@ -38,9 +44,17 @@ const FAQ = [
     lien: { label: "Pour en savoir plus → BURIDA", href: LIENS.burida },
   },
   {
+    q: "Je filme mon spectacle pour les réseaux. Ai-je le droit ?",
+    a: "Deux autorisations différentes se superposent, et on n'en voit souvent qu'une. La première concerne les œuvres jouées : reprises, musique, texte — c'est le droit d'auteur, géré par le BURIDA. La seconde concerne les personnes filmées : chaque artiste sur scène, et parfois un spectateur reconnaissable au premier plan, a un droit sur son image. Ce droit-là ne dépend ni du BURIDA ni de l'OIPI : c'est un accord à demander aux personnes concernées. Le bon réflexe : prévoir cet accord en amont, idéalement dans le contrat que vous signez avec vos artistes, plutôt que de courir après une signature une fois la vidéo en ligne.",
+  },
+  {
     q: "J'ai écrit une chanson ou créé une chorégraphie. Suis-je protégé(e) ?",
     a: "Votre création vous appartient dès que vous l'avez réalisée. Pour la faire gérer et percevoir des redevances quand elle est exploitée, vous pouvez adhérer au BURIDA. C'est aussi ce qui vous permet de réagir si quelqu'un l'utilise sans votre accord.",
     lien: { label: "Pour adhérer → BURIDA", href: LIENS.burida },
+  },
+  {
+    q: "J'ai signé un contrat pour mon œuvre. Est-ce que je l'ai « vendue » pour toujours ?",
+    a: "Presque jamais. Signer un contrat ne veut pas dire tout abandonner : le plus souvent, vous autorisez une exploitation précise — un usage, une durée, un territoire — sans cesser d'être l'auteur. Il faut donc lire ce que le contrat transfère exactement : quels usages, pour combien de temps, où. Et une chose ne se cède pas : votre droit moral. Même après avoir cédé l'exploitation de votre œuvre, vous gardez le droit d'être crédité comme auteur et de vous opposer à ce qu'on la dénature. Avant de signer, vérifiez ce que vous donnez et ce que vous gardez — dans le doute, faites relire.",
   },
   {
     q: "Combien ça coûte, et combien de temps ça prend ?",
@@ -165,14 +179,16 @@ export default function ProprieteIntellectuellePage() {
               </span>
             </summary>
             <p className="mt-2.5 max-w-prose text-sm text-muted">{item.a}</p>
-            <a
-              href={item.lien.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-block text-sm font-medium text-primary-dark underline"
-            >
-              {item.lien.label}
-            </a>
+            {item.lien && (
+              <a
+                href={item.lien.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-block text-sm font-medium text-primary-dark underline"
+              >
+                {item.lien.label}
+              </a>
+            )}
           </details>
         ))}
       </div>
