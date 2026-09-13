@@ -21,13 +21,23 @@ const SOMMAIRE = [
   { id: "pieges", label: "Trois pièges à éviter" },
 ];
 
-const DEPENSES = [
+type DepenseItem = {
+  titre: string;
+  legende: string | null;
+  detail: string;
+  liens?: { label: string; href: string }[];
+};
+
+const DEPENSES: DepenseItem[] = [
   {
     titre: "L'artistique",
     legende: "Le cœur de votre projet.",
     detail:
       "Cachets des artistes, des conteurs, des musiciens. Droits d'auteur si vous diffusez des œuvres qui ne sont pas les vôtres (en Côte d'Ivoire, la gestion du droit d'auteur relève du BURIDA). Répétitions.",
-    lien: { label: "Voir la ressource propriété intellectuelle →", href: "/ressources/propriete-intellectuelle" },
+    liens: [
+      { label: "Voir la ressource propriété intellectuelle →", href: "/ressources/propriete-intellectuelle" },
+      { label: "Déclarer et payer vos artistes →", href: "/ressources/payer-artistes" },
+    ],
   },
   {
     titre: "Le technique",
@@ -51,7 +61,7 @@ const DEPENSES = [
     legende: "Tout ce qui fait tourner l'événement.",
     detail:
       "Frais de licence et démarches, s'ils vous concernent. Assurance. Transport, hébergement et restauration des équipes (les « défraiements »). Sécurité et accueil du public. Petit matériel.",
-    lien: { label: "Suis-je concerné par la licence ? →", href: "/suis-je-concerne" },
+    liens: [{ label: "Suis-je concerné par la licence ? →", href: "/suis-je-concerne" }],
   },
   {
     titre: "Une ligne à ne jamais oublier : les imprévus",
@@ -223,13 +233,18 @@ export default function BudgetPage() {
                 )}
               </p>
               <p className="mt-1.5 text-sm text-muted">{d.detail}</p>
-              {d.lien && (
-                <Link
-                  href={d.lien.href}
-                  className="mt-2 inline-block text-sm font-medium text-primary-dark underline"
-                >
-                  {d.lien.label}
-                </Link>
+              {d.liens && (
+                <div className="mt-2 flex flex-col gap-1">
+                  {d.liens.map((lien) => (
+                    <Link
+                      key={lien.href}
+                      href={lien.href}
+                      className="inline-block text-sm font-medium text-primary-dark underline"
+                    >
+                      {lien.label}
+                    </Link>
+                  ))}
+                </div>
               )}
             </div>
           ))}

@@ -153,7 +153,7 @@ export default function RessourcesPage() {
             Trouver un mentor
           </LinkButton>
         </Card>
-        <Card className="sm:col-span-2">
+        <Card>
           <h2 className="text-base font-bold text-foreground">
             Propriété intellectuelle
           </h2>
@@ -164,6 +164,22 @@ export default function RessourcesPage() {
           </p>
           <LinkButton
             href="/ressources/propriete-intellectuelle"
+            variant="outline"
+            className="mt-4"
+          >
+            Découvrir
+          </LinkButton>
+        </Card>
+        <Card>
+          <h2 className="text-base font-bold text-foreground">
+            Déclarer et payer vos artistes
+          </h2>
+          <p className="mt-1.5 text-sm text-muted">
+            Retenue à la source, cotisations CNPS, statut de l&apos;artiste :
+            comment rémunérer un artiste sans vous mettre en faute.
+          </p>
+          <LinkButton
+            href="/ressources/payer-artistes"
             variant="outline"
             className="mt-4"
           >
