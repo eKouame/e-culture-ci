@@ -15,21 +15,21 @@ const LEGAL_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="no-print mt-12 border-t border-border bg-surface">
+    <footer className="no-print mt-12 bg-deep text-on-deep">
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
         <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
           <div className="col-span-2 sm:col-span-1">
             <div className="flex items-center gap-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo-wordmark-dark.svg"
+                src="/logo-wordmark.svg"
                 alt="e-Culture CI"
                 className="h-10 w-auto"
                 width={288}
                 height={100}
               />
             </div>
-            <p className="mt-3 text-sm text-muted">
+            <p className="mt-3 text-sm text-on-deep-muted">
               Service culturel de proximité pour comprendre et préparer vos
               démarches du spectacle vivant, partout en Côte d&apos;Ivoire.
             </p>
@@ -37,7 +37,7 @@ export function Footer() {
               href="https://www.facebook.com/profile.php?id=61592840133412&sk=about"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary-dark hover:text-foreground"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-on-deep hover:text-on-deep"
             >
               <svg
                 width="18"
@@ -54,7 +54,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-muted">
+            <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
               Modules
             </p>
             <ul className="mt-3 flex flex-col gap-2 text-sm">
@@ -62,7 +62,7 @@ export function Footer() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-foreground hover:text-primary-dark"
+                    className="text-on-deep hover:text-accent-on-deep"
                   >
                     {l.label}
                   </a>
@@ -72,7 +72,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-muted">
+            <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
               Légal
             </p>
             <ul className="mt-3 flex flex-col gap-2 text-sm">
@@ -80,7 +80,7 @@ export function Footer() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-foreground hover:text-primary-dark"
+                    className="text-on-deep hover:text-accent-on-deep"
                   >
                     {l.label}
                   </a>
@@ -90,20 +90,20 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-muted">
+            <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
               Aide
             </p>
             <ul className="mt-3 flex flex-col gap-2 text-sm">
               <li>
                 <a
                   href="/ressources/faq"
-                  className="text-foreground hover:text-primary-dark"
+                  className="text-on-deep hover:text-accent-on-deep"
                 >
                   Centre de ressources
                 </a>
               </li>
             </ul>
-            <p className="mt-4 text-xs text-muted">
+            <p className="mt-4 text-xs text-on-deep-muted">
               Les résultats du module &laquo;&nbsp;Suis-je
               concerné&nbsp;?&nbsp;&raquo; sont indicatifs et ne constituent
               pas une décision administrative.
@@ -111,8 +111,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 rounded-lg border border-border bg-black/[0.02] px-4 py-3 text-xs text-muted">
-          ℹ️ {INDEPENDENCE_DISCLAIMER}
+        <div className="mt-8 border-t border-white/15 pt-6 text-xs text-on-deep-muted">
+          {INDEPENDENCE_DISCLAIMER}
         </div>
       </div>
     </footer>
