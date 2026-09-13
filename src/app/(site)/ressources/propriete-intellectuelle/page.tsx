@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -160,6 +161,20 @@ export default function ProprieteIntellectuellePage() {
           </li>
         </ul>
       </Card>
+
+      <p className="mt-6 max-w-prose text-sm text-muted">
+        Attention à ne pas confondre : les droits d&apos;auteur (BURIDA) et
+        la fiscalité de votre événement sont deux sujets distincts. Pour
+        savoir comment déclarer et payer vos artistes (retenue à la source,
+        CNPS), consultez la ressource{" "}
+        <Link
+          href="/ressources/payer-artistes"
+          className="font-medium text-primary-dark underline"
+        >
+          Déclarer et payer vos artistes
+        </Link>
+        .
+      </p>
 
       <h2 className="mt-10 text-xl font-bold text-foreground">
         Questions fréquentes

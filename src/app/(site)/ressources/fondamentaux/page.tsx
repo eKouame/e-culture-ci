@@ -19,7 +19,7 @@ const SOMMAIRE = [
 const CHAINE: {
   etape: string;
   texte: string;
-  lien?: { label: string; href: string };
+  liens?: { label: string; href: string }[];
 }[] = [
   {
     etape: "La création",
@@ -29,7 +29,10 @@ const CHAINE: {
     etape: "La production",
     texte:
       "on monte le projet : budget, artistes, technique, logistique. C'est ici qu'on prend le risque.",
-    lien: { label: "Comment construire ce budget →", href: "/ressources/budget" },
+    liens: [
+      { label: "Comment construire ce budget →", href: "/ressources/budget" },
+      { label: "Déclarer et payer vos artistes →", href: "/ressources/payer-artistes" },
+    ],
   },
   {
     etape: "La diffusion",
@@ -228,17 +231,17 @@ export default function FondamentauxPage() {
               <p className="pt-0.5 text-sm text-muted">
                 <strong className="text-foreground">{c.etape}</strong> —{" "}
                 {c.texte}
-                {c.lien && (
-                  <>
+                {c.liens?.map((lien) => (
+                  <span key={lien.href}>
                     {" "}
                     <Link
-                      href={c.lien.href}
+                      href={lien.href}
                       className="font-medium text-primary-dark underline"
                     >
-                      {c.lien.label}
+                      {lien.label}
                     </Link>
-                  </>
-                )}
+                  </span>
+                ))}
               </p>
             </li>
           ))}
