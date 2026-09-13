@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "outline" | "ghost";
+type Variant = "primary" | "secondary" | "outline" | "ghost" | "outlineOnDeep";
 type Size = "md" | "lg";
 
 const base =
@@ -12,6 +12,7 @@ const variants: Record<Variant, string> = {
   secondary: "bg-secondary text-white hover:bg-secondary-dark",
   outline: "border-2 border-primary text-primary-dark hover:bg-primary-light",
   ghost: "text-foreground hover:bg-black/5",
+  outlineOnDeep: "border-2 border-white/30 text-on-deep hover:bg-white/10",
 };
 
 const sizes: Record<Size, string> = {

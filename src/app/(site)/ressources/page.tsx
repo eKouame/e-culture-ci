@@ -1,192 +1,186 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { LinkButton } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { ParcoursCarousel } from "@/components/ressources/ParcoursCarousel";
 import { pageMetadata } from "@/lib/metadata";
 
-const PARCOURS = [
-  {
-    href: "/ressources/fondamentaux",
-    titre: "Les fondamentaux du spectacle vivant",
-    description:
-      "Comprenez le vocabulaire, la chaîne de production et les métiers du secteur.",
-  },
-  {
-    href: "/ressources/note-intention",
-    titre: "De l'idée à la note d'intention",
-    description:
-      "Un framework en 5 questions pour clarifier votre projet.",
-  },
-  {
-    href: "/ressources/budget",
-    titre: "De la note d'intention au budget",
-    description:
-      "Estimez vos dépenses, réunissez vos recettes, et vérifiez que ça tient debout.",
-  },
-];
-
 export const metadata: Metadata = pageMetadata({
-  title: "Centre de Ressources | e-Culture CI",
+  title: "Centre de ressources — e-Culture CI",
   description:
-    "La réglementation du spectacle vivant expliquée simplement, et le centre de ressources pour aller plus loin.",
+    "Comprendre le spectacle vivant, monter votre projet et être en règle : le parcours complet des ressources d'e-Culture CI, gratuit et indépendant.",
   path: "/ressources",
 });
 
+const ETAPES = [
+  {
+    numero: 1,
+    titre: "Comprendre le secteur",
+    description: "De quoi on parle exactement, et qui fait quoi dans le spectacle vivant.",
+    ressources: [
+      {
+        href: "/ressources/fondamentaux",
+        label: "Ressource 01",
+        titre: "Les fondamentaux du spectacle vivant",
+        description: "Le vocabulaire, les acteurs et les règles de base, sans jargon.",
+      },
+    ],
+  },
+  {
+    numero: 2,
+    titre: "Monter votre projet",
+    description: "Passer de l'idée à un projet écrit, chiffré, présentable à un partenaire.",
+    ressources: [
+      {
+        href: "/ressources/note-intention",
+        label: "Ressource 02",
+        titre: "De l'idée à la note d'intention",
+        description: "Mettre votre projet par écrit, clairement, en une page.",
+      },
+      {
+        href: "/ressources/budget",
+        label: "Ressource 03",
+        titre: "Bâtir votre budget",
+        description: "Les postes de dépense à ne pas oublier et comment les chiffrer.",
+      },
+    ],
+  },
+  {
+    numero: 3,
+    titre: "Être en règle",
+    description: "Les obligations à connaître avant, pendant et après votre événement.",
+    ressources: [
+      {
+        href: "/ressources/propriete-intellectuelle",
+        label: "Ressource 04",
+        titre: "Propriété intellectuelle",
+        description: "Droits d'auteur et droits voisins : qui doit quoi, et quand.",
+      },
+      {
+        href: "/ressources/payer-artistes",
+        label: "Ressource 05",
+        titre: "Déclarer et payer vos artistes",
+        description: "Retenue à la source, cotisations et paiements : la marche à suivre.",
+      },
+      {
+        href: "/ressources/faq",
+        label: "Questions fréquentes",
+        titre: "FAQ",
+        description: "Toutes les réponses sur les licences, la déclaration et l'immatriculation.",
+      },
+      {
+        href: "/ressources/mentorat",
+        label: "Mentorat",
+        titre: "Mentorat & parrainage (Licence B)",
+        description: "Vous débutez ? Trouvez un professionnel licencié pour vous superviser.",
+      },
+    ],
+  },
+];
+
 export default function RessourcesPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary-dark">Centre de ressources</p>
-      <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        La réglementation expliquée simplement
-      </h1>
-      <p className="mt-3 max-w-prose text-muted">
-        Le décret de 2021 sur le spectacle vivant a été mal communiqué au
-        départ, ce qui a créé beaucoup de confusion et de peur sur le
-        terrain. Voici, en langage simple, ce que dit réellement le texte.
-      </p>
-
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card>
-          <span className="text-2xl">✅</span>
-          <h2 className="mt-2 text-base font-bold text-secondary-dark">
-            Si vous organisez occasionnellement
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Mariages, funérailles, fêtes de quartier, tournois, festivals
-            communautaires, sensibilisation... vous êtes très probablement
-            exempté(e) de licence et de caution bancaire. Une simple
-            déclaration gratuite suffit.
+    <div>
+      <section className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+          <nav className="mb-3 flex items-center gap-2 text-sm text-muted">
+            <Link href="/">Accueil</Link>
+            <span>›</span>
+            <span className="font-semibold text-foreground">Ressources</span>
+          </nav>
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            Centre de ressources
+          </h1>
+          <p className="mt-3 max-w-prose text-muted">
+            Cinq ressources qui se lisent dans l&apos;ordre ou séparément :
+            comprendre le secteur, monter votre projet, être en règle.
+            Gratuit, sans compte.
           </p>
-        </Card>
-        <Card>
-          <span className="text-2xl">🎫</span>
-          <h2 className="mt-2 text-base font-bold text-primary-dark">
-            Si le spectacle est votre métier
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Si l&apos;organisation de spectacles est votre activité
-            professionnelle principale, vous devez obtenir une licence
-            (5 000 000 FCFA) et constituer une caution bancaire de garantie
-            (5 000 000 FCFA) — au total 10 000 000 FCFA, versés à un
-            établissement bancaire, pas directement au ministère.
-          </p>
-        </Card>
-      </div>
-
-      <Card className="mt-6 border-danger/30 bg-red-50">
-        <h2 className="text-base font-bold text-danger">
-          ⚠️ La rumeur à ne pas croire
-        </h2>
-        <p className="mt-1.5 max-w-prose text-sm text-foreground">
-          Une rumeur affirme que <strong>tout le monde</strong>{" "}
-          devrait payer jusqu&apos;à{" "}
-          <strong>10 000 000 FCFA</strong>{" "}
-          pour organiser un événement. C&apos;est faux pour la grande
-          majorité des acteurs : ce montant ne concerne que les
-          professionnels dont le spectacle est l&apos;activité principale —
-          pas les organisateurs occasionnels à but socio-éducatif, sportif,
-          philanthropique ou de promotion de la culture locale.
-        </p>
-        <LinkButton href="/suis-je-concerne" size="md" className="mt-4">
-          Vérifier ma situation
-        </LinkButton>
-      </Card>
-
-      <div className="mt-10">
-        <h2 className="text-xl font-bold text-foreground">
-          Lancer votre projet, étape par étape
-        </h2>
-        <p className="mt-1.5 max-w-prose text-sm text-muted">
-          Trois ressources pensées pour se suivre : comprendre le secteur,
-          poser votre intention, puis chiffrer votre budget.
-        </p>
-        <div className="mt-4">
-          <ParcoursCarousel>
-            {PARCOURS.map((p, i) => (
-              <Card
-                key={p.href}
-                className="w-[82%] shrink-0 snap-center sm:w-auto"
-              >
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-sm font-bold text-primary-dark">
-                  {i + 1}
-                </span>
-                <h3 className="mt-3 text-base font-bold text-foreground">
-                  {p.titre}
-                </h3>
-                <p className="mt-1.5 text-sm text-muted">{p.description}</p>
-                <LinkButton
-                  href={p.href}
-                  variant="outline"
-                  className="mt-4"
-                >
-                  Découvrir
-                </LinkButton>
-              </Card>
-            ))}
-          </ParcoursCarousel>
         </div>
-      </div>
+      </section>
 
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card>
-          <h2 className="text-base font-bold text-foreground">
-            Questions fréquentes
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Toutes les réponses détaillées sur les licences, la déclaration
-            et l&apos;immatriculation.
-          </p>
-          <LinkButton href="/ressources/faq" variant="outline" className="mt-4">
-            Voir la FAQ
+      <section className="mx-auto max-w-5xl px-4 pt-6 sm:px-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border border-l-4 border-l-primary bg-surface p-5">
+          <div className="max-w-prose">
+            <h2 className="text-lg font-extrabold text-foreground">
+              Vous débutez ?
+            </h2>
+            <p className="mt-1 text-sm text-muted">
+              Commencez par les fondamentaux : le vocabulaire, les acteurs et
+              les règles de base, expliqués sans jargon.
+            </p>
+          </div>
+          <LinkButton href="/ressources/fondamentaux">
+            Commencer ici
           </LinkButton>
-        </Card>
-        <Card>
-          <h2 className="text-base font-bold text-foreground">
-            Mentorat &amp; parrainage (Licence B)
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Vous débutez ? La réglementation exige de réaliser 5 spectacles
-            sous la supervision d&apos;un professionnel licencié avant
-            d&apos;opérer en autonomie. Trouvez un mentor.
-          </p>
-          <LinkButton href="/ressources/mentorat" variant="outline" className="mt-4">
-            Trouver un mentor
-          </LinkButton>
-        </Card>
-        <Card>
-          <h2 className="text-base font-bold text-foreground">
-            Propriété intellectuelle
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Musique, texte, chorégraphie, nom de festival, logo... Comprenez
-            ce qui est protégé, par qui, et vers qui vous tourner (BURIDA,
-            OIPI).
-          </p>
-          <LinkButton
-            href="/ressources/propriete-intellectuelle"
-            variant="outline"
-            className="mt-4"
-          >
-            Découvrir
-          </LinkButton>
-        </Card>
-        <Card>
-          <h2 className="text-base font-bold text-foreground">
-            Déclarer et payer vos artistes
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Retenue à la source, cotisations CNPS, statut de l&apos;artiste :
-            comment rémunérer un artiste sans vous mettre en faute.
-          </p>
-          <LinkButton
-            href="/ressources/payer-artistes"
-            variant="outline"
-            className="mt-4"
-          >
-            Découvrir
-          </LinkButton>
-        </Card>
-      </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+        {ETAPES.map((etape, i) => (
+          <div key={etape.numero} className="flex gap-4">
+            <div className="flex flex-none flex-col items-center self-stretch">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary text-base font-extrabold text-white">
+                {etape.numero}
+              </span>
+              {i < ETAPES.length - 1 && (
+                <span className="my-2 w-0.5 flex-1 bg-border" />
+              )}
+            </div>
+            <div className="min-w-0 flex-1 pb-9">
+              <h2 className="text-xl font-extrabold text-foreground sm:text-2xl">
+                {etape.titre}
+              </h2>
+              <p className="mt-1.5 max-w-prose text-muted">
+                {etape.description}
+              </p>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {etape.ressources.map((r) => (
+                  <Link
+                    key={r.href}
+                    href={r.href}
+                    className="flex flex-col gap-1.5 rounded-xl border border-border border-l-4 border-l-primary bg-surface p-5 transition-colors hover:bg-black/[0.02]"
+                  >
+                    <span className="text-xs font-bold uppercase tracking-wide text-primary-dark">
+                      {r.label}
+                    </span>
+                    <span className="text-lg font-bold text-foreground">
+                      {r.titre}
+                    </span>
+                    <span className="text-sm text-muted">{r.description}</span>
+                    <span className="mt-1.5 text-sm font-bold text-secondary">
+                      Lire la ressource →
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <section className="bg-deep text-on-deep">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-12 sm:px-6 md:grid-cols-2 md:items-center">
+          <div>
+            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+              Prêt à passer à l&apos;action ?
+            </h2>
+            <p className="mt-3 max-w-md text-on-deep-muted">
+              Les ressources expliquent ; les modules vous font avancer,
+              étape par étape, à votre rythme.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2.5">
+            <LinkButton href="/suis-je-concerne" size="lg">
+              Suis-je concerné ?
+            </LinkButton>
+            <LinkButton href="/declaration" variant="outlineOnDeep" size="lg">
+              Ma déclaration
+            </LinkButton>
+            <LinkButton href="/immatriculation" variant="outlineOnDeep" size="lg">
+              Mon immatriculation
+            </LinkButton>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

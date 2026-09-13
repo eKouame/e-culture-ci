@@ -1,18 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf9;
-  --foreground: #1c1917;
-  --color-primary: #e8590c;
-  --color-primary-dark: #c2410c;
-  --color-primary-light: #fff1e6;
-  --color-secondary: #0f8a3f;
-  --color-secondary-dark: #0a6b30;
-  --color-secondary-light: #e9f9ee;
-  --color-muted: #6b6b6b;
-  --color-border: #e5e2df;
-  --color-surface: #ffffff;
+  --background: #f7f3ec;
+  --foreground: #18231e;
+  --color-primary: #f47b20;
+  --color-primary-dark: #c2560f;
+  --color-primary-light: #fdefe2;
+  --color-secondary: #0f5a4b;
+  --color-secondary-dark: #08281f;
+  --color-secondary-light: #e8f2ee;
+  --color-muted: #5b6b63;
+  --color-border: #e3dccf;
+  --color-surface: #fffdf9;
   --color-danger: #c1121f;
+  --color-deep: #0b3a31;
+  --color-deep-strong: #08281f;
+  --color-on-deep: #e6efe9;
+  --color-on-deep-muted: #c7d8ce;
+  --color-accent-on-deep: #ffa84f;
 }
 
 @theme inline {
@@ -28,6 +33,16 @@
   --color-border: var(--color-border);
   --color-surface: var(--color-surface);
   --color-danger: var(--color-danger);
+  --color-deep: var(--color-deep);
+  --color-deep-strong: var(--color-deep-strong);
+  --color-on-deep: var(--color-on-deep);
+  --color-on-deep-muted: var(--color-on-deep-muted);
+  --color-accent-on-deep: var(--color-accent-on-deep);
+}
+
+*:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 body {
