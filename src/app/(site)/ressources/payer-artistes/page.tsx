@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Card } from "@/components/ui/Card";
 import { pageMetadata } from "@/lib/metadata";
+import { RessourceArticle } from "@/components/ressources/RessourceArticle";
+import { Callout } from "@/components/ressources/Callout";
+import { NextCards } from "@/components/ressources/NextCards";
 
 export const metadata: Metadata = pageMetadata({
   title:
@@ -182,47 +183,31 @@ const LEXIQUE = [
 
 export default function PayerArtistesPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary-dark">
-        Centre de ressources
-      </p>
-      <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        Déclarer et payer vos artistes correctement
-      </h1>
-
-      <div className="mt-4 rounded-lg border border-border bg-black/[0.02] px-4 py-3 text-sm italic text-muted">
+    <RessourceArticle
+      kicker="Ressource · Être en règle"
+      titre="Déclarer et payer vos artistes correctement"
+      dek="Comment déclarer et payer un artiste sans se tromper : retenue à la source (7,5 % ou 20 %), cotisations CNPS, statut de l'artiste."
+      meta={{ lecture: "8 min", niveau: "Intermédiaire" }}
+      sommaire={SOMMAIRE}
+    >
+      <div className="mb-8 rounded-lg border border-border bg-black/[0.02] px-4 py-3 text-sm italic text-muted">
         Ressource e-Culture CI — outil d&apos;orientation. Cette page vous
         aide à comprendre le cadre. Elle donne une information générale, pas
         un conseil juridique ou fiscal personnalisé, et ne remplace ni la
         CNPS, ni la DGI, ni le Ministère.
       </div>
 
-      <nav className="mt-8 rounded-xl border border-border bg-black/[0.02] p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-muted">
-          Sommaire
-        </p>
-        <ul className="mt-2 grid grid-cols-1 gap-1.5 text-sm sm:grid-cols-2">
-          {SOMMAIRE.map((s) => (
-            <li key={s.id}>
-              <a href={`#${s.id}`} className="text-primary-dark underline">
-                {s.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <section id="pourquoi" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="pourquoi" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Pourquoi cette question est mal comprise
         </h2>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Payer un artiste, ce n&apos;est pas seulement lui remettre son
           cachet. Derrière ce geste se cachent deux questions qu&apos;on
           mélange presque toujours — et c&apos;est ce mélange qui crée les
           erreurs.
         </p>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           La première :{" "}
           <strong className="text-foreground">vous, organisateur</strong>,
           comment engagez-vous et payez-vous quelqu&apos;un sans vous mettre
@@ -231,12 +216,12 @@ export default function PayerArtistesPage() {
           comment est-il protégé socialement — maladie, retraite — quand il
           vit de son art ?
         </p>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Ce sont deux sujets différents, deux démarches différentes, deux
           interlocuteurs différents. On commence par les séparer. Tout
           devient clair ensuite.
         </p>
-        <p className="mt-3 max-w-prose text-sm text-muted">
+        <p className="mb-4 max-w-prose text-sm text-muted">
           Un mot vous échappe en cours de lecture ? Le{" "}
           <a href="#lexique" className="font-medium text-primary-dark underline">
             lexique
@@ -245,11 +230,11 @@ export default function PayerArtistesPage() {
         </p>
       </section>
 
-      <section id="casquette-1" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="casquette-1" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Casquette 1 — L&apos;artiste est un travailleur indépendant
         </h2>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           C&apos;est le point de départ, et il est officiel. En Côte
           d&apos;Ivoire, l&apos;artiste qui travaille à son compte est un{" "}
           <strong className="text-foreground">
@@ -263,14 +248,14 @@ export default function PayerArtistesPage() {
           , géré par la <strong className="text-foreground">CNPS</strong>{" "}
           (Caisse Nationale de Prévoyance Sociale).
         </p>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Ce n&apos;est pas optionnel. Le RSTI est la couverture sociale
           obligatoire de tous les travailleurs indépendants, et les
           artistes — précisément la catégorie « Artistes et professionnels
           des médias et de l&apos;événementiel » — y sont expressément
           inscrits.
         </p>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           <strong className="text-foreground">
             Ce que le RSTI protège
           </strong>
@@ -278,10 +263,10 @@ export default function PayerArtistesPage() {
           vieillesse.
         </p>
 
-        <p className="mt-5 font-bold text-foreground">
+        <p className="mb-2 mt-5 font-bold text-foreground">
           Comment l&apos;artiste s&apos;y met (les 3 étapes CNPS)
         </p>
-        <ol className="mt-2 flex flex-col gap-2 text-sm text-muted">
+        <ol className="mb-4 flex flex-col gap-2 text-sm text-muted">
           <li>
             <strong className="text-foreground">1. Se déclarer à la CNPS</strong>
             , en précisant son métier et le montant de cotisation qu&apos;il
@@ -302,10 +287,10 @@ export default function PayerArtistesPage() {
           </li>
         </ol>
 
-        <p className="mt-5 font-bold text-foreground">
+        <p className="mb-2 font-bold text-foreground">
           Ce que ça lui rapporte concrètement, toujours selon la CNPS
         </p>
-        <ul className="mt-2 flex flex-col gap-2 text-sm text-muted">
+        <ul className="mb-4 flex flex-col gap-2 text-sm text-muted">
           <li>
             Des <strong className="text-foreground">indemnités journalières</strong>{" "}
             en cas de maladie ou d&apos;accident entraînant un arrêt de plus
@@ -326,12 +311,12 @@ export default function PayerArtistesPage() {
           </li>
         </ul>
 
-        <p className="mt-4 max-w-prose text-sm text-muted">
+        <p className="mb-4 max-w-prose text-sm text-muted">
           Pour se déclarer ou se renseigner, l&apos;artiste s&apos;adresse
           directement à la CNPS (20 25 21 00 / info@cnps.ci).
         </p>
 
-        <p className="mt-4 max-w-prose text-xs italic text-muted">
+        <p className="max-w-prose border-t border-border pt-4 text-xs italic text-muted">
           Source : document officiel de la CNPS sur le RSTI. À noter : la
           couverture maladie passe aussi par la Couverture Maladie
           Universelle (CMU), obligatoire pour tout résident et gérée par la
@@ -339,17 +324,17 @@ export default function PayerArtistesPage() {
         </p>
       </section>
 
-      <section id="casquette-2" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="casquette-2" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Casquette 2 — Vous engagez un artiste : ce que ça change pour vous
         </h2>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Une fois qu&apos;on sait que l&apos;artiste porte lui-même sa
           protection sociale, votre situation d&apos;organisateur devient
           plus lisible — mais elle vient avec une responsabilité qu&apos;on
           sous-estime souvent.
         </p>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           <strong className="text-foreground">
             Le cas le plus courant : vous engagez un artiste indépendant
             pour une prestation.
@@ -359,7 +344,7 @@ export default function PayerArtistesPage() {
           assure sa propre couverture sociale — vous n&apos;avez pas à gérer
           sa retraite ou sa maladie à sa place. Deux réflexes s&apos;imposent :
         </p>
-        <ul className="mt-2 flex flex-col gap-2 text-sm text-muted">
+        <ul className="mb-4 flex flex-col gap-2 text-sm text-muted">
           <li>
             <strong className="text-foreground">Mettez tout par écrit.</strong>{" "}
             Un contrat clair — qui fait quoi, pour combien, quand, avec
@@ -375,10 +360,10 @@ export default function PayerArtistesPage() {
           </li>
         </ul>
 
-        <h3 className="mt-6 text-lg font-bold text-foreground">
+        <h3 className="mb-2 mt-6 text-xl font-bold text-secondary-dark">
           La fiscalité du cachet : vous êtes collecteur d&apos;impôt
         </h3>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Voici ce que peu d&apos;organisateurs savent : quand vous payez un
           artiste, la loi fait de vous le{" "}
           <strong className="text-foreground">
@@ -390,7 +375,7 @@ export default function PayerArtistesPage() {
           l&apos;étranger ?
         </p>
 
-        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
           {TAUX.map((t) => (
             <div
               key={t.label}
@@ -407,7 +392,7 @@ export default function PayerArtistesPage() {
           ))}
         </div>
 
-        <p className="mt-5 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           <strong className="text-foreground">
             Artiste résident — une retenue de 7,5 %.
           </strong>{" "}
@@ -421,28 +406,27 @@ export default function PayerArtistesPage() {
           attestation qu&apos;il pourra déduire de son propre impôt.
         </p>
 
-        <Card className="mt-4 border-secondary/30 bg-secondary-light">
-          <p className="text-xs font-bold uppercase tracking-wide text-secondary-dark">
-            À jour 2026
-          </p>
-          <p className="mt-1.5 max-w-prose text-sm text-foreground">
+        <div className="mb-4">
+          <Callout variant="jour" label="À jour 2026">
             La loi de finances 2026 a élargi cette retenue de 7,5 % à de
             nouveaux intervenants non-salariés du secteur du spectacle et
             des productions audiovisuelles, pour que plus personne
             n&apos;y échappe.
-          </p>
-        </Card>
+          </Callout>
+        </div>
 
-        <p className="mt-4 max-w-prose text-sm text-muted">
-          <em>Exception :</em> si votre artiste est établi au{" "}
-          <strong className="text-foreground">régime réel d&apos;imposition</strong>{" "}
-          et vous remet une <strong className="text-foreground">facture normalisée</strong>{" "}
-          avec son numéro de compte contribuable, vous ne retenez rien. Il
-          encaisse l&apos;intégralité de son cachet et règle ses impôts
-          lui-même.
-        </p>
+        <div className="mb-4">
+          <Callout variant="exception">
+            Si votre artiste est établi au{" "}
+            <strong className="text-foreground">régime réel d&apos;imposition</strong>{" "}
+            et vous remet une <strong className="text-foreground">facture normalisée</strong>{" "}
+            avec son numéro de compte contribuable, vous ne retenez rien. Il
+            encaisse l&apos;intégralité de son cachet et règle ses impôts
+            lui-même.
+          </Callout>
+        </div>
 
-        <p className="mt-4 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           <strong className="text-foreground">
             Artiste non-résident — une retenue de 20 %.
           </strong>{" "}
@@ -456,7 +440,7 @@ export default function PayerArtistesPage() {
           c&apos;est à vous de prélever et de reverser.
         </p>
 
-        <p className="mt-4 max-w-prose text-sm text-muted">
+        <p className="mb-4 max-w-prose text-sm text-muted">
           <strong className="text-foreground">
             En cas d&apos;oubli, la faute est pour vous.
           </strong>{" "}
@@ -467,10 +451,10 @@ export default function PayerArtistesPage() {
           chiffrage.
         </p>
 
-        <h3 className="mt-6 text-lg font-bold text-foreground">
+        <h3 className="mb-2 mt-6 text-xl font-bold text-secondary-dark">
           À ne pas confondre avec le reste
         </h3>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Cette retenue fiscale est <strong className="text-foreground">distincte</strong>{" "}
           de deux autres obligations qui touchent aussi vos événements : les
           redevances au BURIDA (droit d&apos;auteur, quand vous diffusez
@@ -478,7 +462,7 @@ export default function PayerArtistesPage() {
           de l&apos;artiste, qui le concerne lui). Trois guichets, trois
           logiques — ne les mélangez pas.
         </p>
-        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
           {TROIS_GUICHETS.map((g) => (
             <div
               key={g.nom}
@@ -490,10 +474,10 @@ export default function PayerArtistesPage() {
           ))}
         </div>
 
-        <h3 className="mt-6 text-lg font-bold text-foreground">
+        <h3 className="mb-2 mt-6 text-xl font-bold text-secondary-dark">
           Et si vous engagez l&apos;artiste comme salarié ?
         </h3>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="max-w-prose text-muted">
           Un autre cas existe : vous l&apos;engagez sous{" "}
           <strong className="text-foreground">contrat de travail</strong>.
           Là, ce sont les obligations classiques d&apos;un employeur qui
@@ -505,11 +489,11 @@ export default function PayerArtistesPage() {
         </p>
       </section>
 
-      <section id="statut" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="statut" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Le statut de l&apos;artiste : le cadre qui structure tout ça
         </h2>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="max-w-prose text-muted">
           Tout ceci s&apos;inscrit dans un mouvement plus large. La Côte
           d&apos;Ivoire s&apos;est dotée d&apos;un{" "}
           <strong className="text-foreground">statut de l&apos;artiste</strong>{" "}
@@ -523,11 +507,11 @@ export default function PayerArtistesPage() {
         </p>
       </section>
 
-      <section id="reflexes" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="reflexes" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Les bons réflexes, en résumé
         </h2>
-        <ul className="mt-3 flex flex-col gap-2 text-sm text-muted">
+        <ul className="flex flex-col gap-2 text-sm text-muted">
           <li>
             <strong className="text-foreground">
               Ne confondez pas les deux casquettes.
@@ -556,71 +540,42 @@ export default function PayerArtistesPage() {
         </ul>
       </section>
 
-      <section id="lexique" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="lexique" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Lexique — les mots techniques expliqués simplement
         </h2>
-        <div className="mt-5 flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
           {LEXIQUE.map((bloc) => (
             <div key={bloc.titre}>
               <h3 className="text-sm font-bold uppercase tracking-wide text-muted">
                 {bloc.titre}
               </h3>
-              <dl className="mt-3 flex flex-col gap-3">
+              <div className="mt-3 flex flex-col gap-2.5">
                 {bloc.termes.map((t) => (
-                  <div key={t.mot}>
-                    <dt className="font-bold text-foreground">{t.mot}</dt>
-                    <dd className="mt-0.5 text-sm text-muted">{t.def}</dd>
-                  </div>
+                  <details
+                    key={t.mot}
+                    className="group rounded-xl border border-border bg-surface p-4 open:shadow-sm"
+                  >
+                    <summary className="cursor-pointer list-none text-sm font-semibold text-foreground marker:content-none">
+                      <span className="flex items-center justify-between gap-3">
+                        {t.mot}
+                        <span className="shrink-0 text-primary-dark transition-transform group-open:rotate-45">
+                          +
+                        </span>
+                      </span>
+                    </summary>
+                    <p className="mt-2.5 max-w-prose text-sm text-muted">
+                      {t.def}
+                    </p>
+                  </details>
                 ))}
-              </dl>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="et-apres" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">Et après ?</h2>
-        <ul className="mt-3 flex flex-col gap-2 text-sm">
-          <li>
-            <Link
-              href="/ressources/budget"
-              className="font-medium text-primary-dark underline"
-            >
-              Bâtir votre budget
-            </Link>{" "}
-            <span className="text-muted">
-              — pour intégrer les cachets, la retenue et les charges dès le
-              départ.
-            </span>
-          </li>
-          <li>
-            <Link
-              href="/ressources/propriete-intellectuelle"
-              className="font-medium text-primary-dark underline"
-            >
-              Propriété intellectuelle
-            </Link>{" "}
-            <span className="text-muted">
-              — parce que payer un artiste et respecter les droits
-              d&apos;auteur sont deux obligations parallèles.
-            </span>
-          </li>
-          <li>
-            <Link
-              href="/ressources/fondamentaux"
-              className="font-medium text-primary-dark underline"
-            >
-              Les fondamentaux du spectacle vivant
-            </Link>{" "}
-            <span className="text-muted">
-              — pour situer chaque métier dans la chaîne.
-            </span>
-          </li>
-        </ul>
-      </section>
-
-      <p className="mt-10 max-w-prose text-xs italic text-muted">
+      <p className="mt-8 max-w-prose border-t border-border pt-4 text-xs italic text-muted">
         Les taux et régimes cités proviennent de sources officielles (CNPS,
         Code Général des Impôts, loi de finances 2026) à leur date de
         publication. La fiscalité évoluant chaque année avec les annexes
@@ -631,6 +586,30 @@ export default function PayerArtistesPage() {
       <p className="mt-3 text-xs text-muted">
         Informations vérifiées en septembre 2026.
       </p>
-    </div>
+
+      <div id="et-apres" className="scroll-mt-24">
+        <NextCards
+          liens={[
+            {
+              href: "/ressources/budget",
+              label: "Bâtir votre budget",
+              description:
+                "Intégrer les cachets, la retenue et les charges dès le départ.",
+            },
+            {
+              href: "/ressources/propriete-intellectuelle",
+              label: "Propriété intellectuelle",
+              description:
+                "Payer un artiste et respecter les droits d'auteur sont deux obligations parallèles.",
+            },
+            {
+              href: "/ressources/fondamentaux",
+              label: "Les fondamentaux du spectacle vivant",
+              description: "Pour situer chaque métier dans la chaîne.",
+            },
+          ]}
+        />
+      </div>
+    </RessourceArticle>
   );
 }
