@@ -84,7 +84,7 @@ export default function Home() {
           src="/hero-e-mark.svg"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 top-1/2 hidden h-[150%] w-auto -translate-y-1/2 opacity-10 md:block"
+          className="pointer-events-none absolute right-0 top-1/2 hidden h-[85%] w-auto -translate-y-1/2 translate-x-1/4 opacity-10 md:block"
         />
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
           <div className="max-w-2xl">
