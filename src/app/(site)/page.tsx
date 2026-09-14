@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LinkButton } from "@/components/ui/Button";
 import { DotPill } from "@/components/ui/DotPill";
-import { ChevronBand } from "@/components/layout/ChevronBand";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -202,8 +201,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <ChevronBand />
 
       <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
         <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
