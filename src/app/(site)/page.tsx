@@ -78,9 +78,16 @@ const FACEBOOK_URL =
 export default function Home() {
   return (
     <div>
-      <section className="bg-deep-strong text-on-deep">
-        <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 md:grid-cols-[1.3fr_1fr]">
-          <div>
+      <section className="relative overflow-hidden bg-deep-strong text-on-deep">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/hero-e-mark.svg"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 top-1/2 hidden h-[150%] w-auto -translate-y-1/2 opacity-10 md:block"
+        />
+        <div className="relative mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
+          <div className="max-w-2xl">
             <p className="text-xs font-bold uppercase tracking-widest text-accent-on-deep">
               Service culturel de proximité
             </p>
@@ -106,20 +113,10 @@ export default function Home() {
               le ministère de la Culture.
             </p>
           </div>
-          <div className="hidden justify-center md:flex">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/avatar.svg"
-              alt=""
-              className="h-40 w-40 rounded-3xl shadow-lg"
-              width={160}
-              height={160}
-            />
-          </div>
         </div>
       </section>
 
-      <section className="border-b border-border bg-surface">
+      <section className="bg-surface">
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 px-4 py-6 sm:grid-cols-3 sm:px-6">
           <div className="flex items-start gap-3">
             <span
