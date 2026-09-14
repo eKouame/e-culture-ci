@@ -94,6 +94,12 @@ export default function RessourcesPage() {
             comprendre le secteur, monter votre projet, être en règle.
             Gratuit, sans compte.
           </p>
+          <Link
+            href="/ressources/toutes"
+            className="mt-2 inline-block text-sm font-medium text-primary-dark underline"
+          >
+            Voir toutes les ressources en un coup d&apos;œil →
+          </Link>
         </div>
       </section>
 
