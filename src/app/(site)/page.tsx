@@ -120,25 +120,89 @@ export default function Home() {
       </section>
 
       <section className="border-b border-border bg-surface">
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-3 px-4 py-5 sm:grid-cols-3 sm:px-6">
-          <p className="text-sm">
-            <strong className="font-bold text-foreground">Gratuit</strong>{" "}
-            <span className="text-muted">— aucun compte, aucun paiement.</span>
-          </p>
-          <p className="text-sm">
-            <strong className="font-bold text-foreground">Indépendant</strong>{" "}
-            <span className="text-muted">
-              — nous expliquons, nous ne délivrons rien.
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 px-4 py-6 sm:grid-cols-3 sm:px-6">
+          <div className="flex items-start gap-3">
+            <span
+              aria-hidden="true"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-light"
+            >
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-primary-dark"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M8.5 12.5l2.5 2.5 4.5-5" />
+              </svg>
             </span>
-          </p>
-          <p className="text-sm">
-            <strong className="font-bold text-foreground">
-              Conçu pour le mobile
-            </strong>{" "}
-            <span className="text-muted">
-              — léger, jusque dans le pays profond.
+            <p className="pt-1 text-sm">
+              <strong className="font-bold text-foreground">Gratuit</strong>{" "}
+              <span className="text-muted">
+                — aucun compte, aucun paiement.
+              </span>
+            </p>
+          </div>
+          <div className="flex items-start gap-3">
+            <span
+              aria-hidden="true"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-light"
+            >
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-primary-dark"
+              >
+                <path d="M12 3l7 3v5.5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z" />
+              </svg>
             </span>
-          </p>
+            <p className="pt-1 text-sm">
+              <strong className="font-bold text-foreground">Indépendant</strong>{" "}
+              <span className="text-muted">
+                — nous expliquons, nous ne délivrons rien.
+              </span>
+            </p>
+          </div>
+          <div className="flex items-start gap-3">
+            <span
+              aria-hidden="true"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-light"
+            >
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-primary-dark"
+              >
+                <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+                <path d="M11 18.5h2" />
+              </svg>
+            </span>
+            <p className="pt-1 text-sm">
+              <strong className="font-bold text-foreground">
+                Conçu pour le mobile
+              </strong>{" "}
+              <span className="text-muted">
+                — léger, jusque dans le pays profond.
+              </span>
+            </p>
+          </div>
         </div>
       </section>
 
