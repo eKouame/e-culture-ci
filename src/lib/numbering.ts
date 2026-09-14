@@ -1,6 +1,6 @@
 import { Prisma } from "@/generated/prisma/client";
 
-type Prefix = "DEC" | "IMM" | "MEN" | "COM";
+type Prefix = "DEC" | "IMM" | "MEN";
 
 /**
  * Génère un numéro lisible et unique (ex: DEC-2026-000123) en incrémentant

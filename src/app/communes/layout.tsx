@@ -1,5 +1,5 @@
-import { CommunesHeader } from "@/components/communes/CommunesHeader";
-import { CommunesFooter } from "@/components/communes/CommunesFooter";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 export default function CommunesLayout({
   children,
@@ -8,9 +8,9 @@ export default function CommunesLayout({
 }) {
   return (
     <>
-      <CommunesHeader />
-      <main className="flex-1 bg-[#fafaf9]">{children}</main>
-      <CommunesFooter />
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
     </>
   );
 }
