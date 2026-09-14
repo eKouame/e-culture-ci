@@ -157,8 +157,8 @@ export default function RessourcesPage() {
         ))}
       </section>
 
-      <section className="bg-deep text-on-deep">
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-12 sm:px-6 md:grid-cols-2 md:items-center">
+      <section className="-mb-12 bg-secondary text-on-deep">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-20 sm:px-6 md:grid-cols-2 md:items-center">
           <div>
             <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
               Prêt à passer à l&apos;action ?
