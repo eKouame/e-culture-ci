@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { pageMetadata } from "@/lib/metadata";
+import { RessourceArticle } from "@/components/ressources/RessourceArticle";
+import { NextCards } from "@/components/ressources/NextCards";
 
 export const metadata: Metadata = pageMetadata({
   title: "Les fondamentaux du spectacle vivant | e-Culture CI",
@@ -171,19 +173,18 @@ const FAMILLES: {
 
 export default function FondamentauxPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary-dark">
-        Centre de ressources
-      </p>
-      <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        Les fondamentaux du spectacle vivant
-      </h1>
-
-      <section id="c-est-quoi" className="mt-6 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+    <RessourceArticle
+      kicker="Ressource · Comprendre le secteur"
+      titre="Les fondamentaux du spectacle vivant"
+      dek="Le vocabulaire, les acteurs et les règles de base, sans jargon."
+      meta={{ lecture: "6 min", niveau: "Débutant" }}
+      sommaire={SOMMAIRE}
+    >
+      <section id="c-est-quoi" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           C&apos;est quoi, le spectacle vivant ?
         </h2>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Le spectacle vivant, c&apos;est tout ce qui se joue{" "}
           <strong className="text-foreground">en direct, devant un public</strong>{" "}
           : un concert, une pièce de théâtre, un spectacle de danse, un
@@ -191,38 +192,23 @@ export default function FondamentauxPage() {
           le définit, c&apos;est la présence — des artistes et des
           spectateurs, au même endroit, au même moment.
         </p>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Ce n&apos;est pas un petit monde à part : c&apos;est un secteur
           entier, avec ses métiers, ses règles et son économie. En
           comprendre les bases, c&apos;est déjà mieux s&apos;y situer.
         </p>
       </section>
 
-      <nav className="mt-8 rounded-xl border border-border bg-black/[0.02] p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-muted">
-          Sommaire
-        </p>
-        <ul className="mt-2 flex flex-col gap-1.5 text-sm">
-          {SOMMAIRE.map((s) => (
-            <li key={s.id}>
-              <a href={`#${s.id}`} className="text-primary-dark underline">
-                {s.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <section id="chaine" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="chaine" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Comment ça marche : la chaîne du spectacle
         </h2>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Un spectacle passe par quatre grandes étapes. Souvent, une même
           personne en cumule plusieurs — mais les comprendre séparément aide
           à savoir qui fait quoi.
         </p>
-        <ol className="mt-4 flex flex-col gap-3">
+        <ol className="flex flex-col gap-3">
           {CHAINE.map((c, i) => (
             <li key={c.etape} className="flex gap-3">
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-sm font-bold text-primary-dark">
@@ -248,11 +234,11 @@ export default function FondamentauxPage() {
         </ol>
       </section>
 
-      <section id="metiers" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="metiers" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Les métiers, famille par famille
         </h2>
-        <div className="mt-5 flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
           {FAMILLES.map((famille) => (
             <div key={famille.titre}>
               <h3 className="text-sm font-bold uppercase tracking-wide text-muted">
@@ -291,11 +277,11 @@ export default function FondamentauxPage() {
         </div>
       </section>
 
-      <section id="synthese" className="mt-10 scroll-mt-24">
-        <h2 className="text-xl font-bold text-foreground">
+      <section id="synthese" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Comment un spectacle prend vie
         </h2>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Un spectacle naît d&apos;une œuvre — l&apos;auteur —, portée par
           des interprètes et façonnée par un metteur en scène. Un producteur
           le monte et prend le risque ; un tourneur le fait voyager ; un
@@ -304,7 +290,7 @@ export default function FondamentauxPage() {
           qu&apos;une autre gère la billetterie, la communication et la
           sécurité.
         </p>
-        <p className="mt-3 max-w-prose text-muted">
+        <p className="mb-4 max-w-prose text-muted">
           Chacun de ces métiers est un maillon. Enlevez-en un, et le
           spectacle boite. C&apos;est pour ça qu&apos;un secteur qui se
           structure, c&apos;est un secteur où chaque maillon est reconnu —
@@ -312,33 +298,20 @@ export default function FondamentauxPage() {
         </p>
       </section>
 
-      <div className="mt-10 rounded-xl border border-border bg-surface p-5 shadow-sm">
-        <h2 className="text-base font-bold text-foreground">
-          Pour aller plus loin
-        </h2>
-        <ul className="mt-2 flex flex-col gap-1.5 text-sm">
-          <li>
-            <Link
-              href="/suis-je-concerne"
-              className="text-primary-dark underline"
-            >
-              Suis-je concerné par la licence ?
-            </Link>{" "}
-            <span className="text-muted">— pour les producteurs.</span>
-          </li>
-          <li>
-            <Link
-              href="/ressources/propriete-intellectuelle"
-              className="text-primary-dark underline"
-            >
-              Propriété intellectuelle
-            </Link>{" "}
-            <span className="text-muted">
-              — pour les droits sur les œuvres et les prestations.
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
+      <NextCards
+        liens={[
+          {
+            href: "/suis-je-concerne",
+            label: "Suis-je concerné par la licence ?",
+            description: "Pour les producteurs.",
+          },
+          {
+            href: "/ressources/propriete-intellectuelle",
+            label: "Propriété intellectuelle",
+            description: "Pour les droits sur les œuvres et les prestations.",
+          },
+        ]}
+      />
+    </RessourceArticle>
   );
 }

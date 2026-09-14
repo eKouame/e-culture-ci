@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { pageMetadata } from "@/lib/metadata";
+import { RessourceArticle } from "@/components/ressources/RessourceArticle";
+import { Callout } from "@/components/ressources/Callout";
+import { NextCards } from "@/components/ressources/NextCards";
 
 export const metadata: Metadata = pageMetadata({
   title: "Propriété intellectuelle | e-Culture CI",
@@ -9,6 +12,12 @@ export const metadata: Metadata = pageMetadata({
     "Comprendre les bases de la propriété intellectuelle dans le spectacle vivant en Côte d'Ivoire : droit d'auteur, droits voisins, droit à l'image, marques — et vers qui se tourner (BURIDA, OIPI).",
   path: "/ressources/propriete-intellectuelle",
 });
+
+const SOMMAIRE = [
+  { id: "familles", label: "Deux grandes familles" },
+  { id: "faq", label: "Questions fréquentes" },
+  { id: "contacts", label: "Liens et contacts officiels" },
+];
 
 const LIENS = {
   burida: "https://www.buridaci.com",
@@ -21,6 +30,7 @@ type FaqItem = {
   q: string;
   a: string;
   lien?: { label: string; href: string };
+  exception?: string;
 };
 
 const FAQ: FaqItem[] = [
@@ -47,6 +57,8 @@ const FAQ: FaqItem[] = [
   {
     q: "Je filme mon spectacle pour les réseaux. Ai-je le droit ?",
     a: "Deux autorisations différentes se superposent, et on n'en voit souvent qu'une. La première concerne les œuvres jouées : reprises, musique, texte — c'est le droit d'auteur, géré par le BURIDA. La seconde concerne les personnes filmées : chaque artiste sur scène, et parfois un spectateur reconnaissable au premier plan, a un droit sur son image. Ce droit-là ne dépend ni du BURIDA ni de l'OIPI : c'est un accord à demander aux personnes concernées. Le bon réflexe : prévoir cet accord en amont, idéalement dans le contrat que vous signez avec vos artistes, plutôt que de courir après une signature une fois la vidéo en ligne.",
+    exception:
+      "Contrairement aux autres questions de cette page, celle-ci ne renvoie à aucun guichet officiel : le droit à l'image relève du droit civil général, ni du BURIDA ni de l'OIPI.",
   },
   {
     q: "J'ai écrit une chanson ou créé une chorégraphie. Suis-je protégé(e) ?",
@@ -89,148 +101,173 @@ const CONTACTS = [
 
 export default function ProprieteIntellectuellePage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary-dark">
-        Centre de ressources
-      </p>
-      <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        Propriété intellectuelle
-      </h1>
-      <p className="mt-3 max-w-prose text-muted">
+    <RessourceArticle
+      kicker="Ressource · Être en règle"
+      titre="Propriété intellectuelle"
+      dek="Droit d'auteur, droits voisins, droit à l'image, marques : comprenez vos droits et vers qui vous tourner."
+      meta={{ lecture: "5 min", niveau: "Intermédiaire" }}
+      sommaire={SOMMAIRE}
+    >
+      <p className="mb-4 max-w-prose text-muted">
         Quand vous montez un spectacle, vous manipulez des créations : une
         musique, un texte, une chorégraphie, un nom de festival, un logo.
         Tout cela peut être protégé — par vous, ou par quelqu&apos;un
         d&apos;autre. C&apos;est ça, la propriété intellectuelle.
       </p>
-      <p className="mt-3 max-w-prose text-muted">
+      <p className="mb-6 max-w-prose text-muted">
         Il y a deux grandes familles. Et dans un même événement, les deux
         peuvent vous concerner en même temps.
       </p>
 
-      <div className="mt-4 rounded-lg border border-border bg-black/[0.02] px-4 py-3 text-sm text-muted">
-        ℹ️{" "}
-        <strong className="text-foreground">
-          Info, pas conseil juridique.
-        </strong>{" "}
-        Cette page vous informe et vous sensibilise. Pour faire une
-        démarche, adressez-vous directement au{" "}
-        <strong className="text-foreground">BURIDA</strong>{" "}
-        (droit d&apos;auteur) ou à l&apos;
-        <strong className="text-foreground">OIPI</strong>{" "}
-        (marques, noms, logos).
+      <div className="mb-8">
+        <Callout variant="retenir" label="Info, pas conseil juridique">
+          Cette page vous informe et vous sensibilise. Pour faire une
+          démarche, adressez-vous directement au BURIDA (droit
+          d&apos;auteur) ou à l&apos;OIPI (marques, noms, logos).
+        </Callout>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card>
-          <h2 className="text-base font-bold text-secondary-dark">
-            Le droit d&apos;auteur et les droits voisins
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Ça protège les œuvres et ceux qui les interprètent : la chanson,
-            le texte, la danse — mais aussi le musicien, le comédien, le
-            danseur qui les portent sur scène. En Côte d&apos;Ivoire,
-            c&apos;est le <strong>BURIDA</strong> qui gère ces droits.
-          </p>
-        </Card>
-        <Card>
-          <h2 className="text-base font-bold text-primary-dark">
-            La propriété industrielle
-          </h2>
-          <p className="mt-1.5 text-sm text-muted">
-            Ça protège ce qui identifie votre activité : le nom de votre
-            festival, votre logo, le nom de votre structure, un décor ou un
-            costume original. Là, vous passez par l&apos;<strong>OIPI</strong>.
-          </p>
-        </Card>
-      </div>
-
-      <Card className="mt-6">
-        <h2 className="text-base font-bold text-foreground">
-          Deux réflexes simples
+      <section id="familles" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
+          Deux grandes familles
         </h2>
-        <ul className="mt-2 flex flex-col gap-1.5 text-sm text-muted">
-          <li>
-            Si vous{" "}
-            <strong className="text-foreground">utilisez</strong>{" "}
-            la création d&apos;un autre, vous devez demander
-            l&apos;autorisation.
-          </li>
-          <li>
-            Si vous <strong className="text-foreground">créez</strong>
-            {", "}vous pouvez protéger ce que vous faites.
-          </li>
-        </ul>
-      </Card>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Card>
+            <h3 className="text-base font-bold text-secondary-dark">
+              Le droit d&apos;auteur et les droits voisins
+            </h3>
+            <p className="mt-1.5 text-sm text-muted">
+              Ça protège les œuvres et ceux qui les interprètent : la
+              chanson, le texte, la danse — mais aussi le musicien, le
+              comédien, le danseur qui les portent sur scène. En Côte
+              d&apos;Ivoire, c&apos;est le <strong>BURIDA</strong> qui gère
+              ces droits.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-base font-bold text-primary-dark">
+              La propriété industrielle
+            </h3>
+            <p className="mt-1.5 text-sm text-muted">
+              Ça protège ce qui identifie votre activité : le nom de votre
+              festival, votre logo, le nom de votre structure, un décor ou
+              un costume original. Là, vous passez par l&apos;
+              <strong>OIPI</strong>.
+            </p>
+          </Card>
+        </div>
 
-      <p className="mt-6 max-w-prose text-sm text-muted">
-        Attention à ne pas confondre : les droits d&apos;auteur (BURIDA) et
-        la fiscalité de votre événement sont deux sujets distincts. Pour
-        savoir comment déclarer et payer vos artistes (retenue à la source,
-        CNPS), consultez la ressource{" "}
-        <Link
-          href="/ressources/payer-artistes"
-          className="font-medium text-primary-dark underline"
-        >
-          Déclarer et payer vos artistes
-        </Link>
-        .
-      </p>
+        <Card className="mt-4">
+          <h3 className="text-base font-bold text-foreground">
+            Deux réflexes simples
+          </h3>
+          <ul className="mt-2 flex flex-col gap-1.5 text-sm text-muted">
+            <li>
+              Si vous <strong className="text-foreground">utilisez</strong>{" "}
+              la création d&apos;un autre, vous devez demander
+              l&apos;autorisation.
+            </li>
+            <li>
+              Si vous <strong className="text-foreground">créez</strong>
+              {", "}vous pouvez protéger ce que vous faites.
+            </li>
+          </ul>
+        </Card>
 
-      <h2 className="mt-10 text-xl font-bold text-foreground">
-        Questions fréquentes
-      </h2>
-      <div className="mt-4 flex flex-col gap-3">
-        {FAQ.map((item) => (
-          <details
-            key={item.q}
-            className="group rounded-xl border border-border bg-surface p-4 open:shadow-sm"
+        <p className="mt-4 max-w-prose text-sm text-muted">
+          Attention à ne pas confondre : les droits d&apos;auteur (BURIDA)
+          et la fiscalité de votre événement sont deux sujets distincts.
+          Pour savoir comment déclarer et payer vos artistes (retenue à la
+          source, CNPS), consultez la ressource{" "}
+          <Link
+            href="/ressources/payer-artistes"
+            className="font-medium text-primary-dark underline"
           >
-            <summary className="cursor-pointer list-none text-sm font-semibold text-foreground marker:content-none">
-              <span className="flex items-center justify-between gap-3">
-                {item.q}
-                <span className="shrink-0 text-primary-dark transition-transform group-open:rotate-45">
-                  +
+            Déclarer et payer vos artistes
+          </Link>
+          .
+        </p>
+      </section>
+
+      <section id="faq" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
+          Questions fréquentes
+        </h2>
+        <div className="flex flex-col gap-3">
+          {FAQ.map((item) => (
+            <details
+              key={item.q}
+              className="group rounded-xl border border-border bg-surface p-4 open:shadow-sm"
+            >
+              <summary className="cursor-pointer list-none text-sm font-semibold text-foreground marker:content-none">
+                <span className="flex items-center justify-between gap-3">
+                  {item.q}
+                  <span className="shrink-0 text-primary-dark transition-transform group-open:rotate-45">
+                    +
+                  </span>
                 </span>
-              </span>
-            </summary>
-            <p className="mt-2.5 max-w-prose text-sm text-muted">{item.a}</p>
-            {item.lien && (
-              <a
-                href={item.lien.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-block text-sm font-medium text-primary-dark underline"
-              >
-                {item.lien.label}
-              </a>
-            )}
-          </details>
-        ))}
-      </div>
+              </summary>
+              <p className="mt-2.5 max-w-prose text-sm text-muted">{item.a}</p>
+              {item.lien && (
+                <a
+                  href={item.lien.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block text-sm font-medium text-primary-dark underline"
+                >
+                  {item.lien.label}
+                </a>
+              )}
+              {item.exception && (
+                <div className="mt-3">
+                  <Callout variant="exception">{item.exception}</Callout>
+                </div>
+              )}
+            </details>
+          ))}
+        </div>
+      </section>
 
-      <h2 className="mt-10 text-xl font-bold text-foreground">
-        Liens et contacts officiels
-      </h2>
-      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {CONTACTS.map((c) => (
-          <a
-            key={c.nom}
-            href={c.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-xl border border-border bg-surface p-4 transition-colors hover:border-primary"
-          >
-            <p className="font-bold text-foreground">{c.nom} ↗</p>
-            <p className="mt-1 text-sm text-muted">{c.role}</p>
-          </a>
-        ))}
-      </div>
+      <section id="contacts" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
+          Liens et contacts officiels
+        </h2>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {CONTACTS.map((c) => (
+            <a
+              key={c.nom}
+              href={c.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-border bg-surface p-4 transition-colors hover:border-primary"
+            >
+              <p className="font-bold text-foreground">{c.nom} ↗</p>
+              <p className="mt-1 text-sm text-muted">{c.role}</p>
+            </a>
+          ))}
+        </div>
+      </section>
 
-      <div className="mt-8 rounded-lg border border-border bg-black/[0.02] px-4 py-3 text-xs text-muted">
-        ℹ️ Cette page est une information de sensibilisation, pas un conseil
+      <p className="mt-2 max-w-prose text-xs text-muted">
+        Cette page est une information de sensibilisation, pas un conseil
         juridique. Pour toute démarche, adressez-vous au BURIDA ou à
         l&apos;OIPI.
-      </div>
-    </div>
+      </p>
+
+      <NextCards
+        liens={[
+          {
+            href: "/ressources/payer-artistes",
+            label: "Déclarer et payer vos artistes",
+            description: "Cachet, retenue à la source, CNPS.",
+          },
+          {
+            href: "/ressources/budget",
+            label: "Bâtir votre budget",
+            description: "Intégrer droits d'auteur et cachets dans vos comptes.",
+          },
+        ]}
+      />
+    </RessourceArticle>
   );
 }
