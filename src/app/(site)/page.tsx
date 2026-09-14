@@ -304,8 +304,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mt-10 bg-deep text-on-deep">
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-12 sm:px-6 md:grid-cols-2 md:items-center">
+      <section className="mt-10 -mb-12 bg-secondary text-on-deep">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-20 sm:px-6 md:grid-cols-2 md:items-center">
           <div>
             <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
               Vous nous avez découverts sur Facebook ?
