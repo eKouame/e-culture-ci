@@ -1,266 +1,511 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  declarationSchema,
-  DeclarationInput,
-} from "@/lib/validation/declaration.schema";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/Input";
-import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
-import { ProgressBar } from "@/components/questionnaire/ProgressBar";
-import { REGIONS_CI } from "@/lib/regions";
-import { TYPE_SPECTACLE_LABELS } from "@/lib/labels";
+import { LinkButton } from "@/components/ui/Button";
+import { PrintButton } from "@/components/ui/PrintButton";
+import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
+import { Stamp } from "@/components/ui/Stamp";
 
-const typeSpectacleOptions = Object.entries(TYPE_SPECTACLE_LABELS).map(
-  ([value, label]) => ({ value, label }),
-);
-const regionOptions = REGIONS_CI.map((r) => ({ value: r, label: r }));
+const DISTRICTS_CI = [
+  "Abidjan",
+  "Bas-Sassandra",
+  "Comoé",
+  "Denguélé",
+  "Gôh-Djiboua",
+  "Lacs",
+  "Lagunes",
+  "Montagnes",
+  "Sassandra-Marahoué",
+  "Savanes",
+  "Vallée du Bandama",
+  "Woroba",
+  "Yamoussoukro",
+  "Zanzan",
+] as const;
 
-const STEPS: { title: string; fields: (keyof DeclarationInput)[] }[] = [
+const TYPES_SPECTACLE = [
+  "Concert",
+  "Théâtre",
+  "Danse",
+  "Humour",
+  "Conte",
+  "Projection",
+  "Cirque",
+  "Exposition",
+  "Autre",
+] as const;
+
+// Point de branchement pour la bascule "partage avec une commune pilote" (cahier des charges §5) :
+// reste désactivé tant qu'aucune commune n'a signé. Le texte de consentement ci-dessous est déjà
+// prêt à être affiché le jour où `actif` passe à true.
+const PARTAGE_COMMUNE: {
+  actif: boolean;
+  commune: string;
+  dureeConservation: string;
+} = {
+  actif: false,
+  commune: "",
+  dureeConservation: "trois ans après l'événement",
+};
+
+type Champ = {
+  cle: string;
+  label: string;
+  requis?: boolean;
+  type?: string;
+  exemple?: string;
+  liste?: readonly string[];
+  vide?: string;
+  case?: boolean;
+  pleineLargeur?: boolean;
+};
+
+const ETAPES: { titre: string; entete: string; aide: string; champs: Champ[] }[] = [
   {
-    title: "Organisateur",
-    fields: [
-      "organisateurNom",
-      "organisateurPrenom",
-      "organisateurTelephone",
-      "organisateurEmail",
-      "organisateurStructure",
+    titre: "Organisateur",
+    entete: "Qui organise l'événement ?",
+    aide: "Ces informations identifient la personne à contacter au sujet de l'événement.",
+    champs: [
+      { cle: "nom", label: "Nom", requis: true, exemple: "Koné" },
+      { cle: "prenom", label: "Prénom", exemple: "Awa" },
+      {
+        cle: "telephone",
+        label: "Téléphone",
+        requis: true,
+        type: "tel",
+        exemple: "07 00 00 00 00",
+      },
+      { cle: "email", label: "Email", type: "email", exemple: "vous@exemple.ci" },
+      {
+        cle: "structure",
+        label: "Structure ou association",
+        exemple: "Collectif Cour commune",
+        pleineLargeur: true,
+      },
     ],
   },
   {
-    title: "Événement",
-    fields: [
-      "titreEvenement",
-      "typeSpectacle",
-      "typeSpectacleAutre",
-      "dateEvenement",
+    titre: "Événement",
+    entete: "Que présentez-vous ?",
+    aide: "Le titre peut rester provisoire. Seule la date est nécessaire pour préparer votre récapitulatif.",
+    champs: [
+      {
+        cle: "titre",
+        label: "Titre de l'événement",
+        exemple: "Nuit des conteurs",
+        pleineLargeur: true,
+      },
+      {
+        cle: "type",
+        label: "Type de spectacle",
+        liste: TYPES_SPECTACLE,
+        vide: "Choisir un type",
+      },
+      { cle: "date", label: "Date de l'événement", requis: true, type: "date" },
     ],
   },
   {
-    title: "Lieu & public",
-    fields: ["region", "commune", "lieu", "jaugeEstimee", "entreePayante"],
+    titre: "Lieu & public",
+    entete: "Où, et devant combien de personnes ?",
+    aide: "La commune permet d'orienter vers la bonne mairie ou direction régionale.",
+    champs: [
+      {
+        cle: "district",
+        label: "District ou région",
+        liste: DISTRICTS_CI,
+        vide: "Choisir un district",
+      },
+      { cle: "commune", label: "Commune ou localité", requis: true, exemple: "Bouaké" },
+      {
+        cle: "lieu",
+        label: "Lieu précis",
+        exemple: "Place de la mairie",
+        pleineLargeur: true,
+      },
+      { cle: "jauge", label: "Jauge estimée", type: "number", exemple: "150" },
+      { cle: "payante", label: "L'entrée est payante", case: true, pleineLargeur: true },
+    ],
   },
 ];
 
-export function DeclarationForm({
-  defaultJauge,
-  defaultOrientation,
-}: {
-  defaultJauge?: number;
-  defaultOrientation?: "EXEMPTE" | "PROFESSIONNEL";
-}) {
-  const router = useRouter();
-  const [step, setStep] = useState(0);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+function scrollBehavior(): ScrollBehavior {
+  if (typeof window === "undefined") return "auto";
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "auto"
+    : "smooth";
+}
 
-  const {
-    register,
-    handleSubmit,
-    trigger,
-    watch,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: zodResolver(declarationSchema),
-    defaultValues: {
-      entreePayante: false,
-      jaugeEstimee: defaultJauge,
-      statutOrientation: defaultOrientation,
-    },
+function genererReference() {
+  let n = "";
+  for (let i = 0; i < 6; i++) n += Math.floor(Math.random() * 10);
+  return `DEC-${new Date().getFullYear()}-${n}`;
+}
+
+function texteOu(valeur: unknown, defaut = "Non précisé") {
+  const s = String(valeur ?? "").trim();
+  return s ? s : defaut;
+}
+
+function dateLisible(v: string) {
+  if (!v) return "Non précisée";
+  const d = new Date(`${v}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return v;
+  return d.toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   });
+}
 
-  const typeSpectacle = watch("typeSpectacle");
-  const isLastStep = step === STEPS.length - 1;
+const dateFormat = new Intl.DateTimeFormat("fr-FR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
 
-  async function goNext() {
-    const valid = await trigger(STEPS[step].fields);
-    if (valid) {
-      setStep((s) => Math.min(s + 1, STEPS.length - 1));
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+export function DeclarationForm() {
+  const [etape, setEtape] = useState(1);
+  const [donnees, setDonnees] = useState<Record<string, string | boolean>>({
+    payante: false,
+    partage: false,
+  });
+  const [erreur, setErreur] = useState<string | null>(null);
+  const [fini, setFini] = useState(false);
+  const [reference, setReference] = useState("");
+  const [datePreparation, setDatePreparation] = useState<Date | null>(null);
+
+  const cardRef = useRef<HTMLDivElement>(null);
+  const docRef = useRef<HTMLDivElement>(null);
+  const interacted = useRef(false);
+
+  useEffect(() => {
+    if (!interacted.current) return;
+    const target = fini ? docRef.current : cardRef.current;
+    target?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
+  }, [etape, fini]);
+
+  function maj(cle: string, valeur: string | boolean) {
+    setDonnees((d) => ({ ...d, [cle]: valeur }));
+    setErreur(null);
   }
 
-  function goBack() {
-    setStep((s) => Math.max(s - 1, 0));
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  async function onSubmit(data: DeclarationInput) {
-    setSubmitError(null);
-    const res = await fetch("/api/declarations", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (!res.ok) {
-      setSubmitError("Une erreur est survenue. Veuillez réessayer.");
+  function suivant() {
+    interacted.current = true;
+    const etapeActuelle = ETAPES[etape - 1];
+    const manquants = etapeActuelle.champs.filter(
+      (c) => c.requis && !String(donnees[c.cle] ?? "").trim(),
+    );
+    if (manquants.length > 0) {
+      const noms = manquants.map((c) => c.label.toLowerCase()).join(", ");
+      setErreur(
+        manquants.length > 1
+          ? `Ces informations sont nécessaires pour continuer : ${noms}.`
+          : `Le champ « ${manquants[0].label} » est nécessaire pour continuer.`,
+      );
       return;
     }
-
-    const json = await res.json();
-    router.push(`/declaration/recapitulatif/${json.id}`);
-  }
-
-  async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (!isLastStep) {
-      await goNext();
+    if (etape < ETAPES.length) {
+      setEtape((e) => e + 1);
       return;
     }
-    handleSubmit(onSubmit)();
+    setReference(genererReference());
+    setDatePreparation(new Date());
+    setFini(true);
   }
+
+  function retour() {
+    interacted.current = true;
+    setErreur(null);
+    setEtape((e) => Math.max(1, e - 1));
+  }
+
+  function recommencer() {
+    interacted.current = true;
+    setDonnees({ payante: false, partage: false });
+    setErreur(null);
+    setFini(false);
+    setEtape(1);
+  }
+
+  if (fini) {
+    const identite = [donnees.prenom, donnees.nom]
+      .filter((x) => String(x ?? "").trim())
+      .join(" ");
+
+    return (
+      <>
+        <div ref={docRef}>
+          <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3">
+            <Stamp>Récapitulatif prêt</Stamp>
+            <PrintButton />
+          </div>
+
+          <div className="dog-ear ledger-lines rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+            <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+                  Récapitulatif de préparation
+                </p>
+                <p className="mt-1 text-sm font-medium text-primary-dark">
+                  Document non officiel, préparé avec e-Culture CI
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-muted">Référence</p>
+                <p className="tabular-ref text-base font-bold text-foreground">
+                  {reference}
+                </p>
+              </div>
+            </div>
+
+            <dl className="mt-5 grid grid-cols-1 gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
+              <Field label="Organisateur">{texteOu(identite)}</Field>
+              <Field label="Téléphone">{texteOu(donnees.telephone)}</Field>
+              {String(donnees.email ?? "").trim() && (
+                <Field label="Email">{String(donnees.email)}</Field>
+              )}
+              {String(donnees.structure ?? "").trim() && (
+                <Field label="Structure / association">
+                  {String(donnees.structure)}
+                </Field>
+              )}
+              <Field label="Titre de l'événement">
+                {texteOu(donnees.titre, "Sans titre")}
+              </Field>
+              <Field label="Type de spectacle">{texteOu(donnees.type)}</Field>
+              <Field label="Date de l'événement">
+                {dateLisible(String(donnees.date ?? ""))}
+              </Field>
+              <Field label="District / Région">{texteOu(donnees.district)}</Field>
+              <Field label="Commune / Localité">{texteOu(donnees.commune)}</Field>
+              {String(donnees.lieu ?? "").trim() && (
+                <Field label="Lieu précis">{String(donnees.lieu)}</Field>
+              )}
+              <Field label="Jauge estimée">
+                {String(donnees.jauge ?? "").trim()
+                  ? `${donnees.jauge} spectateurs`
+                  : "Non précisée"}
+              </Field>
+              <Field label="Entrée">
+                {donnees.payante ? "Payante" : "Libre ou gratuite"}
+              </Field>
+              <Field label="Préparé le">
+                {datePreparation ? dateFormat.format(datePreparation) : ""}
+              </Field>
+            </dl>
+
+            <p className="mt-6 max-w-prose border-t border-border pt-4 text-xs text-muted">
+              Ce récapitulatif vous aide à préparer votre démarche ; il ne
+              remplace aucun document officiel. Conservez-le pour vos échanges
+              avec les autorités locales (mairie, préfecture).
+            </p>
+          </div>
+
+          <NextStepsNotice
+            leadIn="Votre récapitulatif est prêt."
+            body="Présentez-le à votre mairie ou à la direction régionale de la Culture de votre district. La validation de toute autorisation ou licence appartient au ministère de la Culture ; e-Culture CI est un service indépendant et ne délivre aucun document officiel."
+          />
+
+          <div className="no-print mt-6 flex flex-col gap-2 sm:flex-row">
+            <LinkButton href="/" variant="outline">
+              Retour à l&apos;accueil
+            </LinkButton>
+            <Button type="button" variant="ghost" onClick={recommencer}>
+              Préparer une autre déclaration
+            </Button>
+          </div>
+        </div>
+
+        <p className="no-print mt-6 text-sm text-muted">
+          Aucune donnée n&apos;est envoyée ni conservée : le récapitulatif et
+          sa référence sont produits dans votre navigateur. Si vous quittez la
+          page sans imprimer, tout est perdu.
+        </p>
+      </>
+    );
+  }
+
+  const etapeActuelle = ETAPES[etape - 1];
+  const partageActif = PARTAGE_COMMUNE.actif && etape === ETAPES.length;
 
   return (
-    <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
-      <ProgressBar step={step} total={STEPS.length} label="Étape" />
-
+    <>
       <div
-        key={step}
-        className="page-turn dog-ear ledger-lines flex flex-col gap-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6"
+        ref={cardRef}
+        className="flex flex-col gap-6 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6"
       >
-        <h2 className="text-sm font-bold uppercase tracking-wide text-muted">
-          {STEPS[step].title}
-        </h2>
+        <div>
+          <div className="mb-2.5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <span className="text-xs font-bold uppercase tracking-wide text-primary-dark">
+              Étape {etape} sur {ETAPES.length}
+            </span>
+            <span className="text-sm text-muted">Deux minutes environ</span>
+          </div>
+          <ol className="grid grid-cols-3 gap-2" aria-hidden="true">
+            {ETAPES.map((e, i) => {
+              const n = i + 1;
+              const atteint = n <= etape;
+              return (
+                <li key={e.titre} className="flex flex-col gap-1.5">
+                  <span
+                    className={`block h-1.5 rounded-full ${
+                      atteint ? "bg-primary" : "bg-border"
+                    }`}
+                  />
+                  <span
+                    className={`text-xs font-bold leading-tight ${
+                      atteint ? "text-foreground" : "text-muted"
+                    }`}
+                  >
+                    {n}. {e.titre}
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
 
-        {step === 0 && (
-          <>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Input
-                label="Nom"
-                error={errors.organisateurNom?.message}
-                {...register("organisateurNom")}
-              />
-              <Input
-                label="Prénom (facultatif)"
-                error={errors.organisateurPrenom?.message}
-                {...register("organisateurPrenom")}
-              />
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Input
-                label="Téléphone"
-                type="tel"
-                error={errors.organisateurTelephone?.message}
-                {...register("organisateurTelephone")}
-              />
-              <Input
-                label="Email (facultatif)"
-                type="email"
-                error={errors.organisateurEmail?.message}
-                {...register("organisateurEmail")}
-              />
-            </div>
-            <Input
-              label="Structure / association (facultatif)"
-              error={errors.organisateurStructure?.message}
-              {...register("organisateurStructure")}
-            />
-          </>
+        <div>
+          <h2 className="text-xl font-extrabold tracking-tight text-foreground">
+            {etapeActuelle.entete}
+          </h2>
+          <p className="mt-1 max-w-prose text-sm text-muted">
+            {etapeActuelle.aide}
+          </p>
+        </div>
+
+        {erreur && (
+          <div
+            role="alert"
+            className="rounded-r-lg border border-primary-light border-l-4 border-l-primary bg-primary-light px-4 py-3.5"
+          >
+            <p className="text-sm font-semibold text-primary-dark">{erreur}</p>
+          </div>
         )}
 
-        {step === 1 && (
-          <>
-            <Input
-              label="Titre de l'événement (facultatif)"
-              error={errors.titreEvenement?.message}
-              {...register("titreEvenement")}
-            />
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Select
-                label="Type de spectacle"
-                placeholder="Choisissez un type"
-                options={typeSpectacleOptions}
-                error={errors.typeSpectacle?.message}
-                {...register("typeSpectacle")}
-              />
-              <Input
-                label="Date de l'événement"
-                type="date"
-                error={errors.dateEvenement?.message}
-                {...register("dateEvenement")}
-              />
-            </div>
-            {typeSpectacle === "AUTRE" && (
-              <Input
-                label="Précisez le type de spectacle"
-                error={errors.typeSpectacleAutre?.message}
-                {...register("typeSpectacleAutre")}
-              />
-            )}
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Select
-                label="Région"
-                placeholder="Sélectionnez votre région"
-                options={regionOptions}
-                error={errors.region?.message}
-                {...register("region")}
-              />
-              <Input
-                label="Commune / Localité"
-                error={errors.commune?.message}
-                {...register("commune")}
-              />
-            </div>
-            <Input
-              label="Lieu précis (salle, place, quartier...)"
-              error={errors.lieu?.message}
-              {...register("lieu")}
-            />
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Input
-                label="Jauge estimée (nombre de spectateurs)"
-                type="number"
-                min={1}
-                error={errors.jaugeEstimee?.message}
-                {...register("jaugeEstimee", {
-                  setValueAs: (v) => (v === "" ? undefined : Number(v)),
-                })}
-              />
-              <label className="flex items-center gap-2.5 self-end rounded-lg border border-border px-3.5 py-2.5">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 accent-orange-600"
-                  {...register("entreePayante")}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {etapeActuelle.champs.map((c) => {
+            const enveloppe = c.pleineLargeur ? "sm:col-span-2" : "";
+            if (c.case) {
+              return (
+                <label
+                  key={c.cle}
+                  className={`flex items-center gap-2.5 rounded-lg border border-border px-3.5 py-2.5 ${enveloppe}`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={!!donnees[c.cle]}
+                    onChange={(e) => maj(c.cle, e.target.checked)}
+                    className="h-4 w-4 accent-orange-600"
+                  />
+                  <span className="text-sm font-medium text-foreground">
+                    {c.label}
+                  </span>
+                </label>
+              );
+            }
+            if (c.liste) {
+              return (
+                <div key={c.cle} className={`flex flex-col gap-1.5 ${enveloppe}`}>
+                  <label className="text-sm font-medium text-foreground">
+                    {c.label}
+                  </label>
+                  <select
+                    value={String(donnees[c.cle] ?? "")}
+                    onChange={(e) => maj(c.cle, e.target.value)}
+                    className="w-full rounded-lg border border-border bg-surface px-3.5 py-2.5 text-base outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary"
+                  >
+                    <option value="" disabled>
+                      {c.vide}
+                    </option>
+                    {c.liste.map((v) => (
+                      <option key={v} value={v}>
+                        {v}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              );
+            }
+            return (
+              <div key={c.cle} className={enveloppe}>
+                <Input
+                  label={c.requis ? c.label : `${c.label} (facultatif)`}
+                  type={c.type ?? "text"}
+                  placeholder={c.exemple}
+                  value={String(donnees[c.cle] ?? "")}
+                  onChange={(e) => maj(c.cle, e.target.value)}
                 />
-                <span className="text-sm font-medium text-foreground">
-                  Entrée payante
-                </span>
-              </label>
-            </div>
-          </>
+              </div>
+            );
+          })}
+        </div>
+
+        {partageActif && (
+          <div className="rounded-r-lg border border-border border-l-4 border-l-secondary bg-background px-5 py-4">
+            <p className="mb-2.5 text-xs font-bold uppercase tracking-wide text-secondary-dark">
+              Contribuer à la cartographie culturelle
+            </p>
+            <label className="flex cursor-pointer items-start gap-3">
+              <input
+                type="checkbox"
+                checked={!!donnees.partage}
+                onChange={(e) => maj("partage", e.target.checked)}
+                className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-secondary"
+              />
+              <span className="text-sm leading-relaxed text-foreground">
+                J&apos;accepte que les informations de cette déclaration
+                soient transmises à la commune de{" "}
+                <strong>{PARTAGE_COMMUNE.commune}</strong> pour alimenter la
+                cartographie culturelle de son territoire.
+              </span>
+            </label>
+            <p className="mt-3 text-xs leading-relaxed text-muted">
+              Sont transmis : votre nom, votre téléphone, la nature, la date
+              et le lieu de votre événement. Conservation :{" "}
+              {PARTAGE_COMMUNE.dureeConservation}. Vous pouvez demander la
+              suppression de ces informations à tout moment. Sans cette case
+              cochée, votre récapitulatif est produit normalement et rien
+              n&apos;est transmis.
+            </p>
+          </div>
         )}
+
+        <div className="flex flex-col-reverse gap-2 sm:flex-row">
+          {etape > 1 && (
+            <Button type="button" variant="outline" size="lg" onClick={retour}>
+              ← Retour
+            </Button>
+          )}
+          <Button type="button" size="lg" className="sm:ml-auto" onClick={suivant}>
+            {etape === ETAPES.length ? "Produire mon récapitulatif" : "Continuer →"}
+          </Button>
+        </div>
+
+        <p className="text-xs text-muted">
+          Seuls le nom, le téléphone, la date et la commune sont nécessaires.
+          Le reste est facultatif : nous ne demandons rien dont vous n&apos;avez
+          pas besoin.
+        </p>
       </div>
 
-      <div className="flex flex-col-reverse gap-2 sm:flex-row">
-        {step > 0 && (
-          <Button type="button" variant="outline" size="lg" onClick={goBack}>
-            ← Retour
-          </Button>
-        )}
-        <Button
-          size="lg"
-          disabled={isLastStep && isSubmitting}
-          className="sm:ml-auto"
-        >
-          {isLastStep
-            ? isSubmitting
-              ? "Envoi en cours…"
-              : "Préparer ma déclaration"
-            : "Continuer →"}
-        </Button>
-      </div>
-      {submitError && (
-        <p className="text-sm font-medium text-danger">{submitError}</p>
-      )}
-    </form>
+      <p className="mt-6 text-sm text-muted">
+        Aucune donnée n&apos;est envoyée ni conservée : le récapitulatif et sa
+        référence sont produits dans votre navigateur. Si vous quittez la page
+        sans imprimer, tout est perdu.
+      </p>
+    </>
+  );
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <dt className="text-xs text-muted">{label}</dt>
+      <dd className="font-medium text-foreground">{children}</dd>
+    </div>
   );
 }
