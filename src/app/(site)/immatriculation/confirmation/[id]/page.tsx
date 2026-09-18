@@ -42,7 +42,7 @@ export default async function ConfirmationImmatriculationPage({
         <PrintButton />
       </div>
 
-      <div className="dog-ear ledger-lines rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+      <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">
@@ -60,31 +60,34 @@ export default async function ConfirmationImmatriculationPage({
           </div>
         </div>
 
-        <dl className="mt-5 grid grid-cols-1 gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
-          <Field label="Type de demandeur">{immatriculation.typeDemandeur}</Field>
-          <Field label="Nom complet">{immatriculation.nomComplet}</Field>
+        <div className="mt-5 overflow-hidden rounded-xl border border-border">
+          <div className="border-b border-border bg-background px-5 py-3 text-sm font-extrabold text-foreground">
+            Dossier
+          </div>
+          <Ligne label="Type de demandeur">{immatriculation.typeDemandeur}</Ligne>
+          <Ligne label="Nom complet">{immatriculation.nomComplet}</Ligne>
           {immatriculation.raisonSociale && (
-            <Field label="Structure / association">
+            <Ligne label="Structure / association">
               {immatriculation.raisonSociale}
-            </Field>
+            </Ligne>
           )}
-          <Field label="Téléphone">{immatriculation.telephone}</Field>
-          <Field label="Adresse">{immatriculation.adresse}</Field>
-          <Field label="Commune / Région">
+          <Ligne label="Téléphone">{immatriculation.telephone}</Ligne>
+          <Ligne label="Adresse">{immatriculation.adresse}</Ligne>
+          <Ligne label="Commune / Région">
             {immatriculation.commune}, {immatriculation.region}
-          </Field>
-          <Field label="Fréquence d'activité">
+          </Ligne>
+          <Ligne label="Fréquence d'activité">
             {TYPE_ACTIVITE_LABELS[immatriculation.typeActivite]}
-          </Field>
-          <Field label="Domaines d'activité">
+          </Ligne>
+          <Ligne label="Domaines d'activité">
             {immatriculation.domainesActivite}
-          </Field>
-          <Field label="Date de soumission">
+          </Ligne>
+          <Ligne label="Date de soumission">
             {dateFormat.format(immatriculation.createdAt)}
-          </Field>
-        </dl>
+          </Ligne>
+        </div>
 
-        <p className="mt-6 max-w-prose border-t border-border pt-4 text-xs text-muted">
+        <p className="mt-5 rounded-r-lg border border-border border-l-4 border-l-secondary bg-background px-4 py-3.5 text-sm leading-relaxed text-foreground">
           Ce dossier vous aide à préparer votre immatriculation ; il ne
           remplace aucun document officiel. Il est prêt à être transmis aux
           autorités locales (mairie, préfecture).
@@ -105,11 +108,11 @@ export default async function ConfirmationImmatriculationPage({
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Ligne({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div>
-      <dt className="text-xs text-muted">{label}</dt>
-      <dd className="font-medium text-foreground">{children}</dd>
+    <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border px-5 py-3 last:border-b-0">
+      <span className="text-sm text-muted">{label}</span>
+      <span className="text-sm font-bold text-foreground">{children}</span>
     </div>
   );
 }

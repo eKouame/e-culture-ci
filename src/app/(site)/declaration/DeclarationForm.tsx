@@ -5,8 +5,6 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { LinkButton } from "@/components/ui/Button";
 import { PrintButton } from "@/components/ui/PrintButton";
-import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
-import { Stamp } from "@/components/ui/Stamp";
 
 const DISTRICTS_CI = [
   "Abidjan",
@@ -235,87 +233,147 @@ export function DeclarationForm() {
       .filter((x) => String(x ?? "").trim())
       .join(" ");
 
+    const blocs: { titre: string; lignes: { label: string; valeur: string }[] }[] = [
+      {
+        titre: "Organisateur",
+        lignes: [
+          { label: "Nom et prénom", valeur: texteOu(identite) },
+          { label: "Téléphone", valeur: texteOu(donnees.telephone) },
+          { label: "Email", valeur: texteOu(donnees.email, "Non communiqué") },
+          {
+            label: "Structure",
+            valeur: texteOu(donnees.structure, "À titre individuel"),
+          },
+        ],
+      },
+      {
+        titre: "Événement",
+        lignes: [
+          { label: "Titre", valeur: texteOu(donnees.titre, "Sans titre") },
+          { label: "Type de spectacle", valeur: texteOu(donnees.type) },
+          { label: "Date", valeur: dateLisible(String(donnees.date ?? "")) },
+        ],
+      },
+      {
+        titre: "Lieu et public",
+        lignes: [
+          { label: "District ou région", valeur: texteOu(donnees.district) },
+          { label: "Commune ou localité", valeur: texteOu(donnees.commune) },
+          { label: "Lieu précis", valeur: texteOu(donnees.lieu) },
+          {
+            label: "Jauge estimée",
+            valeur: String(donnees.jauge ?? "").trim()
+              ? `${donnees.jauge} personnes`
+              : "Non précisée",
+          },
+          {
+            label: "Entrée",
+            valeur: donnees.payante ? "Payante" : "Libre ou gratuite",
+          },
+        ],
+      },
+    ];
+
     return (
       <>
         <div ref={docRef}>
-          <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3">
-            <Stamp>Récapitulatif prêt</Stamp>
-            <PrintButton />
-          </div>
-
-          <div className="dog-ear ledger-lines rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
             <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-                  Récapitulatif de préparation
+                <p className="text-lg font-extrabold tracking-tight text-secondary">
+                  e-Culture <span className="text-primary-dark">CI</span>
                 </p>
-                <p className="mt-1 text-sm font-medium text-primary-dark">
-                  Document non officiel, préparé avec e-Culture CI
+                <p className="mt-1 text-sm text-muted">
+                  Récapitulatif de préparation d&apos;événement
                 </p>
               </div>
-              <div className="text-right">
-                <p className="text-xs text-muted">Référence</p>
-                <p className="tabular-ref text-base font-bold text-foreground">
+              <span className="rounded-full bg-primary px-3.5 py-1.5 text-right text-xs font-extrabold uppercase tracking-wide text-[#241403]">
+                Document non officiel, préparé avec e-Culture CI
+              </span>
+            </div>
+
+            <div className="flex flex-wrap gap-x-8 gap-y-3 border-b border-border py-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+                  Référence
+                </p>
+                <p className="tabular-ref mt-0.5 text-lg font-extrabold text-foreground">
                   {reference}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+                  Préparé le
+                </p>
+                <p className="mt-0.5 text-lg font-extrabold text-foreground">
+                  {datePreparation ? dateFormat.format(datePreparation) : ""}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+                  Statut
+                </p>
+                <p className="mt-0.5 text-lg font-extrabold text-secondary">
+                  Récapitulatif prêt
                 </p>
               </div>
             </div>
 
-            <dl className="mt-5 grid grid-cols-1 gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
-              <Field label="Organisateur">{texteOu(identite)}</Field>
-              <Field label="Téléphone">{texteOu(donnees.telephone)}</Field>
-              {String(donnees.email ?? "").trim() && (
-                <Field label="Email">{String(donnees.email)}</Field>
-              )}
-              {String(donnees.structure ?? "").trim() && (
-                <Field label="Structure / association">
-                  {String(donnees.structure)}
-                </Field>
-              )}
-              <Field label="Titre de l'événement">
-                {texteOu(donnees.titre, "Sans titre")}
-              </Field>
-              <Field label="Type de spectacle">{texteOu(donnees.type)}</Field>
-              <Field label="Date de l'événement">
-                {dateLisible(String(donnees.date ?? ""))}
-              </Field>
-              <Field label="District / Région">{texteOu(donnees.district)}</Field>
-              <Field label="Commune / Localité">{texteOu(donnees.commune)}</Field>
-              {String(donnees.lieu ?? "").trim() && (
-                <Field label="Lieu précis">{String(donnees.lieu)}</Field>
-              )}
-              <Field label="Jauge estimée">
-                {String(donnees.jauge ?? "").trim()
-                  ? `${donnees.jauge} spectateurs`
-                  : "Non précisée"}
-              </Field>
-              <Field label="Entrée">
-                {donnees.payante ? "Payante" : "Libre ou gratuite"}
-              </Field>
-              <Field label="Préparé le">
-                {datePreparation ? dateFormat.format(datePreparation) : ""}
-              </Field>
-            </dl>
+            <div className="mt-5 flex flex-col gap-4">
+              {blocs.map((b) => (
+                <div
+                  key={b.titre}
+                  className="overflow-hidden rounded-xl border border-border"
+                >
+                  <div className="border-b border-border bg-background px-5 py-3 text-sm font-extrabold text-foreground">
+                    {b.titre}
+                  </div>
+                  {b.lignes.map((l) => (
+                    <div
+                      key={l.label}
+                      className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border px-5 py-3 last:border-b-0"
+                    >
+                      <span className="text-sm text-muted">{l.label}</span>
+                      <span className="text-sm font-bold text-foreground">
+                        {l.valeur}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
 
-            <p className="mt-6 max-w-prose border-t border-border pt-4 text-xs text-muted">
+            <p className="mt-5 rounded-r-lg border border-border border-l-4 border-l-secondary bg-background px-4 py-3.5 text-sm leading-relaxed text-foreground">
               Ce récapitulatif vous aide à préparer votre démarche ; il ne
               remplace aucun document officiel. Conservez-le pour vos échanges
               avec les autorités locales (mairie, préfecture).
             </p>
+
+            <div className="mt-5 rounded-xl bg-secondary p-5 sm:p-6">
+              <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
+                Et maintenant ?
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-on-deep">
+                Présentez ce récapitulatif à votre mairie ou à la direction
+                régionale de la Culture de votre district. Ce sont elles qui
+                vous indiqueront les démarches attendues sur votre territoire.
+              </p>
+              <p className="mt-2.5 text-sm leading-relaxed text-on-deep-muted">
+                La validation de toute autorisation ou licence appartient au
+                ministère de la Culture. e-Culture CI est un service
+                indépendant et ne délivre aucun document officiel.
+              </p>
+            </div>
           </div>
 
-          <NextStepsNotice
-            leadIn="Votre récapitulatif est prêt."
-            body="Présentez-le à votre mairie ou à la direction régionale de la Culture de votre district. La validation de toute autorisation ou licence appartient au ministère de la Culture ; e-Culture CI est un service indépendant et ne délivre aucun document officiel."
-          />
-
           <div className="no-print mt-6 flex flex-col gap-2 sm:flex-row">
-            <LinkButton href="/" variant="outline">
-              Retour à l&apos;accueil
-            </LinkButton>
-            <Button type="button" variant="ghost" onClick={recommencer}>
+            <PrintButton />
+            <Button type="button" variant="outline" onClick={recommencer}>
               Préparer une autre déclaration
             </Button>
+            <LinkButton href="/" variant="ghost">
+              Retour à l&apos;accueil
+            </LinkButton>
           </div>
         </div>
 
@@ -498,14 +556,5 @@ export function DeclarationForm() {
         sans imprimer, tout est perdu.
       </p>
     </>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <dt className="text-xs text-muted">{label}</dt>
-      <dd className="font-medium text-foreground">{children}</dd>
-    </div>
   );
 }
