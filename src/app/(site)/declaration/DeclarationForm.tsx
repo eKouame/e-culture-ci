@@ -277,8 +277,8 @@ export function DeclarationForm() {
     return (
       <>
         <div ref={docRef}>
-          <div className="dog-ear ledger-lines rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
-            <div className="flex flex-wrap items-start justify-between gap-4 border-b-2 border-foreground pb-4">
+          <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+            <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
               <div>
                 <p className="text-lg font-extrabold tracking-tight text-secondary">
                   e-Culture <span className="text-primary-dark">CI</span>
@@ -319,20 +319,29 @@ export function DeclarationForm() {
               </div>
             </div>
 
-            {blocs.map((b) => (
-              <div key={b.titre} className="border-b border-border py-5">
-                <p className="mb-3 text-xs font-bold uppercase tracking-wide text-primary-dark">
-                  {b.titre}
-                </p>
-                <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
+            <div className="mt-5 flex flex-col gap-4">
+              {blocs.map((b) => (
+                <div
+                  key={b.titre}
+                  className="overflow-hidden rounded-xl border border-border"
+                >
+                  <div className="border-b border-border bg-background px-5 py-3 text-sm font-extrabold text-foreground">
+                    {b.titre}
+                  </div>
                   {b.lignes.map((l) => (
-                    <Field key={l.label} label={l.label}>
-                      {l.valeur}
-                    </Field>
+                    <div
+                      key={l.label}
+                      className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border px-5 py-3 last:border-b-0"
+                    >
+                      <span className="text-sm text-muted">{l.label}</span>
+                      <span className="text-sm font-bold text-foreground">
+                        {l.valeur}
+                      </span>
+                    </div>
                   ))}
-                </dl>
-              </div>
-            ))}
+                </div>
+              ))}
+            </div>
 
             <p className="mt-5 rounded-r-lg border border-border border-l-4 border-l-secondary bg-background px-4 py-3.5 text-sm leading-relaxed text-foreground">
               Ce récapitulatif vous aide à préparer votre démarche ; il ne
@@ -547,14 +556,5 @@ export function DeclarationForm() {
         sans imprimer, tout est perdu.
       </p>
     </>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <dt className="text-xs text-muted">{label}</dt>
-      <dd className="font-medium text-foreground">{children}</dd>
-    </div>
   );
 }
