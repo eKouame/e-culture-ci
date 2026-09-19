@@ -63,7 +63,7 @@ export function FlashInfoBanner({ items }: { items: FlashItem[] }) {
   }
 
   return (
-    <div className="no-print border-b border-primary/20 bg-primary-light">
+    <div className="no-print border-b border-border bg-background">
       <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-2 sm:px-6">
         <svg
           width="16"
@@ -75,15 +75,15 @@ export function FlashInfoBanner({ items }: { items: FlashItem[] }) {
         >
           <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />
         </svg>
-        <p className="flex-1 text-sm text-primary-dark">
+        <p className="flex-1 text-sm text-foreground">
           <span
             className={`mr-1.5 inline-block rounded-full px-2 py-0.5 text-xs font-bold uppercase tracking-wide ${
               current.type === "EXTERNE"
-                ? "bg-amber-100 text-amber-800"
+                ? "bg-primary-light text-primary-dark"
                 : "bg-secondary-light text-secondary-dark"
             }`}
           >
-            {current.type === "EXTERNE" ? "Externe" : "Interne"}
+            {current.type === "EXTERNE" ? "Actu secteur" : "Sur le site"}
           </span>
           {current.lien ? (
             <a
@@ -112,9 +112,7 @@ export function FlashInfoBanner({ items }: { items: FlashItem[] }) {
                 aria-label={`Voir l'info ${i + 1} sur ${visible.length}`}
                 aria-current={i === index % visible.length}
                 className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                  i === index % visible.length
-                    ? "bg-primary-dark"
-                    : "bg-primary-dark/25"
+                  i === index % visible.length ? "bg-primary-dark" : "bg-border"
                 }`}
               />
             ))}
@@ -124,7 +122,7 @@ export function FlashInfoBanner({ items }: { items: FlashItem[] }) {
           type="button"
           onClick={dismiss}
           aria-label="Fermer"
-          className="shrink-0 rounded-md p-1 text-primary-dark hover:bg-primary/10"
+          className="shrink-0 rounded-md p-1 text-muted hover:bg-black/5 hover:text-foreground"
         >
           ✕
         </button>
