@@ -32,14 +32,3 @@ export const TYPE_DEMANDEUR_OPTIONS = [
   "Association",
   "Structure informelle",
 ] as const;
-
-export const DOMAINES_ACTIVITE_OPTIONS = [
-  "Musique / Concert",
-  "Théâtre",
-  "Danse",
-  "Humour",
-  "Festival",
-  "Cérémonie traditionnelle",
-  "Événement sportif-culturel",
-  "Autre",
-] as const;

@@ -56,6 +56,12 @@ export const RESSOURCES: RessourceRegistre[] = [
     etiquettes: ["fiscalite"],
   },
   {
+    href: "/ressources/candidater-licences",
+    titre: "Candidater aux licences B et C",
+    description: "Qui est concerné, calendrier de l'appel, conditions et coûts.",
+    etiquettes: ["reglementation"],
+  },
+  {
     href: "/ressources/faq",
     titre: "FAQ",
     description: "Toutes les réponses sur les licences, la déclaration et l'immatriculation.",

@@ -122,6 +122,11 @@ const LIENS_BASE: Record<string, Lien> = {
     label: "Ma déclaration",
     aide: "Préparer la déclaration de votre événement.",
   },
+  candidaterLicences: {
+    href: "/ressources/candidater-licences",
+    label: "Candidater aux licences B et C",
+    aide: "Calendrier de l'appel, conditions et coûts.",
+  },
 };
 
 function ligneCategorie(code: "A" | "B" | "C"): Fait[] {
@@ -241,7 +246,9 @@ export function getResultat(reponses: Reponses): Resultat {
             "Le détail des pièces à fournir n'est pas publié ici. Adressez-vous à la Direction des affaires juridiques du ministère pour obtenir la liste officielle.",
         },
       ],
-      liens: [L.fondamentaux, L.budget, L.payerArtistes, L.proprieteIntellectuelle, L.declaration],
+      liens: morale
+        ? [L.candidaterLicences, L.budget, L.payerArtistes, L.proprieteIntellectuelle, L.declaration]
+        : [L.fondamentaux, L.budget, L.payerArtistes, L.proprieteIntellectuelle, L.declaration],
     };
   }
 
@@ -300,6 +307,6 @@ export function getResultat(reponses: Reponses): Resultat {
           : "Les montants indiqués proviennent des informations publiques disponibles et doivent être confirmés auprès du ministère avant tout engagement.",
       },
     ],
-    liens: [L.fondamentaux, L.budget, L.payerArtistes, L.proprieteIntellectuelle, L.declaration],
+    liens: [L.candidaterLicences, L.budget, L.payerArtistes, L.proprieteIntellectuelle, L.declaration],
   };
 }

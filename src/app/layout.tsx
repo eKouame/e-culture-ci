@@ -5,7 +5,7 @@ import "./globals.css";
 
 const SITE_TITLE = "e-Culture CI | Comprendre et préparer vos démarches du spectacle vivant";
 const SITE_DESCRIPTION =
-  "Comprendre et préparer vos démarches du spectacle vivant, partout en Côte d'Ivoire : vérifiez si une licence vous concerne, préparez votre déclaration ou votre immatriculation — un outil indépendant.";
+  "Comprendre et préparer vos démarches du spectacle vivant, partout en Côte d'Ivoire : vérifiez si une licence vous concerne, préparez votre déclaration et candidatez aux licences B et C — un service indépendant.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
