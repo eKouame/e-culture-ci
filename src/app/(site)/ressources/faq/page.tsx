@@ -26,8 +26,8 @@ const FAQ = [
     a: "Non, c'est une rumeur infondée. Ce montant ne concerne que les 10 à 30 % d'acteurs dont le spectacle est l'activité professionnelle principale. Les organisateurs occasionnels à but socio-éducatif ou culturel en sont exemptés.",
   },
   {
-    q: "Pourquoi dois-je m'immatriculer au ministère ?",
-    a: "L'immatriculation transforme les acteurs isolés — souvent regroupés informellement sur des groupes WhatsApp — en interlocuteurs officiels et reconnus. Elle est indispensable pour participer aux politiques publiques du secteur et bénéficier d'un accompagnement.",
+    q: "Licence et immatriculation, est-ce la même chose ?",
+    a: "Non, ce sont deux choses différentes. La licence d'entrepreneur de spectacles est une autorisation d'exercer comme professionnel (voir la ressource « Candidater aux licences B et C »). L'immatriculation au registre national des artistes relève du statut de l'artiste et se met encore en place séparément.",
   },
   {
     q: "Qu'est-ce que le parrainage (Licence B) ?",

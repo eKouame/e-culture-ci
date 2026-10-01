@@ -61,6 +61,12 @@ const ETAPES = [
         description: "Retenue à la source, cotisations et paiements : la marche à suivre.",
       },
       {
+        href: "/ressources/candidater-licences",
+        label: "Ressource 06",
+        titre: "Candidater aux licences B et C",
+        description: "Qui est concerné, calendrier de l'appel, conditions et coûts.",
+      },
+      {
         href: "/ressources/faq",
         label: "Questions fréquentes",
         titre: "FAQ",
@@ -180,9 +186,6 @@ export default function RessourcesPage() {
             </LinkButton>
             <LinkButton href="/declaration" variant="outlineOnDeep" size="lg">
               Ma déclaration
-            </LinkButton>
-            <LinkButton href="/immatriculation" variant="outlineOnDeep" size="lg">
-              Mon immatriculation
             </LinkButton>
           </div>
         </div>

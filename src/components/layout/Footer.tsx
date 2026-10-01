@@ -3,7 +3,6 @@ import { INDEPENDENCE_DISCLAIMER } from "@/lib/disclaimer";
 const MODULE_LINKS = [
   { href: "/suis-je-concerne", label: "Suis-je concerné ?" },
   { href: "/declaration", label: "Ma déclaration" },
-  { href: "/immatriculation", label: "Mon immatriculation" },
   { href: "/ressources", label: "Ressources" },
 ];
 
