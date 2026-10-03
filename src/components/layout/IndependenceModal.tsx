@@ -1,25 +1,48 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/Button";
 
 const STORAGE_KEY = "ecci-independence-seen";
+
+// Lit sessionStorage via useSyncExternalStore : rien n'est rendu côté serveur
+// (snapshot serveur = "déjà vu"), puis la vraie valeur est lue après l'hydratation.
+// `dismissedInMemory` garde le comportement si le stockage est indisponible.
+let dismissedInMemory = false;
+const listeners = new Set<() => void>();
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function getSeen(): boolean {
+  if (dismissedInMemory) return true;
+  try {
+    return sessionStorage.getItem(STORAGE_KEY) !== null;
+  } catch {
+    return false;
+  }
+}
+
+function dismiss() {
+  dismissedInMemory = true;
+  try {
+    sessionStorage.setItem(STORAGE_KEY, "1");
+  } catch {
+    // ignore storage errors (private browsing, etc.)
+  }
+  listeners.forEach((listener) => listener());
+}
 
 const MODAL_DISCLAIMER =
   "e-Culture CI est un service d'information indépendant, sans lien officiel avec le ministère de la Culture. Il vous aide à comprendre la réglementation et à préparer vos démarches. Il ne les remplace pas et ne délivre aucun document officiel.";
 
 export function IndependenceModal() {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    try {
-      if (!sessionStorage.getItem(STORAGE_KEY)) {
-        setOpen(true);
-      }
-    } catch {
-      setOpen(true);
-    }
-  }, []);
+  const seen = useSyncExternalStore(subscribe, getSeen, () => true);
+  const open = !seen;
 
   useEffect(() => {
     if (!open) return;
@@ -32,17 +55,7 @@ export function IndependenceModal() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
-
-  function dismiss() {
-    try {
-      sessionStorage.setItem(STORAGE_KEY, "1");
-    } catch {
-      // ignore storage errors (private browsing, etc.)
-    }
-    setOpen(false);
-  }
 
   if (!open) return null;
 
