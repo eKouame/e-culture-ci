@@ -3,15 +3,13 @@ import { ReactNode } from "react";
 export function Card({
   children,
   className = "",
-  dogEar = false,
 }: {
   children: ReactNode;
   className?: string;
-  dogEar?: boolean;
 }) {
   return (
     <div
-      className={`rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6 ${dogEar ? "dog-ear" : ""} ${className}`}
+      className={`rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6 ${className}`}
     >
       {children}
     </div>

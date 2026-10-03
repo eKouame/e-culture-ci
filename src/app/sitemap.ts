@@ -1,15 +1,20 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/metadata";
 
 const PATHS = [
   "",
   "/suis-je-concerne",
   "/declaration",
-  "/immatriculation",
   "/ressources",
-  "/ressources/faq",
-  "/ressources/mentorat",
+  "/ressources/toutes",
+  "/ressources/fondamentaux",
+  "/ressources/note-intention",
+  "/ressources/budget",
+  "/ressources/payer-artistes",
+  "/ressources/candidater-licences",
   "/ressources/propriete-intellectuelle",
+  "/ressources/mentorat",
+  "/ressources/faq",
   "/communes",
   "/mentions-legales",
   "/confidentialite",

@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Conditions d'utilisation | e-Culture CI",
-};
+  description:
+    "Conditions d'utilisation de e-Culture CI, outil indépendant de préparation pour le spectacle vivant en Côte d'Ivoire.",
+  path: "/conditions-utilisation",
+});
 
 export default function ConditionsUtilisationPage() {
   return (

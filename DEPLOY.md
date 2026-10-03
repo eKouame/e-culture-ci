@@ -75,7 +75,7 @@ la vraie base Neon.
 ## 5. Domaine personnalisé
 
 Le site est servi sur **`e-culture.ci`** (domaine principal). Le code
-(`src/lib/site.ts`, `sitemap`, `robots`, métadonnées Open Graph) suppose ce
+(`src/lib/metadata.ts`, `sitemap`, `robots`, métadonnées Open Graph) suppose ce
 domaine.
 
 1. Dans Vercel (**Settings → Domains → Add**), ajoutez `e-culture.ci`, puis

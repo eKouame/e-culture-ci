@@ -27,27 +27,8 @@ export const STATUT_MENTORAT_LABELS: Record<string, string> = {
   CLOTURE: "Clôturé",
 };
 
-export const STATUT_DEMANDE_COMMUNE_LABELS: Record<string, string> = {
-  NOUVELLE: "Nouvelle",
-  CONTACTEE: "Contactée",
-  EN_DISCUSSION: "En discussion",
-  PILOTE: "Commune pilote",
-  CLOTUREE: "Clôturée",
-};
-
 export const TYPE_DEMANDEUR_OPTIONS = [
   "Individuel",
   "Association",
   "Structure informelle",
-] as const;
-
-export const DOMAINES_ACTIVITE_OPTIONS = [
-  "Musique / Concert",
-  "Théâtre",
-  "Danse",
-  "Humour",
-  "Festival",
-  "Cérémonie traditionnelle",
-  "Événement sportif-culturel",
-  "Autre",
 ] as const;

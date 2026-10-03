@@ -51,7 +51,7 @@ export function MentoratForm() {
   if (result) {
     return (
       <div>
-        <Card dogEar className="ledger-lines border-secondary/30 bg-secondary-light">
+        <Card className="border-secondary/30 bg-secondary-light">
           <Stamp>Enregistrée</Stamp>
           <h2 className="mt-3 text-lg font-bold text-secondary-dark">
             Votre demande a bien été enregistrée

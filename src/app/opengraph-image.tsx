@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
-import { SITE_HOST } from "@/lib/site";
+import { SITE_HOST } from "@/lib/metadata";
+import { OgBrandBadge } from "@/lib/og-badge";
 
 export const alt =
   "e-Culture CI — Une licence est-elle nécessaire pour votre spectacle ? Découvrez-le en 1 minute.";
@@ -22,27 +23,7 @@ export default function OpengraphImage() {
         }}
       >
         {/* Marque */}
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 68,
-              height: 68,
-              borderRadius: 16,
-              background: "#e8590c",
-              color: "#ffffff",
-              fontSize: 30,
-              fontWeight: 700,
-            }}
-          >
-            eC
-          </div>
-          <div style={{ fontSize: 32, fontWeight: 700, color: "#1c1917" }}>
-            e-Culture CI
-          </div>
-        </div>
+        <OgBrandBadge />
 
         {/* Accroche */}
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>

@@ -44,14 +44,6 @@ enum StatutMentorat {
   CLOTURE
 }
 
-enum StatutDemandeCommune {
-  NOUVELLE
-  CONTACTEE
-  EN_DISCUSSION
-  PILOTE
-  CLOTUREE
-}
-
 model Counter {
   key   String @id
   value Int    @default(0)
@@ -137,25 +129,20 @@ model MentoratDemande {
   updatedAt DateTime @updatedAt
 }
 
-model DemandeCommune {
-  id     String @id @default(cuid())
-  numero String @unique
+enum FlashInfoType {
+  INTERNE
+  EXTERNE
+}
 
-  nom          String
-  fonction     String
-  commune      String
-  email        String
-  telephone    String?
-  message      String?
-  consentement Boolean @default(false)
-
-  statut    StatutDemandeCommune @default(NOUVELLE)
-  noteAdmin String?
+model FlashInfo {
+  id     String        @id @default(cuid())
+  titre  String
+  lien   String?
+  type   FlashInfoType @default(INTERNE)
+  actif  Boolean       @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@index([commune])
 }
 
 model AdminUser {

@@ -1,118 +1,136 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useRef, useState } from "react";
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { NextStepsNotice } from "@/components/ui/NextStepsNotice";
-import { Stamp } from "@/components/ui/Stamp";
 import { OptionCard } from "@/components/questionnaire/OptionCard";
 import { ProgressBar } from "@/components/questionnaire/ProgressBar";
-import {
-  QUESTION_FREQUENCE,
-  QUESTION_FINALITE,
-  QUESTION_STRUCTURE,
-  QUESTION_JAUGE,
-  JAUGE_TO_ESTIMATE,
-} from "./questions";
-import {
-  getOrientation,
-  ReponsesQuestionnaire,
-  StatutOrientation,
-} from "@/lib/questionnaire-logic";
+import { QUESTIONS, getResultat, Reponses } from "./config";
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 3;
 
 export function Questionnaire() {
   const [step, setStep] = useState(0);
-  const [reponses, setReponses] = useState<Partial<ReponsesQuestionnaire>>({});
+  const [reponses, setReponses] = useState<Partial<Reponses>>({});
+  const [choix, setChoix] = useState<string | null>(null);
+  const [estResultat, setEstResultat] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  function answer<K extends keyof ReponsesQuestionnaire>(
-    key: K,
-    value: ReponsesQuestionnaire[K],
-  ) {
-    setReponses((prev) => ({ ...prev, [key]: value }));
-    setStep((s) => s + 1);
+  function recentrer() {
+    const el = cardRef.current;
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 90;
+    const doux = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: y, behavior: doux ? "smooth" : "auto" });
+  }
+
+  function suivant() {
+    if (choix === null) return;
+    const cle = QUESTIONS[step].cle;
+    const next = { ...reponses, [cle]: choix };
+    setReponses(next);
+
+    // Raccourci : une fréquence occasionnelle donne directement le résultat,
+    // sans poser les questions de rôle/forme (comme dans le prototype).
+    if (step === 0 && choix === "occasionnelle") {
+      setEstResultat(true);
+    } else if (step === TOTAL_STEPS - 1) {
+      setEstResultat(true);
+    } else {
+      const suivantStep = step + 1;
+      setStep(suivantStep);
+      setChoix((next as Partial<Reponses>)[QUESTIONS[suivantStep].cle] ?? null);
+    }
+    requestAnimationFrame(recentrer);
   }
 
   function goBack() {
-    setStep((s) => Math.max(0, s - 1));
+    if (estResultat) {
+      const e = reponses.frequence === "occasionnelle" ? 0 : TOTAL_STEPS - 1;
+      setEstResultat(false);
+      setStep(e);
+      setChoix((reponses as Partial<Reponses>)[QUESTIONS[e].cle] ?? null);
+    } else {
+      const prec = Math.max(0, step - 1);
+      setStep(prec);
+      setChoix((reponses as Partial<Reponses>)[QUESTIONS[prec].cle] ?? null);
+    }
+    requestAnimationFrame(recentrer);
   }
 
-  if (step >= TOTAL_STEPS) {
-    return <Resultat reponses={reponses as ReponsesQuestionnaire} onRestart={() => {
-      setReponses({});
-      setStep(0);
-    }} />;
+  function recommencer() {
+    setReponses({});
+    setChoix(null);
+    setStep(0);
+    setEstResultat(false);
+    requestAnimationFrame(recentrer);
   }
 
+  const labelContinuer =
+    step === TOTAL_STEPS - 1 || choix === "occasionnelle"
+      ? "Voir mon résultat"
+      : "Continuer";
+
   return (
-    <div className="flex flex-col gap-6">
-      <ProgressBar step={step} total={TOTAL_STEPS} />
+    <div
+      ref={cardRef}
+      className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8"
+    >
+      {!estResultat && (
+        <div>
+          <div className="mb-2.5 flex items-baseline justify-end gap-3">
+            <span className="text-sm text-muted">Une minute environ</span>
+          </div>
+          <ProgressBar step={step} total={TOTAL_STEPS} label="Étape" />
+          <div className="mt-6">
+            <h2 className="text-xl font-bold text-foreground sm:text-2xl">
+              {QUESTIONS[step].titre}
+            </h2>
+            <p className="mt-2 max-w-prose text-sm text-muted">
+              {QUESTIONS[step].aide}
+            </p>
+            <div
+              role="radiogroup"
+              aria-label={QUESTIONS[step].titre}
+              className="mt-5 flex flex-col gap-3"
+            >
+              {QUESTIONS[step].options.map((opt) => (
+                <OptionCard
+                  key={opt.value}
+                  label={opt.label}
+                  description={opt.description}
+                  selected={choix === opt.value}
+                  onClick={() => setChoix(opt.value)}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={suivant}
+              disabled={choix === null}
+              className="min-h-[52px] rounded-lg bg-primary-dark px-6 py-3.5 text-base font-semibold text-white transition-colors hover:brightness-90 disabled:cursor-not-allowed disabled:bg-black/10 disabled:text-muted"
+            >
+              {labelContinuer}
+            </button>
+            {step > 0 && (
+              <button
+                type="button"
+                onClick={goBack}
+                className="text-sm font-medium text-muted hover:text-primary-dark"
+              >
+                ← Retour
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
-      {step === 0 && (
-        <Step
-          title={QUESTION_FREQUENCE.title}
-          options={QUESTION_FREQUENCE.options}
-          onSelect={(v) => answer("frequence", v)}
-        />
-      )}
-      {step === 1 && (
-        <Step
-          title={QUESTION_FINALITE.title}
-          options={QUESTION_FINALITE.options}
-          onSelect={(v) => answer("finalite", v)}
-        />
-      )}
-      {step === 2 && (
-        <Step
-          title={QUESTION_STRUCTURE.title}
-          options={QUESTION_STRUCTURE.options}
-          onSelect={(v) => answer("structure", v)}
-        />
-      )}
-      {step === 3 && (
-        <Step
-          title={QUESTION_JAUGE.title}
-          options={QUESTION_JAUGE.options}
-          onSelect={(v) => answer("jauge", v)}
-        />
-      )}
-
-      {step > 0 && (
-        <button
-          type="button"
-          onClick={goBack}
-          className="self-start text-sm font-medium text-muted hover:text-primary-dark"
-        >
-          ← Question précédente
-        </button>
-      )}
-    </div>
-  );
-}
-
-function Step<T extends string>({
-  title,
-  options,
-  onSelect,
-}: {
-  title: string;
-  options: { value: T; label: string; description?: string }[];
-  onSelect: (value: T) => void;
-}) {
-  return (
-    <div className="flex flex-col gap-3">
-      <h2 className="text-xl font-bold text-foreground">{title}</h2>
-      <div className="flex flex-col gap-3">
-        {options.map((opt) => (
-          <OptionCard
-            key={opt.value}
-            label={opt.label}
-            description={opt.description}
-            onClick={() => onSelect(opt.value)}
-          />
-        ))}
+      <div aria-live="polite">
+        {estResultat && (
+          <Resultat reponses={reponses as Reponses} onRestart={recommencer} />
+        )}
       </div>
     </div>
   );
@@ -122,101 +140,132 @@ function Resultat({
   reponses,
   onRestart,
 }: {
-  reponses: ReponsesQuestionnaire;
+  reponses: Reponses;
   onRestart: () => void;
 }) {
-  const statut: StatutOrientation = getOrientation(reponses);
-  const jaugeEstimee = JAUGE_TO_ESTIMATE[reponses.jauge];
-  const declarationHref = `/declaration?jauge=${jaugeEstimee}&orientation=${statut}`;
-
-  if (statut === "EXEMPTE") {
-    return (
-      <>
-        <Card dogEar className="border-secondary/30 bg-secondary-light">
-        <Stamp>Exempté(e)</Stamp>
-        <h2 className="mt-3 text-xl font-extrabold text-secondary-dark">
-          Bonne nouvelle : vous êtes exempté(e)
-        </h2>
-        <p className="mt-2 max-w-prose text-sm text-foreground">
-          D&apos;après vos réponses, votre activité relève des événements
-          occasionnels à but socio-éducatif, sportif, philanthropique ou de
-          promotion culturelle. Vous n&apos;avez ni licence
-          (5 000 000 FCFA) ni caution bancaire (5 000 000 FCFA) à payer.
-        </p>
-        <p className="mt-2 max-w-prose text-sm text-foreground">
-          Il vous suffit de préparer une <strong>déclaration gratuite</strong>{" "}
-          de votre événement et d&apos;obtenir un récapitulatif clair à
-          conserver pour effectuer votre déclaration officielle.
-        </p>
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-          <LinkButton href={declarationHref} size="lg">
-            Préparer ma déclaration →
-          </LinkButton>
-          <button
-            type="button"
-            onClick={onRestart}
-            className="text-sm font-medium text-muted hover:text-primary-dark"
-          >
-            Recommencer le test
-          </button>
-        </div>
-        <p className="mt-4 text-xs text-muted">
-          Ce résultat est indicatif et ne constitue pas une décision
-          administrative. Voir la{" "}
-          <Link href="/ressources/faq" className="underline">
-            FAQ complète
-          </Link>
-          .
-        </p>
-      </Card>
-      <NextStepsNotice leadIn="Votre orientation est prête." />
-      </>
-    );
-  }
+  const res = getResultat(reponses);
+  const resume = [
+    QUESTIONS[0].options.find((o) => o.value === reponses.frequence)?.label,
+    QUESTIONS[1].options.find((o) => o.value === reponses.role)?.label,
+    QUESTIONS[2].options.find((o) => o.value === reponses.forme)?.label,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
-    <>
-    <Card dogEar className="border-primary/30 bg-primary-light">
-      <Stamp tone="primary">Professionnel</Stamp>
-      <h2 className="mt-3 text-xl font-extrabold text-primary-dark">
-        Vous relevez du régime des acteurs professionnels
-      </h2>
-      <p className="mt-4 max-w-prose text-sm text-foreground">
-        D&apos;après vos réponses, vous devez obtenir une licence
-        (5 000 000 FCFA) et constituer une caution bancaire
-        (5 000 000 FCFA), conformément à l&apos;article 10 du décret de
-        2021.
-      </p>
-      <p className="mt-2 max-w-prose text-sm text-foreground">
-        Si vous démarrez votre activité, vous pouvez d&apos;abord vous faire
-        accompagner par un professionnel agréé (parrainage — 5 spectacles
-        supervisés) avant d&apos;opérer en autonomie.
-      </p>
-      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-        <LinkButton href="/immatriculation" size="lg">
-          Préparer mon dossier
-        </LinkButton>
-        <LinkButton href="/ressources/mentorat" variant="outline" size="lg">
-          Trouver un mentor
-        </LinkButton>
-      </div>
-      <button
-        type="button"
-        onClick={onRestart}
-        className="mt-3 text-sm font-medium text-muted hover:text-primary-dark"
+    <div>
+      <div
+        className={`rounded-2xl p-6 ${
+          res.ton === "vert" ? "bg-secondary" : "bg-deep-strong"
+        } text-on-deep`}
       >
-        Recommencer le test
-      </button>
-      <p className="mt-4 text-xs text-muted">
-        Ce résultat est indicatif et ne constitue pas une décision
-        administrative. Voir la{" "}
-        <Link href="/ressources/faq" className="underline">
-          FAQ complète
-        </Link>
-        .
-      </p>
-    </Card>
-      <NextStepsNotice leadIn="Votre orientation est prête." />
-      </>
+        <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
+          {res.surtitre}
+        </p>
+        <h2 className="mt-2 text-2xl font-extrabold tracking-tight">
+          {res.titre}
+        </h2>
+        <p className="mt-3 max-w-prose text-on-deep-muted">{res.chapeau}</p>
+      </div>
+
+      {res.aCategorie && (
+        <div className="mt-5 overflow-hidden rounded-xl border border-border">
+          <div className="border-b border-border bg-background px-5 py-3 text-sm font-extrabold text-foreground">
+            {res.categorieTitre}
+          </div>
+          {res.faits.map((f) => (
+            <div
+              key={f.label}
+              className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border px-5 py-3 last:border-b-0"
+            >
+              <span className="text-sm text-muted">{f.label}</span>
+              <span className="text-sm font-bold text-foreground">
+                {f.valeur}
+              </span>
+            </div>
+          ))}
+          <p className="bg-surface px-5 py-3 text-sm text-muted">
+            Selon les informations publiques disponibles, à confirmer auprès
+            du ministère.
+          </p>
+        </div>
+      )}
+
+      <div className="mt-6">
+        <h3 className="text-lg font-extrabold text-foreground">
+          {res.preparerTitre}
+        </h3>
+        <ul className="mt-3 flex flex-col gap-2.5">
+          {res.preparer.map((item) => (
+            <li key={item} className="flex items-start gap-3 text-sm text-foreground">
+              <span
+                aria-hidden="true"
+                className="mt-1.5 h-2 w-2 shrink-0 rounded-sm bg-primary"
+              />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {res.notes.length > 0 && (
+        <div className="mt-6 flex flex-col gap-3">
+          {res.notes.map((n) => (
+            <Card key={n.titre} className="border-l-4 border-l-primary p-4">
+              <p className="text-xs font-extrabold uppercase tracking-wide text-primary-dark">
+                {n.titre}
+              </p>
+              <p className="mt-1 text-sm text-foreground">{n.texte}</p>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-6">
+        <h3 className="text-lg font-extrabold text-foreground">
+          Pour aller plus loin
+        </h3>
+        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {res.liens.map((lien) => (
+            <LinkButton
+              key={lien.href}
+              href={lien.href}
+              variant="outline"
+              className="!flex-col !items-start !gap-0.5 text-left"
+            >
+              <span className="block text-sm font-bold text-foreground">
+                {lien.label}
+              </span>
+              <span className="block text-xs font-normal text-muted">
+                {lien.aide}
+              </span>
+            </LinkButton>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-6 rounded-xl bg-deep px-5 py-4 text-on-deep">
+        <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
+          Important
+        </p>
+        <p className="mt-1.5 text-sm text-on-deep-muted">
+          Ce résultat est une orientation, pas une décision officielle.
+          e-Culture CI ne délivre aucune licence et n&apos;a pas de lien
+          officiel avec le ministère. La composition du dossier est à
+          demander à la Direction des affaires juridiques du ministère.
+        </p>
+      </div>
+
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={onRestart}
+          className="rounded-lg border border-border px-4 py-2.5 text-sm font-bold text-foreground hover:bg-black/5"
+        >
+          ↻ Recommencer
+        </button>
+        <p className="text-sm text-muted">Vos réponses : {resume}</p>
+      </div>
+    </div>
   );
 }

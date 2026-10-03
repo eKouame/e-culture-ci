@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { MentoratForm } from "./MentoratForm";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Mentorat & parrainage | e-Culture CI",
-};
+  description:
+    "Débutant dans le spectacle vivant ? Trouvez un mentor licencié pour organiser votre parrainage (Licence B).",
+  path: "/ressources/mentorat",
+});
 
 export default function MentoratPage() {
   return (
