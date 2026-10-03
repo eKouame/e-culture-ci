@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "ecci-flash-dismissed";
 const ROTATE_MS = 6000;
@@ -12,24 +12,61 @@ type FlashItem = {
   type: "INTERNE" | "EXTERNE";
 };
 
-function readDismissed(): string[] {
+// Les ids fermés sont lus dans localStorage via useSyncExternalStore : le snapshot
+// serveur vaut `null` (rien n'est rendu), puis la vraie valeur est lue après
+// l'hydratation. `dismissedInMemory` garde la fermeture effective si le stockage
+// est indisponible (navigation privée, etc.).
+let dismissedInMemory: string | null = null;
+const listeners = new Set<() => void>();
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  const onStorage = (e: StorageEvent) => {
+    if (e.key !== STORAGE_KEY) return;
+    dismissedInMemory = null;
+    listener();
+  };
+  window.addEventListener("storage", onStorage);
+  return () => {
+    listeners.delete(listener);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function getSnapshot(): string {
+  if (dismissedInMemory !== null) return dismissedInMemory;
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as string[]) : [];
+    return localStorage.getItem(STORAGE_KEY) ?? "[]";
+  } catch {
+    return "[]";
+  }
+}
+
+function parseDismissed(raw: string): string[] {
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as string[]) : [];
   } catch {
     return [];
   }
 }
 
-export function FlashInfoBanner({ items }: { items: FlashItem[] }) {
-  const [dismissed, setDismissed] = useState<string[]>([]);
-  const [hydrated, setHydrated] = useState(false);
-  const [index, setIndex] = useState(0);
+function saveDismissed(ids: string[]) {
+  const raw = JSON.stringify(ids);
+  dismissedInMemory = raw;
+  try {
+    localStorage.setItem(STORAGE_KEY, raw);
+  } catch {
+    // ignore storage errors (private browsing, etc.)
+  }
+  listeners.forEach((listener) => listener());
+}
 
-  useEffect(() => {
-    setDismissed(readDismissed());
-    setHydrated(true);
-  }, []);
+export function FlashInfoBanner({ items }: { items: FlashItem[] }) {
+  const raw = useSyncExternalStore(subscribe, getSnapshot, () => null);
+  const hydrated = raw !== null;
+  const dismissed = useMemo(() => (raw ? parseDismissed(raw) : []), [raw]);
+  const [index, setIndex] = useState(0);
 
   const visible = hydrated ? items.filter((i) => !dismissed.includes(i.id)) : [];
 
@@ -44,7 +81,6 @@ export function FlashInfoBanner({ items }: { items: FlashItem[] }) {
       setIndex((i) => (i + 1) % visible.length);
     }, ROTATE_MS);
     return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible.length]);
 
   if (!hydrated || visible.length === 0) return null;
@@ -52,13 +88,7 @@ export function FlashInfoBanner({ items }: { items: FlashItem[] }) {
   const current = visible[index % visible.length];
 
   function dismiss() {
-    const next = [...dismissed, current.id];
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    } catch {
-      // ignore storage errors (private browsing, etc.)
-    }
-    setDismissed(next);
+    saveDismissed([...dismissed, current.id]);
     setIndex(0);
   }
 
