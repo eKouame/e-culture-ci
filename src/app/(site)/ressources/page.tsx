@@ -52,8 +52,10 @@ export default function RessourcesPage() {
           ⚠️ La rumeur à ne pas croire
         </h2>
         <p className="mt-1.5 max-w-prose text-sm text-foreground">
-          Une rumeur affirme que <strong>tout le monde</strong> devrait payer
-          jusqu&apos;à <strong>10 000 000 FCFA</strong> pour organiser un
+          Une rumeur affirme que <strong>tout le monde</strong>{" "}
+          devrait payer
+          jusqu&apos;à <strong>10 000 000 FCFA</strong>{" "}
+          pour organiser un
           événement. C&apos;est faux pour la grande majorité des acteurs : ce
           montant ne concerne que les professionnels dont le spectacle est
           l&apos;activité principale — pas les organisateurs occasionnels à
