@@ -20,10 +20,10 @@ export default function MentionsLegalesPage() {
           <p className="mt-2">
             Le site e-Culture CI (
             <a
-              href="https://e-culture-ci.vercel.app"
+              href="https://e-culture.ci"
               className="underline hover:text-primary-dark"
             >
-              https://e-culture-ci.vercel.app
+              https://e-culture.ci
             </a>
             ) est édité par Élie Kouamé, à titre d&apos;initiative personnelle
             et indépendante.

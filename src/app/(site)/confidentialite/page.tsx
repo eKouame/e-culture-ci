@@ -48,7 +48,7 @@ export default function ConfidentialitePage() {
           <p className="mt-2">
             Sur la page dédiée aux communes (
             <a href="/communes" className="underline hover:text-primary-dark">
-              e-culture-ci.vercel.app/communes
+              e-culture.ci/communes
             </a>
             ), le formulaire de contact collecte votre nom, votre fonction,
             le nom de votre commune, votre email, et, si vous le souhaitez,

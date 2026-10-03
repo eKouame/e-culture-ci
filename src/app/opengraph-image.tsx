@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { SITE_HOST } from "@/lib/site";
 
 export const alt =
   "e-Culture CI — Une licence est-elle nécessaire pour votre spectacle ? Découvrez-le en 1 minute.";
@@ -101,7 +102,7 @@ export default function OpengraphImage() {
             Faire le test gratuitement →
           </div>
           <div style={{ display: "flex", fontSize: 24, color: "#6b6b6b" }}>
-            e-culture-ci.vercel.app
+            {SITE_HOST}
           </div>
         </div>
       </div>
