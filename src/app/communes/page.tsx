@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/metadata";
 
 const TITLE = "e-Culture CI pour les communes | e-Culture CI";
 const DESCRIPTION =
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
-    url: "https://e-culture-ci.vercel.app/communes",
+    url: `${SITE_URL}/communes`,
     siteName: "e-Culture CI",
     locale: "fr_CI",
     type: "website",

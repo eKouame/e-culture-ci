@@ -517,7 +517,8 @@ export function DeclarationForm() {
               <span className="text-sm leading-relaxed text-foreground">
                 J&apos;accepte que les informations de cette déclaration
                 soient transmises à la commune de{" "}
-                <strong>{PARTAGE_COMMUNE.commune}</strong> pour alimenter la
+                <strong>{PARTAGE_COMMUNE.commune}</strong>{" "}
+                pour alimenter la
                 cartographie culturelle de son territoire.
               </span>
             </label>

@@ -72,11 +72,24 @@ la vraie base Neon.
    npx prisma db seed
    ```
 
-## 5. Domaine personnalisé (facultatif)
+## 5. Domaine personnalisé
 
-Dans les réglages du projet Vercel (**Settings → Domains**), vous pouvez
-attacher un nom de domaine que vous possédez déjà, ou utiliser le sous-domaine
-`*.vercel.app` fourni gratuitement pour commencer.
+Le site est servi sur **`e-culture.ci`** (domaine principal). Le code
+(`src/lib/metadata.ts`, `sitemap`, `robots`, métadonnées Open Graph) suppose ce
+domaine.
+
+1. Dans Vercel (**Settings → Domains → Add**), ajoutez `e-culture.ci`, puis
+   `www.e-culture.ci`.
+2. Pour `www.e-culture.ci`, choisissez **Redirect to `e-culture.ci`** (le
+   domaine nu reste le domaine principal).
+3. Chez votre registrar, créez les enregistrements DNS que Vercel affiche
+   (en général un `A` pour le domaine nu et un `CNAME` pour `www`) — copiez
+   les valeurs exactes données par Vercel.
+4. Attendez la propagation DNS ; Vercel émet ensuite le certificat HTTPS
+   automatiquement.
+
+Le sous-domaine `*.vercel.app` du projet continue de fonctionner mais n'est
+plus l'adresse de référence.
 
 ## Ce qui se passe automatiquement à chaque déploiement
 

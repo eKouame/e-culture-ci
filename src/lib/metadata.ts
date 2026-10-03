@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = "https://e-culture-ci.vercel.app";
+export const SITE_HOST = "e-culture.ci";
+export const SITE_URL = `https://${SITE_HOST}`;
 export const SITE_NAME = "e-Culture CI";
 
 /**

@@ -27,8 +27,10 @@ export default async function AdminFlashInfoPage() {
       <p className="mt-1.5 max-w-prose text-sm text-muted">
         Jusqu&apos;à 3 ou 4 flash infos actifs en même temps : ils défilent
         automatiquement dans la bannière, en haut des pages citoyennes.
-        Marquez chacun <strong>Interne</strong> (ressources, nouveautés du
-        site) ou <strong>Externe</strong> (actualité du secteur) pour que
+        Marquez chacun <strong>Interne</strong>{" "}
+        (ressources, nouveautés du
+        site) ou <strong>Externe</strong>{" "}
+        (actualité du secteur) pour que
         les visiteurs distinguent les deux d&apos;un coup d&apos;œil.
       </p>
       {actifsCount > 4 && (

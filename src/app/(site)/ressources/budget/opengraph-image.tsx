@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { SITE_HOST } from "@/lib/metadata";
 import { OgBrandBadge } from "@/lib/og-badge";
 
 export const alt =
@@ -82,7 +83,7 @@ export default function OpengraphImage() {
             Découvrir →
           </div>
           <div style={{ display: "flex", fontSize: 24, color: "#6b6b6b" }}>
-            e-culture-ci.vercel.app/ressources/budget
+            {SITE_HOST}/ressources/budget
           </div>
         </div>
       </div>
