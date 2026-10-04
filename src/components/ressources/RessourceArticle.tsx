@@ -9,6 +9,7 @@ export function RessourceArticle({
   dek,
   meta,
   sommaire,
+  avantCorps,
   children,
 }: {
   kicker: string;
@@ -16,6 +17,8 @@ export function RessourceArticle({
   dek: string;
   meta: { lecture: string; niveau: string };
   sommaire: { id: string; label: string }[];
+  // Bloc optionnel sous l’en-tête, avant le sommaire (essentiel, audio, questions).
+  avantCorps?: ReactNode;
   children: ReactNode;
 }) {
   return (
@@ -63,6 +66,12 @@ export function RessourceArticle({
           </div>
         </div>
       </div>
+
+      {avantCorps && (
+        <div className="mx-auto flex max-w-5xl flex-col gap-5 px-4 pt-8 sm:px-6">
+          {avantCorps}
+        </div>
+      )}
 
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-8 sm:px-6 md:grid-cols-[220px_1fr] md:gap-12">
         <TableOfContents items={sommaire} />
