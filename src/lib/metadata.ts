@@ -21,6 +21,8 @@ export function pageMetadata({
   return {
     title,
     description,
+    // Résolu contre metadataBase : https://e-culture.ci/<path>
+    alternates: { canonical: path },
     openGraph: {
       title,
       description,

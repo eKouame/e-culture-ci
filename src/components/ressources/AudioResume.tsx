@@ -75,6 +75,7 @@ export function AudioResume({
   dureeSecondes,
   poidsLabel,
   enregistre,
+  accroche = "L'essentiel en deux minutes, à écouter.",
 }: {
   ressource: string;
   src: string;
@@ -82,6 +83,8 @@ export function AudioResume({
   dureeSecondes: number;
   poidsLabel: string;
   enregistre: string;
+  // Première phrase du bloc : elle annonce la durée, à ajuster à chaque enregistrement.
+  accroche?: string;
 }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const atteints = useRef(new Set<number>());
@@ -156,8 +159,7 @@ export function AudioResume({
           )}
         </button>
         <p className="text-sm leading-snug text-on-deep">
-          L&apos;essentiel en deux minutes, à écouter. L&apos;écrit ci-dessous reste
-          la référence.
+          {accroche} L&apos;écrit ci-dessous reste la référence.
         </p>
       </div>
 

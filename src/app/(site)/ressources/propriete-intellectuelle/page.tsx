@@ -1,6 +1,12 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
+import { PROPRIETE_INTELLECTUELLE } from "@/lib/propriete-intellectuelle-config";
+import { TableauRegles } from "@/components/ressources/TableauRegles";
+import { LexiqueLien } from "@/components/ressources/LexiqueLien";
+import { AudioResume } from "@/components/ressources/AudioResume";
+import { ComportementAncres } from "@/components/ressources/ComportementAncres";
 import { pageMetadata } from "@/lib/metadata";
 import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { Callout } from "@/components/ressources/Callout";
@@ -18,6 +24,7 @@ const SOMMAIRE = [
   { id: "familles", label: "Deux grandes familles" },
   { id: "faq", label: "Questions fréquentes" },
   { id: "contacts", label: "Liens et contacts officiels" },
+  { id: "lexique", label: "Lexique" },
 ];
 
 const LIENS = {
@@ -29,7 +36,7 @@ const LIENS = {
 
 type FaqItem = {
   q: string;
-  a: string;
+  a: ReactNode;
   lien?: { label: string; href: string };
   exception?: string;
 };
@@ -42,7 +49,19 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "J'ai créé un festival. Comment protéger son nom ?",
-    a: "Le nom et le logo d'un festival se protègent en déposant une marque. Attention : un nom n'est pas protégé automatiquement. Vous déposez via l'OIPI, qui transmet à l'OAPI — et ce dépôt vous protège dans les 17 pays de l'espace OAPI. Pensez à faire vérifier d'abord que le nom est libre (une « recherche d'antériorité »).",
+    a: (
+      <>
+        Le nom et le logo d&apos;un festival se protègent en déposant une
+        marque. Attention : un nom n&apos;est pas protégé automatiquement. Vous
+        déposez via l&apos;OIPI, qui transmet à l&apos;OAPI — et ce dépôt vous
+        protège dans les 17 pays de l&apos;espace OAPI. Pensez à faire vérifier
+        d&apos;abord que le nom est libre (une «{" "}
+        <LexiqueLien terme="anteriorite">
+          recherche d&apos;antériorité
+        </LexiqueLien>{" "}
+        »).
+      </>
+    ),
     lien: { label: "Pour la démarche → OIPI (oipi.ci)", href: LIENS.oipi },
   },
   {
@@ -52,7 +71,16 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Je suis danseur, musicien ou comédien. Ai-je des droits sur ma prestation ?",
-    a: "Oui. Même si vous n'êtes pas l'auteur de l'œuvre, en tant qu'artiste-interprète vous avez ce qu'on appelle des droits voisins — des droits sur votre propre interprétation. Le BURIDA gère aussi ces droits, aux côtés de ceux des auteurs et des producteurs.",
+    a: (
+      <>
+        Oui. Même si vous n&apos;êtes pas l&apos;auteur de l&apos;œuvre, en tant
+        qu&apos;
+        <LexiqueLien terme="artiste-interprete">artiste-interprète</LexiqueLien>{" "}
+        vous avez ce qu&apos;on appelle des droits voisins — des droits sur
+        votre propre interprétation. Le BURIDA gère aussi ces droits, aux côtés
+        de ceux des auteurs et des producteurs.
+      </>
+    ),
     lien: { label: "Pour en savoir plus → BURIDA", href: LIENS.burida },
   },
   {
@@ -100,7 +128,103 @@ const CONTACTS = [
   },
 ];
 
+// Termes liés depuis le corps (premier emploi) : leur entrée propose « Revenir au texte ».
+const TERMES_LIES = new Set([
+  "droits-voisins",
+  "artiste-interprete",
+  "redevance",
+  "droit-moral",
+  "marque",
+  "anteriorite",
+]);
+
+// Définitions limitées à ce que la page et ses sources établissent.
+const LEXIQUE = [
+  {
+    slug: "oeuvre",
+    mot: "Œuvre de l'esprit",
+    def: "Une création originale : musique, paroles, texte de spectacle, chorégraphie, mise en scène.",
+  },
+  {
+    slug: "droit-auteur",
+    mot: "Droit d'auteur",
+    def: "Le droit qui protège les œuvres de l'esprit et leur auteur.",
+  },
+  {
+    slug: "droits-voisins",
+    mot: "Droits voisins",
+    def: "Les droits de l'artiste-interprète sur son interprétation, et ceux du producteur.",
+  },
+  {
+    slug: "artiste-interprete",
+    mot: "Artiste-interprète",
+    def: "Le musicien, le danseur ou le comédien qui porte une œuvre sur scène.",
+  },
+  {
+    slug: "redevance",
+    mot: "Redevance",
+    def: "La somme à payer pour avoir le droit de diffuser une œuvre en public.",
+  },
+  {
+    slug: "gestion-collective",
+    mot: "Gestion collective",
+    def: "La gestion des droits de nombreux auteurs par un organisme unique, qui collecte et reverse. En Côte d'Ivoire, c'est le BURIDA.",
+  },
+  {
+    slug: "droit-moral",
+    mot: "Droit moral",
+    def: "Le droit d'être crédité comme auteur et de s'opposer à ce qu'on dénature son œuvre. Il ne se cède pas.",
+  },
+  {
+    slug: "cession",
+    mot: "Cession",
+    def: "Le contrat par lequel un auteur autorise l'exploitation de son œuvre : pour quels usages, combien de temps, où. Il ne transfère pas forcément tout.",
+  },
+  {
+    slug: "marque",
+    mot: "Marque",
+    def: "Un nom ou un logo protégé par un dépôt. Le premier déposant l'emporte.",
+  },
+  {
+    slug: "nom-commercial",
+    mot: "Nom commercial",
+    def: "Le nom d'une structure, protégé par un dépôt.",
+  },
+  {
+    slug: "dessin-modele",
+    mot: "Dessin ou modèle",
+    def: "La protection d'un élément original, par exemple un décor ou un costume.",
+  },
+  {
+    slug: "anteriorite",
+    mot: "Recherche d'antériorité",
+    def: "La vérification, avant un dépôt, qu'un nom n'est pas déjà pris.",
+  },
+  {
+    slug: "burida",
+    mot: "BURIDA",
+    def: "Le bureau qui gère en Côte d'Ivoire le droit d'auteur et les droits voisins : autorisations, redevances, adhésion.",
+  },
+  {
+    slug: "oipi",
+    mot: "OIPI",
+    def: "Le guichet des marques, noms commerciaux, dessins et modèles (oipi.ci). Il transmet les dépôts à l'OAPI.",
+  },
+  {
+    slug: "oapi",
+    mot: "OAPI",
+    def: "Le cadre régional de 17 pays (Accord de Bangui), siège à Yaoundé. Un dépôt de marque via l'OIPI vous protège dans ces 17 pays.",
+  },
+  {
+    slug: "ompi",
+    mot: "OMPI",
+    def: "L'organisation dont le site WIPO Lex permet de lire les textes de loi.",
+  },
+];
+
 export default function ProprieteIntellectuellePage() {
+  const audio = PROPRIETE_INTELLECTUELLE.audio;
+
   return (
     <RessourceArticle
       kicker="Ressource · Être en règle"
@@ -109,30 +233,58 @@ export default function ProprieteIntellectuellePage() {
       meta={{ lecture: "5 min", niveau: "Intermédiaire" }}
       sommaire={SOMMAIRE}
       avantCorps={
-        <EssentielBloc
-          suite="Détails et questions fréquentes ci-dessous."
-          items={[
-            "Deux familles de droits, et un même événement peut vous concerner par les deux : le droit d'auteur et les droits voisins, la propriété industrielle.",
-            <>
-              Diffuser en public une œuvre que vous n&apos;avez pas créée exige
-              une autorisation et une redevance, à régler avant
-              l&apos;événement auprès du <strong>BURIDA</strong>.
-            </>,
-            <>
-              Le nom et le logo de votre festival ne sont pas protégés
-              automatiquement : déposez une marque via l&apos;
-              <strong>OIPI</strong>. Le premier qui dépose l&apos;emporte.
-            </>,
-            <>
-              Filmer votre spectacle exige aussi l&apos;accord des personnes
-              filmées, qui ne dépend ni du <strong>BURIDA</strong> ni de
-              l&apos;<strong>OIPI</strong> : à prévoir en amont, dans le
-              contrat avec vos artistes.
-            </>,
-          ]}
-        />
+        <div
+          className={
+            audio
+              ? "grid gap-5 md:grid-cols-[minmax(0,1fr)_320px] md:items-start"
+              : undefined
+          }
+        >
+          <EssentielBloc
+            suite="Détails et questions fréquentes ci-dessous."
+            items={[
+              <>
+                La propriété intellectuelle a deux familles, et un même spectacle
+                peut vous concerner par les deux : le{" "}
+                <strong>droit d&apos;auteur et les droits voisins</strong>{" "}
+                (BURIDA), et la <strong>propriété industrielle</strong>,
+                c&apos;est-à-dire les marques, noms et logos (OIPI).
+              </>,
+              <>
+                Vous diffusez en public l&apos;œuvre de quelqu&apos;un d&apos;autre :{" "}
+                <strong>autorisation préalable et redevance au BURIDA</strong>, à
+                prévoir avant l&apos;événement.
+              </>,
+              <>
+                Vous créez : votre œuvre vous appartient dès qu&apos;elle est
+                réalisée. Un <strong>nom ou un logo</strong>, lui, n&apos;est pas
+                protégé automatiquement : il faut le déposer, et c&apos;est le{" "}
+                <strong>premier déposant</strong>{" "}
+                qui l&apos;emporte.
+              </>,
+              <>
+                Vous filmez : les personnes filmées ont un{" "}
+                <strong>droit sur leur image</strong>, indépendamment du BURIDA.
+                Prévoyez leur accord en amont.
+              </>,
+            ]}
+          />
+          {audio && (
+            <AudioResume
+              ressource="propriete-intellectuelle"
+              src={audio.src}
+              accroche="L'essentiel en une minute, à écouter."
+              dureeLabel={audio.dureeLabel}
+              dureeSecondes={audio.dureeSecondes}
+              poidsLabel={audio.poidsLabel}
+              enregistre={audio.enregistre}
+            />
+          )}
+        </div>
       }
     >
+      <ComportementAncres ressource="propriete-intellectuelle" />
+
       <p className="mb-4 max-w-prose text-muted">
         Quand vous montez un spectacle, vous manipulez des créations : une
         musique, un texte, une chorégraphie, un nom de festival, un logo.
@@ -199,6 +351,93 @@ export default function ProprieteIntellectuellePage() {
           </ul>
         </Card>
 
+        <TableauRegles
+          id="situations"
+          titre="Quelle situation, quel interlocuteur ?"
+          colonnes={["Votre situation", "Ce qui s'applique", "Vers qui"]}
+          teteMobile={0}
+          lignes={[
+            {
+              cellules: [
+                <strong key="s1">
+                  Vous diffusez en public des œuvres que vous n&apos;avez pas
+                  créées (reprises, playback, musique de fond)
+                </strong>,
+                <>
+                  Autorisation préalable et{" "}
+                  <LexiqueLien terme="redevance">redevance</LexiqueLien>, à
+                  prévoir avant l&apos;événement
+                </>,
+                "BURIDA",
+              ],
+            },
+            {
+              cellules: [
+                <strong key="s2">
+                  Vous avez écrit une chanson ou créé une chorégraphie
+                </strong>,
+                "Votre création vous appartient dès qu'elle est réalisée ; vous pouvez adhérer pour la faire gérer et percevoir des redevances",
+                "BURIDA",
+              ],
+            },
+            {
+              cellules: [
+                <strong key="s3">
+                  Vous êtes danseur, musicien ou comédien
+                </strong>,
+                <>
+                  <LexiqueLien terme="droits-voisins">Droits voisins</LexiqueLien>{" "}
+                  sur votre interprétation
+                </>,
+                "BURIDA",
+              ],
+            },
+            {
+              cellules: [
+                <strong key="s4">
+                  Vous voulez protéger le nom ou le logo d&apos;un festival ou
+                  d&apos;une structure
+                </strong>,
+                <>
+                  Dépôt d&apos;une{" "}
+                  <LexiqueLien terme="marque">marque</LexiqueLien>{" "}
+                  ; pas de protection automatique ; le premier déposant
+                  l&apos;emporte ; vérifiez d&apos;abord que le nom est libre
+                </>,
+                "OIPI, relais de l'OAPI (17 pays)",
+              ],
+            },
+            {
+              cellules: [
+                <strong key="s5">Vous filmez votre spectacle</strong>,
+                <>
+                  Droit d&apos;auteur sur les œuvres jouées,{" "}
+                  <strong>et</strong>{" "}
+                  accord des personnes filmées
+                </>,
+                <>
+                  BURIDA pour les œuvres ;{" "}
+                  <strong>aucun guichet pour l&apos;image</strong>{" "}
+                  : accord à demander directement
+                </>,
+              ],
+            },
+            {
+              cellules: [
+                <strong key="s6">
+                  Vous signez un contrat pour votre œuvre
+                </strong>,
+                <>
+                  Lisez ce que vous cédez : usages, durée, territoire ; vous
+                  gardez votre{" "}
+                  <LexiqueLien terme="droit-moral">droit moral</LexiqueLien>
+                </>,
+                "Faites relire",
+              ],
+            },
+          ]}
+        />
+
         <p className="mt-4 max-w-prose text-sm text-muted">
           Attention à ne pas confondre : les droits d&apos;auteur (BURIDA)
           et la fiscalité de votre événement sont deux sujets distincts.
@@ -219,9 +458,10 @@ export default function ProprieteIntellectuellePage() {
           Questions fréquentes
         </h2>
         <div className="flex flex-col gap-3">
-          {FAQ.map((item) => (
+          {FAQ.map((item, i) => (
             <details
               key={item.q}
+              data-faq={`q${i + 1}`}
               className="group rounded-xl border border-border bg-surface p-4 open:shadow-sm"
             >
               <summary className="cursor-pointer list-none text-sm font-semibold text-foreground marker:content-none">
@@ -236,6 +476,7 @@ export default function ProprieteIntellectuellePage() {
               {item.lien && (
                 <a
                   href={item.lien.href}
+                  data-lien-officiel={new URL(item.lien.href).hostname}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 inline-block text-sm font-medium text-primary-dark underline"
@@ -262,6 +503,7 @@ export default function ProprieteIntellectuellePage() {
             <a
               key={c.nom}
               href={c.href}
+              data-lien-officiel={new URL(c.href).hostname}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-xl border border-border bg-surface p-4 transition-colors hover:border-primary"
@@ -273,10 +515,49 @@ export default function ProprieteIntellectuellePage() {
         </div>
       </section>
 
+      <section id="lexique" className="scroll-mt-24">
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
+          Lexique
+        </h2>
+        <div className="flex flex-col gap-2.5">
+          {LEXIQUE.map((t) => (
+            <details
+              key={t.slug}
+              id={`lx-${t.slug}`}
+              className="group scroll-mt-24 rounded-xl border border-border bg-surface p-4 open:shadow-sm"
+            >
+              <summary className="cursor-pointer list-none text-sm font-semibold text-foreground marker:content-none">
+                <span className="flex items-center justify-between gap-3">
+                  {t.mot}
+                  <span className="shrink-0 text-primary-dark transition-transform group-open:rotate-45">
+                    +
+                  </span>
+                </span>
+              </summary>
+              <p className="mt-2.5 max-w-prose text-sm text-muted">{t.def}</p>
+              {TERMES_LIES.has(t.slug) && (
+                <a
+                  href={`#lx-ref-${t.slug}`}
+                  className="mt-2 inline-block text-xs font-semibold text-primary-dark underline"
+                >
+                  ↑ Revenir au texte
+                </a>
+              )}
+            </details>
+          ))}
+        </div>
+      </section>
+
       <p className="mt-2 max-w-prose text-xs text-muted">
         Cette page est une information de sensibilisation, pas un conseil
         juridique. Pour toute démarche, adressez-vous au BURIDA ou à
         l&apos;OIPI.
+      </p>
+
+      <p className="mt-3 max-w-prose text-xs text-muted">
+        Informations vérifiées en {PROPRIETE_INTELLECTUELLE.dateVerification}.
+        Les liens officiels et le cadre légal peuvent évoluer : confirmez
+        toujours auprès du BURIDA ou de l&apos;OIPI.
       </p>
 
       <NextCards
@@ -290,6 +571,11 @@ export default function ProprieteIntellectuellePage() {
             href: "/ressources/budget",
             label: "Bâtir votre budget",
             description: "Intégrer droits d'auteur et cachets dans vos comptes.",
+          },
+          {
+            href: "/ressources/candidater-licences",
+            label: "Candidater aux licences B et C",
+            description: "Qui est concerné, calendrier de l'appel, conditions et coûts.",
           },
         ]}
       />
