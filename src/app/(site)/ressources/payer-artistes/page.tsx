@@ -3,6 +3,22 @@ import { pageMetadata } from "@/lib/metadata";
 import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { Callout } from "@/components/ressources/Callout";
 import { NextCards } from "@/components/ressources/NextCards";
+import { EssentielBloc } from "@/components/ressources/EssentielBloc";
+import { AudioResume } from "@/components/ressources/AudioResume";
+import {
+  AutresQuestions,
+  QuestionsRapides,
+} from "@/components/ressources/QuestionsRapides";
+import { TableauRegles } from "@/components/ressources/TableauRegles";
+import { LexiqueLien } from "@/components/ressources/LexiqueLien";
+import { ComportementAncres } from "@/components/ressources/ComportementAncres";
+import {
+  AUDIO_SCRIPT,
+  PAYER_ARTISTES,
+  QUESTIONS,
+  audioAJour,
+  pct,
+} from "@/lib/payer-artistes-config";
 
 export const metadata: Metadata = pageMetadata({
   title:
@@ -22,39 +38,6 @@ const SOMMAIRE = [
   { id: "et-apres", label: "Et après ?" },
 ];
 
-const TAUX = [
-  {
-    taux: "7,5 %",
-    label: "Artiste résident",
-    detail: "Retenue BNC sur le montant brut du cachet.",
-  },
-  {
-    taux: "20 %",
-    label: "Artiste non-résident",
-    detail: "Sur le montant brut, réductible par convention fiscale.",
-  },
-  {
-    taux: "0 %",
-    label: "Régime réel + facture normalisée",
-    detail: "L'artiste règle lui-même ses impôts.",
-  },
-];
-
-const TROIS_GUICHETS = [
-  {
-    nom: "DGI",
-    role: "La fiscalité — la retenue à la source sur le cachet.",
-  },
-  {
-    nom: "CNPS",
-    role: "Le social — la protection de l'artiste (RSTI).",
-  },
-  {
-    nom: "BURIDA",
-    role: "Le droit d'auteur — quand vous diffusez des œuvres.",
-  },
-];
-
 const LEXIQUE = [
   {
     titre: "Les mots des impôts",
@@ -72,10 +55,12 @@ const LEXIQUE = [
         def: "Celui qui doit payer. Ici, l'organisateur qui doit le cachet à l'artiste.",
       },
       {
+        slug: "montant-brut",
         mot: "Montant brut",
         def: "La somme totale avant tout prélèvement. Le « net » est ce qui reste une fois les prélèvements retirés.",
       },
       {
+        slug: "retenue-source",
         mot: "Retenue à la source",
         def: "Un impôt que celui qui paie prélève directement au moment du paiement, et reverse à l'État à la place du bénéficiaire. L'artiste reçoit donc son cachet déjà amputé de cette part.",
       },
@@ -88,6 +73,7 @@ const LEXIQUE = [
         def: "Le texte voté chaque année qui met à jour les impôts. L'annexe fiscale en est la partie qui modifie le CGI ; c'est là qu'apparaissent les nouveautés, comme celles de 2026.",
       },
       {
+        slug: "bnc",
         mot: "Bénéfices non commerciaux (BNC)",
         def: "La catégorie fiscale des revenus tirés d'un savoir-faire, d'un art ou d'une profession intellectuelle plutôt que du commerce. En Côte d'Ivoire, les artistes y sont rattachés.",
       },
@@ -96,10 +82,12 @@ const LEXIQUE = [
         def: "La catégorie fiscale des revenus tirés du commerce, de l'industrie ou de l'artisanat : acheter, produire, revendre.",
       },
       {
+        slug: "regime-reel",
         mot: "Régime réel d'imposition",
         def: "Le régime des entreprises qui tiennent une vraie comptabilité et sont imposées sur leur bénéfice réel. Il s'oppose aux régimes simplifiés ou forfaitaires réservés aux plus petites activités. Un artiste « au régime réel » déclare et paie ses impôts lui-même.",
       },
       {
+        slug: "facture-normalisee",
         mot: "Facture normalisée",
         def: "Une facture conforme au modèle officiel de la DGI. La présenter prouve qu'on est enregistré et en règle.",
       },
@@ -108,10 +96,12 @@ const LEXIQUE = [
         def: "L'identifiant fiscal attribué par la DGI à une personne ou une structure enregistrée.",
       },
       {
+        slug: "convention-fiscale",
         mot: "Convention fiscale",
         def: "Un accord entre deux pays pour éviter qu'un même revenu soit imposé deux fois, et pour fixer qui impose quoi — parfois à un taux réduit. C'est ce qui peut abaisser la retenue sur un artiste étranger.",
       },
       {
+        slug: "resident",
         mot: "Résident / non-résident (au sens fiscal)",
         def: "Résident : installé professionnellement en Côte d'Ivoire. Non-résident : sans installation professionnelle dans le pays, comme un artiste étranger de passage.",
       },
@@ -120,6 +110,7 @@ const LEXIQUE = [
         def: "L'impôt qui porte sur l'ensemble des revenus d'une personne. L'artiste y déduit les retenues déjà prélevées sur ses cachets.",
       },
       {
+        slug: "its",
         mot: "ITS (impôt sur les traitements et salaires)",
         def: "L'impôt prélevé sur le salaire d'un employé. Il concerne le cas où l'artiste est engagé comme salarié.",
       },
@@ -141,6 +132,7 @@ const LEXIQUE = [
         def: "La somme versée régulièrement (ici à la CNPS) pour ouvrir droit à une protection : maladie, retraite, etc.",
       },
       {
+        slug: "rsti",
         mot: "RSTI (Régime Social des Travailleurs Indépendants)",
         def: "Le régime de protection sociale obligatoire des travailleurs indépendants, géré par la CNPS.",
       },
@@ -182,6 +174,9 @@ const LEXIQUE = [
 ];
 
 export default function PayerArtistesPage() {
+  const c = PAYER_ARTISTES;
+  const audio = audioAJour();
+
   return (
     <RessourceArticle
       kicker="Ressource · Être en règle"
@@ -189,7 +184,53 @@ export default function PayerArtistesPage() {
       dek="Comment déclarer et payer un artiste sans se tromper : retenue à la source (7,5 % ou 20 %), cotisations CNPS, statut de l'artiste."
       meta={{ lecture: "8 min", niveau: "Intermédiaire" }}
       sommaire={SOMMAIRE}
+      avantCorps={
+        <>
+          <div
+            className={
+              audio ? "grid gap-5 md:grid-cols-[minmax(0,1fr)_320px]" : undefined
+            }
+          >
+            <EssentielBloc
+              verifie={c.dateVerification}
+              items={[
+                "Payer un artiste, c'est deux sujets distincts : sa protection sociale (il s'en charge lui-même, via la CNPS) et la retenue d'impôt sur son cachet (c'est vous qui la prélevez).",
+                <>
+                  Retenue sur le cachet brut :{" "}
+                  <strong>{pct(c.tauxResident)}</strong>{" "}
+                  si l&apos;artiste est résident ;{" "}
+                  <strong>{pct(c.tauxNonResident)}</strong>{" "}
+                  s&apos;il est non-résident (réductible par convention
+                  fiscale) ; <strong>0 %</strong>{" "}
+                  s&apos;il est au régime réel et vous remet une facture
+                  normalisée.
+                </>,
+                <>
+                  Vous reversez la retenue aux Impôts au plus tard le{" "}
+                  <strong>{c.jourReversement}</strong>{" "}
+                  du mois suivant. En cas d&apos;oubli, la faute est pour vous,
+                  pas pour l&apos;artiste.
+                </>,
+                "Trois guichets à ne pas mélanger : DGI (impôt), CNPS (protection sociale), BURIDA (droits d'auteur).",
+              ]}
+            />
+            {audio && (
+              <AudioResume
+                ressource="payer-artistes"
+                src={audio.src}
+                dureeLabel={audio.dureeLabel}
+                poidsLabel={audio.poidsLabel}
+                enregistre={audio.enregistre}
+                transcription={AUDIO_SCRIPT}
+              />
+            )}
+          </div>
+          <QuestionsRapides questions={QUESTIONS} />
+        </>
+      }
     >
+      <ComportementAncres ressource="payer-artistes" />
+
       <div className="mb-8 rounded-lg border border-border bg-black/[0.02] px-4 py-3 text-sm italic text-muted">
         Ressource e-Culture CI — outil d&apos;orientation. Cette page vous
         aide à comprendre le cadre. Elle donne une information générale, pas
@@ -230,10 +271,13 @@ export default function PayerArtistesPage() {
         </p>
       </section>
 
-      <section id="casquette-1" className="scroll-mt-24">
-        <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
+      <section id="casquette-1" data-surligner="" className="scroll-mt-24">
+        <h2 className="mb-1 text-2xl font-extrabold tracking-tight text-secondary-dark">
           Casquette 1 — L&apos;artiste est un travailleur indépendant
         </h2>
+        <div className="mb-3">
+          <AutresQuestions />
+        </div>
         <p className="mb-4 max-w-prose text-muted">
           C&apos;est le point de départ, et il est officiel. En Côte
           d&apos;Ivoire, l&apos;artiste qui travaille à son compte est un{" "}
@@ -243,7 +287,9 @@ export default function PayerArtistesPage() {
           , au même titre qu&apos;un artisan ou un commerçant. À ce titre,
           il relève d&apos;un régime de protection sociale obligatoire : le{" "}
           <strong className="text-foreground">
-            Régime Social des Travailleurs Indépendants (RSTI)
+            <LexiqueLien terme="rsti">
+              Régime Social des Travailleurs Indépendants (RSTI)
+            </LexiqueLien>
           </strong>
           , géré par la <strong className="text-foreground">CNPS</strong>{" "}
           (Caisse Nationale de Prévoyance Sociale).
@@ -371,25 +417,99 @@ export default function PayerArtistesPage() {
           </strong>
           . Vous prélevez une part du cachet et vous la reversez aux
           Impôts. Le taux dépend d&apos;une seule question : votre artiste
-          est-il résident en Côte d&apos;Ivoire, ou vient-il de
-          l&apos;étranger ?
+          est-il{" "}
+          <LexiqueLien terme="resident">résident</LexiqueLien>{" "}
+          en Côte d&apos;Ivoire, ou vient-il de l&apos;étranger ?
         </p>
 
-        <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {TAUX.map((t) => (
-            <div
-              key={t.label}
-              className="rounded-xl border border-border bg-surface p-4 text-center"
-            >
-              <p className="text-3xl font-extrabold text-primary-dark">
-                {t.taux}
-              </p>
-              <p className="mt-1 text-sm font-bold text-foreground">
-                {t.label}
-              </p>
-              <p className="mt-1 text-xs text-muted">{t.detail}</p>
-            </div>
-          ))}
+        <TableauRegles
+          id="retenue"
+          titre="Quelle retenue sur le cachet ?"
+          colonnes={[
+            "Votre artiste est…",
+            "Vous retenez",
+            "Ce que vous faites",
+            "Source",
+          ]}
+          teteMobile={1}
+          lignes={[
+            {
+              cellules: [
+                <>
+                  <strong>Résident</strong>{" "}
+                  en Côte d&apos;Ivoire
+                </>,
+                <>
+                  <strong className="text-xl text-primary-dark">
+                    {pct(c.tauxResident)}
+                  </strong>{" "}
+                  du cachet brut
+                </>,
+                <>
+                  Vous prélevez, puis reversez aux Impôts au plus tard le{" "}
+                  {c.jourReversement} du mois suivant, et remettez une
+                  attestation à l&apos;artiste
+                </>,
+                <>
+                  Retenue <LexiqueLien terme="bnc">BNC</LexiqueLien>{" "}
+                  (CGI, loi de finances {c.anneeLoiFinances})
+                </>,
+              ],
+            },
+            {
+              id: "retenue-non-resident",
+              cellules: [
+                <>
+                  <strong>Non-résident</strong>{" "}
+                  (étranger sans installation professionnelle)
+                </>,
+                <>
+                  <strong className="text-xl text-primary-dark">
+                    {pct(c.tauxNonResident)}
+                  </strong>{" "}
+                  du cachet brut, réduit si une{" "}
+                  <LexiqueLien terme="convention-fiscale">
+                    convention fiscale
+                  </LexiqueLien>{" "}
+                  existe (souvent autour de {pct(c.tauxConventionIndicatif)})
+                </>,
+                <>
+                  Vous prélevez et reversez ; vérifiez la convention avec son
+                  pays
+                </>,
+                <>Article 92 du CGI</>,
+              ],
+            },
+            {
+              id: "retenue-regime-reel",
+              cellules: [
+                <>
+                  <strong>
+                    Au{" "}
+                    <LexiqueLien terme="regime-reel">régime réel</LexiqueLien>
+                  </strong>
+                  , avec{" "}
+                  <LexiqueLien terme="facture-normalisee">
+                    facture normalisée
+                  </LexiqueLien>{" "}
+                  et numéro de compte contribuable
+                </>,
+                <>
+                  <strong className="text-xl text-primary-dark">0 %</strong>
+                </>,
+                <>Vous ne retenez rien ; conservez la facture</>,
+                <>Exception du régime réel (facture normalisée)</>,
+              ],
+            },
+          ]}
+        />
+        <p className="-mt-2 mb-1 max-w-prose text-sm text-muted">
+          Le cachet brut est le montant avant retenue. En cas de doute sur le
+          cas de votre artiste, un appel à la DGI (ligne verte 800 88 888)
+          tranche.
+        </p>
+        <div className="mb-5">
+          <AutresQuestions />
         </div>
 
         <p className="mb-4 max-w-prose text-muted">
@@ -397,9 +517,14 @@ export default function PayerArtistesPage() {
             Artiste résident — une retenue de 7,5 %.
           </strong>{" "}
           Les sommes versées aux artistes, musiciens, sportifs et
-          organisateurs de spectacles font l&apos;objet d&apos;une retenue
-          à la source au titre des bénéfices non commerciaux (BNC), au
-          taux de <strong className="text-foreground">7,5 % sur le montant brut</strong>.
+          organisateurs de spectacles font l&apos;objet d&apos;une{" "}
+          <LexiqueLien terme="retenue-source">retenue à la source</LexiqueLien>{" "}
+          au titre des bénéfices non commerciaux (BNC), au taux de{" "}
+          <strong className="text-foreground">
+            7,5 % sur le{" "}
+            <LexiqueLien terme="montant-brut">montant brut</LexiqueLien>
+          </strong>
+          .
           Concrètement : vous prélevez ces 7,5 % sur le cachet, vous les
           reversez à la recette des Impôts dont vous dépendez (au plus tard
           le 15 du mois suivant), et vous remettez à l&apos;artiste une
@@ -462,26 +587,60 @@ export default function PayerArtistesPage() {
           de l&apos;artiste, qui le concerne lui). Trois guichets, trois
           logiques — ne les mélangez pas.
         </p>
-        <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {TROIS_GUICHETS.map((g) => (
-            <div
-              key={g.nom}
-              className="rounded-xl border border-border bg-surface p-4"
-            >
-              <p className="font-bold text-foreground">{g.nom}</p>
-              <p className="mt-1 text-sm text-muted">{g.role}</p>
-            </div>
-          ))}
+        <TableauRegles
+          id="trois-guichets"
+          titre="Trois guichets, trois logiques"
+          colonnes={["Guichet", "Ce qu'il gère", "Qui s'en charge"]}
+          teteMobile={0}
+          lignes={[
+            {
+              cellules: [
+                <>
+                  <strong className="text-xl md:text-sm">DGI</strong>{" "}
+                  (Impôts)
+                </>,
+                "La retenue à la source sur le cachet",
+                "Vous, l'organisateur : vous prélevez et reversez",
+              ],
+            },
+            {
+              cellules: [
+                <strong key="cnps" className="text-xl md:text-sm">CNPS</strong>,
+                "La protection sociale de l'artiste (maladie, accident, maternité, retraite)",
+                "L'artiste, comme travailleur indépendant",
+              ],
+            },
+            {
+              cellules: [
+                <strong key="burida" className="text-xl md:text-sm">BURIDA</strong>,
+                "Les droits d'auteur sur les œuvres que vous diffusez",
+                "Vous, l'organisateur, via les redevances",
+              ],
+            },
+          ]}
+        />
+        <div className="mb-4">
+          <AutresQuestions />
         </div>
 
-        <h3 className="mb-2 mt-6 text-xl font-bold text-secondary-dark">
+        <h3
+          id="salarie"
+          data-surligner=""
+          className="mb-1 mt-6 scroll-mt-24 text-xl font-bold text-secondary-dark"
+        >
           Et si vous engagez l&apos;artiste comme salarié ?
         </h3>
+        <div className="mb-2">
+          <AutresQuestions />
+        </div>
         <p className="max-w-prose text-muted">
           Un autre cas existe : vous l&apos;engagez sous{" "}
           <strong className="text-foreground">contrat de travail</strong>.
           Là, ce sont les obligations classiques d&apos;un employeur qui
-          s&apos;appliquent — impôt sur les traitements et salaires (ITS)
+          s&apos;appliquent —{" "}
+          <LexiqueLien terme="its">
+            impôt sur les traitements et salaires (ITS)
+          </LexiqueLien>{" "}
           retenu à la source, contributions employeur, cotisations CNPS.
           C&apos;est un régime différent, plus lourd, plus rare pour un
           spectacle ponctuel. Si c&apos;est votre situation,
@@ -554,7 +713,8 @@ export default function PayerArtistesPage() {
                 {bloc.termes.map((t) => (
                   <details
                     key={t.mot}
-                    className="group rounded-xl border border-border bg-surface p-4 open:shadow-sm"
+                    id={t.slug ? `lx-${t.slug}` : undefined}
+                    className="group scroll-mt-24 rounded-xl border border-border bg-surface p-4 open:shadow-sm"
                   >
                     <summary className="cursor-pointer list-none text-sm font-semibold text-foreground marker:content-none">
                       <span className="flex items-center justify-between gap-3">
@@ -567,6 +727,14 @@ export default function PayerArtistesPage() {
                     <p className="mt-2.5 max-w-prose text-sm text-muted">
                       {t.def}
                     </p>
+                    {t.slug && (
+                      <a
+                        href={`#lx-ref-${t.slug}`}
+                        className="mt-2 inline-block text-xs font-semibold text-primary-dark underline"
+                      >
+                        ↑ Revenir au texte
+                      </a>
+                    )}
                   </details>
                 ))}
               </div>
@@ -584,7 +752,7 @@ export default function PayerArtistesPage() {
       </p>
 
       <p className="mt-3 text-xs text-muted">
-        Informations vérifiées en septembre 2026.
+        Informations vérifiées en {c.dateVerification}.
       </p>
 
       <div id="et-apres" className="scroll-mt-24">

@@ -58,6 +58,29 @@ body {
     sans-serif;
 }
 
+/* Cible d’un lien d’ancre : contour discret un instant (voir ComportementAncres) */
+@keyframes ancre-flash {
+  from {
+    background-color: var(--color-primary-light);
+    box-shadow: 0 0 0 6px var(--color-primary-light);
+  }
+  to {
+    background-color: transparent;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+.ancre-surlignee {
+  animation: ancre-flash 1.8s ease-out;
+  border-radius: 0.375rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ancre-surlignee {
+    animation: none;
+  }
+}
+
 @media print {
   .no-print {
     display: none !important;
