@@ -5,6 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { Callout } from "@/components/ressources/Callout";
 import { NextCards } from "@/components/ressources/NextCards";
+import { EssentielBloc } from "@/components/ressources/EssentielBloc";
 
 export const metadata: Metadata = pageMetadata({
   title: "Propriété intellectuelle | e-Culture CI",
@@ -107,6 +108,30 @@ export default function ProprieteIntellectuellePage() {
       dek="Droit d'auteur, droits voisins, droit à l'image, marques : comprenez vos droits et vers qui vous tourner."
       meta={{ lecture: "5 min", niveau: "Intermédiaire" }}
       sommaire={SOMMAIRE}
+      avantCorps={
+        <EssentielBloc
+          suite="Détails et questions fréquentes ci-dessous."
+          items={[
+            "Deux familles de droits, et un même événement peut vous concerner par les deux : le droit d'auteur et les droits voisins, la propriété industrielle.",
+            <>
+              Diffuser en public une œuvre que vous n&apos;avez pas créée exige
+              une autorisation et une redevance, à régler avant
+              l&apos;événement auprès du <strong>BURIDA</strong>.
+            </>,
+            <>
+              Le nom et le logo de votre festival ne sont pas protégés
+              automatiquement : déposez une marque via l&apos;
+              <strong>OIPI</strong>. Le premier qui dépose l&apos;emporte.
+            </>,
+            <>
+              Filmer votre spectacle exige aussi l&apos;accord des personnes
+              filmées, qui ne dépend ni du <strong>BURIDA</strong> ni de
+              l&apos;<strong>OIPI</strong> : à prévoir en amont, dans le
+              contrat avec vos artistes.
+            </>,
+          ]}
+        />
+      }
     >
       <p className="mb-4 max-w-prose text-muted">
         Quand vous montez un spectacle, vous manipulez des créations : une

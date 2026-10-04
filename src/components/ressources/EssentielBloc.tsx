@@ -7,9 +7,12 @@ import { ReactNode } from "react";
 export function EssentielBloc({
   items,
   verifie,
+  suite = "Détails, exceptions et lexique ci-dessous.",
 }: {
   items: ReactNode[];
-  verifie: string;
+  // Date de vérification, à n'afficher que si la page en porte une.
+  verifie?: string;
+  suite?: string;
 }) {
   return (
     <section
@@ -37,7 +40,8 @@ export function EssentielBloc({
         ))}
       </ul>
       <p className="mt-2 border-t border-primary/20 pt-2.5 text-sm italic text-muted sm:mt-4 sm:pt-3">
-        Vérifié en {verifie}. Détails, exceptions et lexique ci-dessous.
+        {verifie ? `Vérifié en ${verifie}. ` : ""}
+        {suite}
       </p>
     </section>
   );
