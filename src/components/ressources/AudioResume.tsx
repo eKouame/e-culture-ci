@@ -6,22 +6,20 @@ import { mesure } from "@/lib/mesure";
 const PALIERS = [25, 50, 75] as const;
 
 // Version à écouter : lecteur natif, jamais de lecture automatique, rien n'est
-// téléchargé avant le clic. L'écrit reste la référence ; la transcription reproduit
-// le script mot pour mot (accessibilité, absence de son, référencement).
+// téléchargé avant le clic. L'écrit reste la référence : l'audio ne fait que résumer
+// ce que la page dit déjà, sans transcription.
 export function AudioResume({
   ressource,
   src,
   dureeLabel,
   poidsLabel,
   enregistre,
-  transcription,
 }: {
   ressource: string;
   src: string;
   dureeLabel: string;
   poidsLabel: string;
   enregistre: string;
-  transcription: string[];
 }) {
   const atteints = useRef(new Set<number>());
 
@@ -66,21 +64,6 @@ export function AudioResume({
       <p className="mt-2 text-xs text-muted">
         {dureeLabel} · {poidsLabel} · Enregistré en {enregistre}
       </p>
-      <details
-        className="mt-3 rounded-lg border border-border bg-surface px-4 py-2.5"
-        onToggle={(e) => {
-          if (e.currentTarget.open) mesure("transcription_ouverte", { ressource });
-        }}
-      >
-        <summary className="cursor-pointer list-none text-sm font-semibold text-secondary-dark marker:content-none">
-          Lire la transcription
-        </summary>
-        <div className="mt-2.5 flex max-w-prose flex-col gap-2.5 text-sm text-muted">
-          {transcription.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-        </div>
-      </details>
     </section>
   );
 }

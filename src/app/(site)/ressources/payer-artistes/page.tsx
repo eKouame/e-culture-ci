@@ -13,7 +13,6 @@ import { TableauRegles } from "@/components/ressources/TableauRegles";
 import { LexiqueLien } from "@/components/ressources/LexiqueLien";
 import { ComportementAncres } from "@/components/ressources/ComportementAncres";
 import {
-  AUDIO_SCRIPT,
   PAYER_ARTISTES,
   QUESTIONS,
   audioAJour,
@@ -221,7 +220,6 @@ export default function PayerArtistesPage() {
                 dureeLabel={audio.dureeLabel}
                 poidsLabel={audio.poidsLabel}
                 enregistre={audio.enregistre}
-                transcription={AUDIO_SCRIPT}
               />
             )}
           </div>

@@ -27,12 +27,20 @@ export const PAYER_ARTISTES = {
   revenuDeclareMin: 45000,
   anneeLoiFinances: 2026,
   dateVerification: "octobre 2026",
-  // Renseigner quand l'enregistrement existe, par exemple :
-  // { src: "/audio/payer-artistes-resume-2026-10.mp3", dureeLabel: "Environ 2 min",
-  //   poidsLabel: "1 Mo", enregistre: "octobre 2026",
-  //   valeursEnregistrees: { tauxResident: 7.5, tauxNonResident: 20,
-  //     jourReversement: 15, cnpsMinimumMensuel: 5400 } }
-  audio: null as AudioResume | null,
+  // Enregistrement fourni (octobre 2026), à réenregistrer si une valeur ci-dessus change :
+  // le lecteur est alors retiré automatiquement (voir `audioAJour`).
+  audio: {
+    src: "/audio/payer-artistes-resume-2026-10.mp3",
+    dureeLabel: "Environ 2 min",
+    poidsLabel: "1,8 Mo",
+    enregistre: "octobre 2026",
+    valeursEnregistrees: {
+      tauxResident: 7.5,
+      tauxNonResident: 20,
+      jourReversement: 15,
+      cnpsMinimumMensuel: 5400,
+    },
+  } as AudioResume | null,
 };
 
 export function pct(n: number): string {
@@ -74,18 +82,3 @@ export const QUESTIONS = [
   { id: "guichets", label: "Quel guichet pour quoi ?", ancre: "trois-guichets" },
   { id: "salarie", label: "Je veux l'engager comme salarié", ancre: "salarie" },
 ] as const;
-
-// Script de la version à écouter (cahier des charges, annexe A). Les nombres sont
-// écrits en toutes lettres, tels qu'ils sont dits. Sert de transcription.
-export const AUDIO_SCRIPT = [
-  "Ici e-Culture CI, un outil d'orientation indépendant. Ce qui suit est une information générale, pas un conseil fiscal ou juridique.",
-  "Payer un artiste, ce sont en réalité deux sujets. Il faut les séparer.",
-  "Premier sujet : l'artiste lui-même. En Côte d'Ivoire, un artiste qui travaille à son compte est un travailleur indépendant. Il dépend d'un régime de protection sociale obligatoire, géré par la CNPS. C'est lui qui se déclare et qui cotise, au minimum cinq mille quatre cents francs par mois. Ce n'est pas à vous de le faire à sa place. Mais vous pouvez l'y encourager.",
-  "Deuxième sujet : vous, l'organisateur. Quand vous payez un cachet, la loi vous demande de retenir un impôt, puis de le reverser aux Impôts. Le taux dépend d'une seule question : l'artiste est-il résident en Côte d'Ivoire ?",
-  "S'il est résident, vous retenez sept virgule cinq pour cent du cachet brut. Le cachet brut, c'est le montant avant retenue.",
-  "S'il vient de l'étranger, vous retenez vingt pour cent. Ce taux peut être réduit si une convention fiscale existe avec son pays.",
-  "Et s'il est au régime réel et vous remet une facture normalisée, vous ne retenez rien.",
-  "Vous reversez la somme aux Impôts au plus tard le quinze du mois suivant. Et si vous oubliez, la faute est pour vous, pas pour l'artiste.",
-  "Dernier réflexe : ne mélangez pas les trois guichets. Les Impôts, pour la retenue. La CNPS, pour la protection sociale de l'artiste. Le BURIDA, pour les droits d'auteur.",
-  "Ces taux sont ceux en vigueur à la date de cet enregistrement. Pour les exceptions, le cas du salarié et le lexique, lisez la page. Et confirmez toujours votre cas auprès de la direction générale des Impôts.",
-];
