@@ -81,6 +81,78 @@ body {
   }
 }
 
+/* Chiffre clé surligné au marqueur, comme annoté dans un carnet */
+.surligne {
+  background-image: linear-gradient(
+    transparent 58%,
+    color-mix(in srgb, var(--color-primary) 32%, transparent) 58%
+  );
+  border-radius: 2px;
+  padding: 0 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Barre de progression du lecteur audio (fond vert profond, accent orange clair) */
+.lecteur-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lecteur-range:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.lecteur-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--color-accent-on-deep) var(--pct, 0%),
+    rgb(230 239 233 / 0.22) var(--pct, 0%)
+  );
+}
+
+.lecteur-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgb(230 239 233 / 0.22);
+}
+
+.lecteur-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-accent-on-deep);
+}
+
+.lecteur-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -7px;
+  border-radius: 50%;
+  border: 3px solid var(--color-deep);
+  background: var(--color-accent-on-deep);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+}
+
+.lecteur-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid var(--color-deep);
+  background: var(--color-accent-on-deep);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+}
+
 @media print {
   .no-print {
     display: none !important;

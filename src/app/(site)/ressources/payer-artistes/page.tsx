@@ -13,7 +13,6 @@ import { TableauRegles } from "@/components/ressources/TableauRegles";
 import { LexiqueLien } from "@/components/ressources/LexiqueLien";
 import { ComportementAncres } from "@/components/ressources/ComportementAncres";
 import {
-  AUDIO_SCRIPT,
   PAYER_ARTISTES,
   QUESTIONS,
   audioAJour,
@@ -188,7 +187,9 @@ export default function PayerArtistesPage() {
         <>
           <div
             className={
-              audio ? "grid gap-5 md:grid-cols-[minmax(0,1fr)_320px]" : undefined
+              audio
+                ? "grid gap-5 md:grid-cols-[minmax(0,1fr)_320px] md:items-start"
+                : undefined
             }
           >
             <EssentielBloc
@@ -197,17 +198,17 @@ export default function PayerArtistesPage() {
                 "Payer un artiste, c'est deux sujets distincts : sa protection sociale (il s'en charge lui-même, via la CNPS) et la retenue d'impôt sur son cachet (c'est vous qui la prélevez).",
                 <>
                   Retenue sur le cachet brut :{" "}
-                  <strong>{pct(c.tauxResident)}</strong>{" "}
+                  <strong className="surligne">{pct(c.tauxResident)}</strong>{" "}
                   si l&apos;artiste est résident ;{" "}
-                  <strong>{pct(c.tauxNonResident)}</strong>{" "}
+                  <strong className="surligne">{pct(c.tauxNonResident)}</strong>{" "}
                   s&apos;il est non-résident (réductible par convention
-                  fiscale) ; <strong>0 %</strong>{" "}
+                  fiscale) ; <strong className="surligne">0 %</strong>{" "}
                   s&apos;il est au régime réel et vous remet une facture
                   normalisée.
                 </>,
                 <>
                   Vous reversez la retenue aux Impôts au plus tard le{" "}
-                  <strong>{c.jourReversement}</strong>{" "}
+                  <strong className="surligne">{c.jourReversement}</strong>{" "}
                   du mois suivant. En cas d&apos;oubli, la faute est pour vous,
                   pas pour l&apos;artiste.
                 </>,
@@ -219,9 +220,9 @@ export default function PayerArtistesPage() {
                 ressource="payer-artistes"
                 src={audio.src}
                 dureeLabel={audio.dureeLabel}
+                dureeSecondes={audio.dureeSecondes}
                 poidsLabel={audio.poidsLabel}
                 enregistre={audio.enregistre}
-                transcription={AUDIO_SCRIPT}
               />
             )}
           </div>
