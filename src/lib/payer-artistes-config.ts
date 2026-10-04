@@ -6,6 +6,8 @@
 export type AudioResume = {
   src: string;
   dureeLabel: string;
+  // Durée réelle du fichier, pour afficher le total avant le chargement.
+  dureeSecondes: number;
   poidsLabel: string;
   enregistre: string;
   // Valeurs prononcées dans l'enregistrement. Si l'une d'elles diverge de la
@@ -32,6 +34,7 @@ export const PAYER_ARTISTES = {
   audio: {
     src: "/audio/payer-artistes-resume-2026-10.mp3",
     dureeLabel: "Environ 2 min",
+    dureeSecondes: 115,
     poidsLabel: "1,8 Mo",
     enregistre: "octobre 2026",
     valeursEnregistrees: {
@@ -63,22 +66,22 @@ export function audioAJour(): AudioResume | null {
 
 // Les six questions de la rangée « Votre question ? ».
 export const QUESTIONS = [
-  { id: "retenue", label: "Combien dois-je retenir sur le cachet ?", ancre: "retenue" },
+  { id: "retenue", label: "Combien dois-je retenir sur le cachet ?", ancre: "retenue" },
   {
     id: "non-resident",
-    label: "Mon artiste vient de l'étranger : quel taux ?",
+    label: "Mon artiste vient de l'étranger : quel taux ?",
     ancre: "retenue-non-resident",
   },
   {
     id: "regime-reel",
-    label: "Mon artiste est au régime réel : dois-je retenir ?",
+    label: "Mon artiste est au régime réel : dois-je retenir ?",
     ancre: "retenue-regime-reel",
   },
   {
     id: "cnps",
-    label: "Mon artiste doit-il être déclaré à la CNPS ?",
+    label: "Mon artiste doit-il être déclaré à la CNPS ?",
     ancre: "casquette-1",
   },
-  { id: "guichets", label: "Quel guichet pour quoi ?", ancre: "trois-guichets" },
+  { id: "guichets", label: "Quel guichet pour quoi ?", ancre: "trois-guichets" },
   { id: "salarie", label: "Je veux l'engager comme salarié", ancre: "salarie" },
 ] as const;
