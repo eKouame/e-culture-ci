@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-// Menu principal : trois entrées, dans cet ordre. Le libellé vit ici, pas dans les
+// Menu principal : trois entrées, dans cet ordre. Aucun lien d'administration dans la
+// navigation publique (l'administration s'ouvre par son adresse, derrière une connexion). Le libellé vit ici, pas dans les
 // routes. `actifs` : les chemins qui relèvent de l'onglet (« Suis-je concerné ? » vit
 // sous Outils, « Ma déclaration » sous Communes ; leurs routes ne changent pas).
 const NAV_ITEMS = [
@@ -46,12 +47,6 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/admin"
-            className="ml-2 whitespace-nowrap rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
-          >
-            Espace admin
-          </Link>
         </nav>
 
         <button
@@ -86,13 +81,6 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/admin"
-            onClick={() => setOpen(false)}
-            className="min-h-[44px] rounded-lg px-3 py-2.5 text-sm font-medium text-muted hover:bg-black/5"
-          >
-            Espace admin
-          </Link>
         </nav>
       )}
     </header>
