@@ -298,6 +298,10 @@ export function Calculateur() {
   const [copie, setCopie] = useState<"non" | "oui" | "manuel">("non");
   const [dateImpression, setDateImpression] = useState("");
   const calculEnvoye = useRef(false);
+  // Phase 0 de « Mon espace » : mesure de l'envie d'enregistrer, sans compte ni stockage.
+  const [bientot, setBientot] = useState(false);
+  const enregistrerEnvoye = useRef(false);
+  const copierRef = useRef<HTMLButtonElement>(null);
 
   const resultat = useMemo(() => calculer(saisies), [saisies]);
   const texte = useMemo(() => recapitulatif(saisies, resultat), [saisies, resultat]);
@@ -326,6 +330,7 @@ export function Calculateur() {
 
   function maj(id: ChampId, valeur: string) {
     setCopie("non");
+    setBientot(false);
     setSaisies((s) => {
       if (id === "imprevus") {
         // Champ vidé : retour au calcul automatique.
@@ -339,12 +344,26 @@ export function Calculateur() {
     setSaisies(SAISIES_EXEMPLE);
     setExemple(true);
     setCopie("non");
+    setBientot(false);
   }
 
   function effacer() {
     setSaisies(SAISIES_VIDES);
     setExemple(false);
     setCopie("non");
+    setBientot(false);
+  }
+
+  // Un seul événement anonyme « clic sur Enregistrer » par visite, rapporté au nombre
+  // de « calcul effectué » (même population : l'exemple fictif ne compte pas). Aucune
+  // valeur saisie, aucune donnée personnelle, rien n'est enregistré.
+  function enregistrer() {
+    setBientot(true);
+    if (!exemple && !enregistrerEnvoye.current) {
+      enregistrerEnvoye.current = true;
+      mesure("enregistrer_clique", { ressource: "calculateur-budget" });
+    }
+    copierRef.current?.focus();
   }
 
   async function copier() {
@@ -576,10 +595,13 @@ export function Calculateur() {
 
               <div className="mt-4 flex flex-col gap-2.5 border-t border-border pt-4">
                 <button
+                  ref={copierRef}
                   type="button"
                   onClick={copier}
                   disabled={!pret}
-                  className="min-h-[44px] rounded-lg bg-primary-dark px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:brightness-90 disabled:opacity-50"
+                  className={`min-h-[44px] rounded-lg bg-primary-dark px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:brightness-90 disabled:opacity-50 ${
+                    bientot ? "ring-4 ring-primary/50 ring-offset-2" : ""
+                  }`}
                 >
                   Copier mon récapitulatif
                 </button>
@@ -591,6 +613,26 @@ export function Calculateur() {
                 >
                   Imprimer ou enregistrer en PDF
                 </button>
+                {pret && !exemple && (
+                  <button
+                    type="button"
+                    onClick={enregistrer}
+                    aria-describedby="enregistrer-bientot"
+                    className="min-h-[44px] rounded-lg border-2 border-dashed border-border px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-black/5"
+                  >
+                    Enregistrer ce budget (bientôt, en bêta)
+                  </button>
+                )}
+                <p
+                  id="enregistrer-bientot"
+                  role="status"
+                  aria-live="polite"
+                  className={bientot ? "text-sm font-medium text-foreground" : "sr-only"}
+                >
+                  {bientot && pret && !exemple
+                    ? "L'enregistrement des budgets arrive. Pour l'instant, copiez votre récapitulatif ci-dessus."
+                    : ""}
+                </p>
                 {!pret && (
                   <p className="text-xs text-muted">
                     Disponible dès qu&apos;un résultat est affiché.
