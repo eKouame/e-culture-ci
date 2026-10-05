@@ -42,7 +42,7 @@ const ETAPES = [
         description: "Les postes de dépense à ne pas oublier et comment les chiffrer.",
       },
       {
-        href: "/ressources/budget/calculateur",
+        href: "/outils/budget",
         label: "Outil",
         titre: "Calculateur de budget",
         description: "Votre point d'équilibre en une minute. Gratuit, sans compte.",

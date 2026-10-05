@@ -3,6 +3,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { Callout } from "@/components/ressources/Callout";
 import { NextCards } from "@/components/ressources/NextCards";
+import { OutilsLies } from "@/components/ressources/OutilsLies";
 import { EssentielBloc } from "@/components/ressources/EssentielBloc";
 import { AudioResume } from "@/components/ressources/AudioResume";
 import {
@@ -755,6 +756,16 @@ export default function PayerArtistesPage() {
       <p className="mt-3 text-xs text-muted">
         Informations vérifiées en {c.dateVerification}.
       </p>
+
+      <OutilsLies
+        depuis="payer-artistes"
+        outils={[
+          {
+            id: "budget",
+            phrase: "La retenue sur le cachet fait partie de votre budget.",
+          },
+        ]}
+      />
 
       <div id="et-apres" className="scroll-mt-24">
         <NextCards

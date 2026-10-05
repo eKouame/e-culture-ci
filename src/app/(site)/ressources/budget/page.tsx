@@ -5,6 +5,7 @@ import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { Callout } from "@/components/ressources/Callout";
 import { ExampleCard } from "@/components/ressources/ExampleCard";
 import { NextCards } from "@/components/ressources/NextCards";
+import { OutilsLies } from "@/components/ressources/OutilsLies";
 import { AppelOutil } from "@/components/ressources/AppelOutil";
 
 export const metadata: Metadata = pageMetadata({
@@ -378,7 +379,9 @@ export default function BudgetPage() {
         </p>
 
         <AppelOutil
-          href="/ressources/budget/calculateur"
+          href="/outils/budget"
+          depuis="budget"
+          outil="budget"
           titre="Essayez avec vos propres chiffres"
           description="Le calculateur donne votre point d'équilibre en une minute. Gratuit, sans compte, vos chiffres restent sur votre appareil."
           bouton="Essayez avec vos propres chiffres →"
@@ -452,7 +455,9 @@ export default function BudgetPage() {
         </ExampleCard>
 
         <AppelOutil
-          href="/ressources/budget/calculateur"
+          href="/outils/budget"
+          depuis="budget"
+          outil="budget"
           titre="Et pour votre spectacle ?"
           description="Refaites ce calcul avec vos propres chiffres : le calculateur reprend la même méthode et donne le nombre d'entrées à vendre."
           bouton="Essayez avec vos propres chiffres →"
@@ -486,6 +491,8 @@ export default function BudgetPage() {
         de votre note d&apos;intention et de votre budget un dossier qui
         convainc.
       </p>
+
+      <OutilsLies depuis="budget" outils={[{ id: "budget" }]} />
 
       <NextCards
         liens={[

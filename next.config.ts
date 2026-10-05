@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
         destination: "/ressources/candidater-licences",
         permanent: true,
       },
+      // Le calculateur vit désormais sous l'onglet Outils.
+      {
+        source: "/ressources/budget/calculateur",
+        destination: "/outils/budget",
+        permanent: true,
+      },
     ];
   },
 };

@@ -44,7 +44,7 @@ export const RESSOURCES: RessourceRegistre[] = [
     etiquettes: ["projet"],
   },
   {
-    href: "/ressources/budget/calculateur",
+    href: "/outils/budget",
     titre: "Calculateur de budget (outil)",
     description: "Votre point d'équilibre en une minute. Gratuit, sans compte.",
     etiquettes: ["projet"],

@@ -3,12 +3,13 @@ import Link from "next/link";
 import { pageMetadata } from "@/lib/metadata";
 import { Calculateur } from "@/components/budget/Calculateur";
 import { NextCards } from "@/components/ressources/NextCards";
+import { BarreOutils } from "@/components/outils/BarreOutils";
 
 export const metadata: Metadata = pageMetadata({
   title: "Calculateur de budget et point d'équilibre pour un spectacle | e-Culture CI",
   description:
     "Entrez vos dépenses, vos recettes et le prix du billet : obtenez le nombre d'entrées à vendre pour couvrir votre spectacle. Gratuit, sans inscription, indépendant.",
-  path: "/ressources/budget/calculateur",
+  path: "/outils/budget",
 });
 
 const FAQ = [
@@ -29,16 +30,17 @@ const FAQ = [
 export default function CalculateurBudgetPage() {
   return (
     <div>
+      <BarreOutils actif="budget" />
       <div className="no-print border-b border-border bg-surface">
         <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
           <nav className="mb-3 flex flex-wrap items-center gap-2 text-sm text-muted">
             <Link href="/">Accueil</Link>
             <span>›</span>
-            <Link href="/ressources">Ressources</Link>
+            <Link href="/outils">Outils</Link>
             <span>›</span>
-            <Link href="/ressources/budget">Bâtir votre budget</Link>
-            <span>›</span>
-            <span className="font-semibold text-foreground">Calculateur</span>
+            <span className="font-semibold text-foreground">
+              Calculateur de budget
+            </span>
           </nav>
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
             Calculez le point d&apos;équilibre de votre spectacle

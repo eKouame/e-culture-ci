@@ -3,6 +3,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { Callout } from "@/components/ressources/Callout";
 import { NextCards } from "@/components/ressources/NextCards";
+import { OutilsLies } from "@/components/ressources/OutilsLies";
 import { EssentielBloc } from "@/components/ressources/EssentielBloc";
 import {
   AutresQuestions,
@@ -455,6 +456,8 @@ export default function CandidaterLicencesPage() {
         confirmez toujours l&apos;état en vigueur et votre cas précis auprès
         du ministère de la Culture.
       </p>
+
+      <OutilsLies depuis="candidater-licences" outils={[{ id: "concerne" }]} />
 
       <div id="et-apres" className="scroll-mt-24">
         <NextCards
