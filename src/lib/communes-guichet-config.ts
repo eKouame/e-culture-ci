@@ -21,9 +21,9 @@ export interface CommuneGuichet {
 
 export const COMMUNES_GUICHET: CommuneGuichet[] = [];
 
-// Commune clairement fictive, utilisée seulement par la démonstration. Elle n'est
+// Commune clairement fictive, utilisée seulement pour l'essai. Elle n'est
 // jamais dans `COMMUNES_GUICHET` : elle ne peut donc pas passer pour un partenaire.
-export const COMMUNE_DEMO = "Commune de démonstration";
+export const COMMUNE_ESSAI = "Commune d'essai";
 
 function normaliser(s: string) {
   return s

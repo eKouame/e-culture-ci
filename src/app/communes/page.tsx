@@ -222,13 +222,13 @@ export default function CommunesPage() {
               administrés.
             </p>
             <LienOutil
-              href="/declaration/demonstration"
+              href="/declaration/essai"
               depuis="communes"
-              outil="demonstration"
+              outil="essai"
               emplacement="appel"
               className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-secondary px-6 py-3.5 text-base font-bold text-secondary-dark transition-colors hover:bg-black/5"
             >
-              Essayer la démonstration →
+              Essayer le guichet →
             </LienOutil>
           </div>
         </div>

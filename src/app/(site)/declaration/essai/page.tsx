@@ -4,16 +4,16 @@ import { DotPill } from "@/components/ui/DotPill";
 import { DeclarationForm } from "../DeclarationForm";
 import { BarreCommunes } from "@/components/outils/BarreCommunes";
 
-// Page de démonstration pour les mairies : hors sitemap et hors index, car elle
+// Page d'essai pour les mairies : hors sitemap et hors index, car elle
 // présente une commune fictive.
 export const metadata: Metadata = {
-  title: "Démonstration du guichet de déclaration | e-Culture CI",
+  title: "Essai du guichet de déclaration | e-Culture CI",
   description:
     "Essayez, avec une commune fictive, ce que voit un organisateur dont la mairie propose le guichet de déclaration. Aucune donnée n'est transmise.",
   robots: { index: false, follow: false },
 };
 
-export default function DemonstrationPage() {
+export default function EssaiPage() {
   return (
     <div>
       <BarreCommunes actif="declarer" />
@@ -24,7 +24,7 @@ export default function DemonstrationPage() {
             <span>›</span>
             <Link href="/communes">Communes</Link>
             <span>›</span>
-            <span className="font-semibold text-foreground">Démonstration</span>
+            <span className="font-semibold text-foreground">Essai du guichet</span>
           </nav>
           <p className="text-sm font-semibold text-primary-dark">
             Pour les mairies
