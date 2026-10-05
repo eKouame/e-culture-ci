@@ -4,6 +4,7 @@ import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { Callout } from "@/components/ressources/Callout";
 import { NextCards } from "@/components/ressources/NextCards";
 import { OutilsLies } from "@/components/ressources/OutilsLies";
+import { LienOutil } from "@/components/outils/LienOutil";
 import { EssentielBloc } from "@/components/ressources/EssentielBloc";
 import {
   AutresQuestions,
@@ -155,6 +156,19 @@ export default function CandidaterLicencesPage() {
         le ministère. Pour la procédure et les pièces exactes, seul le
         ministère de la Culture fait foi.
       </div>
+
+      <p className="no-print mb-8 text-sm text-foreground">
+        Pas sûr d&apos;être concerné ?{" "}
+        <LienOutil
+          href="/suis-je-concerne"
+          depuis="candidater-licences"
+          outil="concerne"
+          emplacement="appel"
+          className="font-medium text-primary-dark underline"
+        >
+          Faites le test « Suis-je concerné ? »
+        </LienOutil>
+      </p>
 
       <section id="de-quoi" className="scroll-mt-24">
         <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">

@@ -5,7 +5,8 @@ import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { OptionCard } from "@/components/questionnaire/OptionCard";
 import { ProgressBar } from "@/components/questionnaire/ProgressBar";
-import { getResultat, questionsPour, Reponses } from "./config";
+import { AppelOutil } from "@/components/ressources/AppelOutil";
+import { LIEN_MAIRIE, getResultat, questionsPour, Reponses } from "./config";
 
 const TOTAL_STEPS = 3;
 
@@ -252,6 +253,15 @@ function Resultat({
             </LinkButton>
           ))}
         </div>
+
+        <AppelOutil
+          href={LIEN_MAIRIE.href}
+          depuis="suis-je-concerne"
+          outil="declaration"
+          titre={LIEN_MAIRIE.label}
+          description={LIEN_MAIRIE.aide}
+          bouton={`${LIEN_MAIRIE.label} →`}
+        />
       </div>
 
       <div className="mt-6 rounded-xl bg-deep px-5 py-4 text-on-deep">

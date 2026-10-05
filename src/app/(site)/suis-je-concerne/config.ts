@@ -131,16 +131,20 @@ const LIENS_BASE: Record<string, Lien> = {
     label: "Propriété intellectuelle",
     aide: "Droits d'auteur et droits voisins : qui doit quoi.",
   },
-  declaration: {
-    href: "/declaration",
-    label: "Ma déclaration",
-    aide: "Préparer la déclaration de votre événement.",
-  },
   candidaterLicences: {
     href: "/ressources/candidater-licences",
     label: "Candidater aux licences B et C",
     aide: "Calendrier de l'appel, conditions et coûts.",
   },
+};
+
+// Le parcours se termine par un appel vers « Déclarer à ma mairie » (outil `/declaration`,
+// onglet Communes). Formulation exacte tant qu'aucune commune n'est active : l'outil
+// prépare un récapitulatif à porter à la mairie, il ne transmet rien.
+export const LIEN_MAIRIE: Lien = {
+  href: "/declaration",
+  label: "Déclarer à ma mairie",
+  aide: "Préparez en trois étapes le récapitulatif de votre événement, à porter à votre mairie.",
 };
 
 function ligneCategorie(code: "A" | "B" | "C"): Fait[] {
@@ -187,7 +191,7 @@ export function getResultat(reponses: Reponses, clos = false): Resultat {
             "« Occasionnel » n'est pas un statut permanent. Si vos événements se répètent et s'installent dans l'année, votre activité peut être regardée comme régulière — et la licence redevient une question. Refaites le test si votre rythme change.",
         },
       ],
-      liens: [L.fondamentaux, L.payerArtistes, L.budget, L.declaration],
+      liens: [L.fondamentaux, L.payerArtistes, L.budget],
     };
   }
 
@@ -274,8 +278,8 @@ export function getResultat(reponses: Reponses, clos = false): Resultat {
         },
       ],
       liens: morale
-        ? [L.candidaterLicences, L.budget, L.payerArtistes, L.proprieteIntellectuelle, L.declaration]
-        : [L.fondamentaux, L.budget, L.payerArtistes, L.proprieteIntellectuelle, L.declaration],
+        ? [L.candidaterLicences, L.budget, L.payerArtistes, L.proprieteIntellectuelle]
+        : [L.fondamentaux, L.budget, L.payerArtistes, L.proprieteIntellectuelle],
     };
   }
 
@@ -308,7 +312,7 @@ export function getResultat(reponses: Reponses, clos = false): Resultat {
             : "Nous ne pouvons pas affirmer qu'une personne physique est exclue : nous constatons seulement que l'appel publié vise les personnes morales. Faites confirmer votre situation par le ministère.",
         },
       ],
-      liens: [L.fondamentaux, L.budget, L.payerArtistes, L.declaration],
+      liens: [L.fondamentaux, L.budget, L.payerArtistes],
     };
   }
 
@@ -343,6 +347,6 @@ export function getResultat(reponses: Reponses, clos = false): Resultat {
           : "Les montants indiqués proviennent des informations publiques disponibles et doivent être confirmés auprès du ministère avant tout engagement.",
       },
     ],
-    liens: [L.candidaterLicences, L.budget, L.payerArtistes, L.proprieteIntellectuelle, L.declaration],
+    liens: [L.candidaterLicences, L.budget, L.payerArtistes, L.proprieteIntellectuelle],
   };
 }

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export function ActifVisible() {
   useEffect(() => {
     const actif = document.querySelector<HTMLElement>(
-      'nav[aria-label="Outils"] [aria-current="page"]',
+      '[data-barre-secondaire] [aria-current="page"]',
     );
     actif?.scrollIntoView({ inline: "center", block: "nearest" });
   }, []);
