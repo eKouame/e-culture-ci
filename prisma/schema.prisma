@@ -86,7 +86,6 @@ model Immatriculation {
   typeDemandeur  String
   nomComplet     String
   raisonSociale  String?
-  numeroCNI      String?
   dateNaissance  DateTime?
 
   telephone String
