@@ -4,16 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+// Menu principal : trois entrées, dans cet ordre. Le libellé vit ici, pas dans les
+// routes. `actifs` : les chemins qui relèvent de l'onglet (« Suis-je concerné ? » vit
+// sous Outils, « Ma déclaration » sous Communes ; leurs routes ne changent pas).
 const NAV_ITEMS = [
-  { href: "/suis-je-concerne", label: "Suis-je concerné ?" },
-  { href: "/declaration", label: "Ma déclaration" },
-  { href: "/ressources", label: "Ressources" },
-  { href: "/outils", label: "Outils" },
+  { href: "/ressources", label: "Ressources", actifs: ["/ressources"] },
+  { href: "/outils", label: "Outils", actifs: ["/outils", "/suis-je-concerne"] },
+  { href: "/communes", label: "Communes", actifs: ["/communes", "/declaration"] },
 ];
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const estActif = (actifs: string[]) =>
+    actifs.some((p) => pathname === p || pathname?.startsWith(`${p}/`));
 
   return (
     <header className="no-print sticky top-0 z-40 border-b border-border bg-surface/95 backdrop-blur">
@@ -29,29 +33,22 @@ export function Header() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Menu principal" className="hidden items-center gap-1 md:flex">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              aria-current={estActif(item.actifs) ? "true" : undefined}
               className={`whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-black/5 ${
-                pathname?.startsWith(item.href)
-                  ? "text-primary-dark"
-                  : "text-foreground"
+                estActif(item.actifs) ? "text-primary-dark" : "text-foreground"
               }`}
             >
               {item.label}
             </Link>
           ))}
           <Link
-            href="/communes"
-            className="ml-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-primary-dark hover:bg-primary-light"
-          >
-            Vous êtes une mairie ? →
-          </Link>
-          <Link
             href="/admin"
-            className="whitespace-nowrap rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
+            className="ml-2 whitespace-nowrap rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
           >
             Espace admin
           </Link>
@@ -60,7 +57,7 @@ export function Header() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-border lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-border md:hidden"
           aria-label="Ouvrir le menu"
           aria-expanded={open}
         >
@@ -70,14 +67,18 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-border px-4 py-3 lg:hidden">
+        <nav
+          aria-label="Menu principal"
+          className="flex flex-col gap-1 border-t border-border px-4 py-3 md:hidden"
+        >
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className={`rounded-lg px-3 py-2.5 text-sm font-medium ${
-                pathname?.startsWith(item.href)
+              aria-current={estActif(item.actifs) ? "true" : undefined}
+              className={`min-h-[44px] rounded-lg px-3 py-2.5 text-sm font-medium ${
+                estActif(item.actifs)
                   ? "bg-primary-light text-primary-dark"
                   : "text-foreground hover:bg-black/5"
               }`}
@@ -86,16 +87,9 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/communes"
-            onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-primary-dark hover:bg-primary-light"
-          >
-            Vous êtes une mairie ? →
-          </Link>
-          <Link
             href="/admin"
             onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted hover:bg-black/5"
+            className="min-h-[44px] rounded-lg px-3 py-2.5 text-sm font-medium text-muted hover:bg-black/5"
           >
             Espace admin
           </Link>

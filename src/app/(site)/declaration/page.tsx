@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DotPill } from "@/components/ui/DotPill";
 import { DeclarationForm } from "./DeclarationForm";
 import { pageMetadata } from "@/lib/metadata";
+import { BarreCommunes } from "@/components/outils/BarreCommunes";
 
 export const metadata: Metadata = pageMetadata({
   title: "Préparer ma déclaration | e-Culture CI",
@@ -14,10 +15,13 @@ export const metadata: Metadata = pageMetadata({
 export default function DeclarationPage() {
   return (
     <div>
+      <BarreCommunes actif="declarer" />
       <section className="no-print border-b border-border bg-surface">
         <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
           <nav className="mb-3 flex items-center gap-2 text-sm text-muted">
             <Link href="/">Accueil</Link>
+            <span>›</span>
+            <Link href="/communes">Communes</Link>
             <span>›</span>
             <span className="font-semibold text-foreground">
               Ma déclaration

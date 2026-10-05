@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
+import { LienOutil } from "@/components/outils/LienOutil";
 
 export const metadata: Metadata = pageMetadata({
   title: "FAQ | e-Culture CI",
@@ -46,6 +47,18 @@ export default function FaqPage() {
       <h1 className="mt-1 text-3xl font-extrabold text-foreground">
         Questions fréquentes
       </h1>
+      <p className="mt-3 text-sm text-foreground">
+        Pas sûr d&apos;être concerné ?{" "}
+        <LienOutil
+          href="/suis-je-concerne"
+          depuis="faq"
+          outil="concerne"
+          emplacement="appel"
+          className="font-medium text-primary-dark underline"
+        >
+          Faites le test « Suis-je concerné ? »
+        </LienOutil>
+      </p>
 
       <div className="mt-6 flex flex-col gap-3">
         {FAQ.map((item) => (

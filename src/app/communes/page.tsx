@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/metadata";
+import { BarreCommunes } from "@/components/outils/BarreCommunes";
 
 const TITLE = "e-Culture CI pour les communes | e-Culture CI";
 const DESCRIPTION =
@@ -98,6 +99,8 @@ const ETAPES = [
 export default function CommunesPage() {
   return (
     <div>
+      <BarreCommunes actif="mairies" />
+
       {/* 1. Hero */}
       <section className="bg-deep-strong text-on-deep">
         <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-20">
