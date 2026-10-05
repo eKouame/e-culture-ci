@@ -3,6 +3,18 @@ import { pageMetadata } from "@/lib/metadata";
 import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { Callout } from "@/components/ressources/Callout";
 import { NextCards } from "@/components/ressources/NextCards";
+import { EssentielBloc } from "@/components/ressources/EssentielBloc";
+import {
+  AutresQuestions,
+  QuestionsRapides,
+} from "@/components/ressources/QuestionsRapides";
+import { TableauRegles } from "@/components/ressources/TableauRegles";
+import { ComportementAncres } from "@/components/ressources/ComportementAncres";
+import {
+  CANDIDATER_LICENCES,
+  QUESTIONS,
+  fcfa,
+} from "@/lib/candidater-licences-config";
 
 export const metadata: Metadata = pageMetadata({
   title: "Candidater aux licences de spectacle (B et C) en Côte d'Ivoire | e-Culture CI",
@@ -39,10 +51,25 @@ const CATEGORIES = [
   },
 ];
 
+const c = CANDIDATER_LICENCES;
+
+// Montants lus dans la configuration : une seule valeur à changer, partout.
 const MONTANTS = [
-  { code: "A — Producteurs", frais: "5 000 000 FCFA", caution: "5 000 000 FCFA" },
-  { code: "B — Diffuseurs", frais: "4 500 000 FCFA", caution: "5 000 000 FCFA" },
-  { code: "C — Exploitants de lieux", frais: "À confirmer", caution: "À confirmer" },
+  {
+    code: "A — Producteurs",
+    frais: fcfa(c.montants.A.frais),
+    caution: fcfa(c.montants.A.caution),
+  },
+  {
+    code: "B — Diffuseurs",
+    frais: fcfa(c.montants.B.frais),
+    caution: fcfa(c.montants.B.caution),
+  },
+  {
+    code: "C — Exploitants de lieux",
+    frais: c.montants.C ? fcfa(c.montants.C.frais) : "À confirmer",
+    caution: c.montants.C ? fcfa(c.montants.C.caution) : "À confirmer",
+  },
 ];
 
 export default function CandidaterLicencesPage() {
@@ -53,7 +80,50 @@ export default function CandidaterLicencesPage() {
       dek="Qui est concerné, calendrier de l'appel, conditions d'accès, coûts et caution — pour préparer votre candidature sans vous tromper de guichet."
       meta={{ lecture: "6 min", niveau: "Intermédiaire" }}
       sommaire={SOMMAIRE}
+      avantCorps={
+        <>
+          <EssentielBloc
+            verifie={c.dateVerification}
+            suite="Détails, conditions et coûts ci-dessous."
+            items={[
+              <>
+                La licence d&apos;entrepreneur de spectacles a trois catégories,
+                que vous pouvez cumuler : <strong>A (producteurs)</strong>,{" "}
+                <strong>B (diffuseurs)</strong> et{" "}
+                <strong>C (exploitants de lieux)</strong>.
+              </>,
+              <>
+                Un <strong>appel à candidatures</strong> est ouvert{" "}
+                <strong>jusqu&apos;au {c.cloture}</strong>, pour les licences{" "}
+                <strong>B et C</strong>{" "}
+                et pour les <strong>personnes morales</strong>{" "}
+                seulement. La licence A n&apos;y entre pas : elle viendra plus
+                tard.
+              </>,
+              <>
+                Il faut justifier de <strong>cinq spectacles</strong>{" "}
+                déjà organisés sous l&apos;autorité d&apos;un licencié, et
+                réunir frais et caution. Selon les informations publiques, en
+                catégorie B : <strong>{fcfa(c.montants.B.frais)}</strong>{" "}
+                de frais et <strong>{fcfa(c.montants.B.caution)}</strong>{" "}
+                de caution ; C à confirmer. À confirmer sur pièce.
+              </>,
+              <>
+                La liste exacte des pièces n&apos;est pas détaillée ici : seule
+                la{" "}
+                <strong>
+                  Direction des affaires juridiques du ministère de la Culture
+                </strong>{" "}
+                fait foi.
+              </>,
+            ]}
+          />
+          <QuestionsRapides questions={QUESTIONS} />
+        </>
+      }
     >
+      <ComportementAncres ressource="candidater-licences" />
+
       <div className="mb-8 rounded-lg border border-border bg-black/[0.02] px-4 py-3 text-sm italic text-muted">
         Ressource e-Culture CI — outil d&apos;orientation. Cette page vous
         aide à comprendre et à préparer votre candidature. Elle ne la dépose
@@ -100,21 +170,25 @@ export default function CandidaterLicencesPage() {
           faites. Vous pouvez en cumuler plusieurs si vous exercez plusieurs
           métiers.
         </p>
-        <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {CATEGORIES.map((c) => (
-            <div
-              key={c.code}
-              className="rounded-xl border border-border bg-surface p-4"
-            >
-              <p className="text-3xl font-extrabold text-primary-dark">
-                {c.code}
-              </p>
-              <p className="mt-1 text-sm font-bold text-foreground">
-                {c.nom}
-              </p>
-              <p className="mt-1 text-xs text-muted">{c.description}</p>
-            </div>
-          ))}
+        <TableauRegles
+          id="categories"
+          titre="Les trois catégories d'un coup d'œil"
+          colonnes={["Catégorie", "Vous êtes…", "Appel en cours"]}
+          teteMobile={0}
+          lignes={CATEGORIES.map((cat) => ({
+            cellules: [
+              <strong key={cat.code} className="text-xl md:text-sm">
+                {cat.code} — {cat.nom}
+              </strong>,
+              cat.description,
+              cat.code === "A"
+                ? "Pas dans cet appel : phase ultérieure"
+                : `Ouvert jusqu'au ${c.cloture}, personnes morales uniquement`,
+            ],
+          }))}
+        />
+        <div className="mb-4">
+          <AutresQuestions />
         </div>
         <p className="max-w-prose text-sm text-muted">
           Pour savoir si vous êtes concerné et dans quelle catégorie, le
@@ -161,7 +235,11 @@ export default function CandidaterLicencesPage() {
           ultérieure.
         </p>
 
-        <div className="mb-4 flex flex-col gap-3">
+        <div
+          id="profils"
+          data-surligner=""
+          className="mb-1 flex scroll-mt-24 flex-col gap-3"
+        >
           <Callout variant="retenir" label="À retenir si vous êtes producteur">
             Inutile de vous précipiter sur cet appel, il ne vous concerne pas
             encore. Surveillez l&apos;ouverture du volet A.
@@ -174,6 +252,9 @@ export default function CandidaterLicencesPage() {
             C, il faudra probablement passer par une structure.
             Renseignez-vous sur ce point avant la clôture.
           </Callout>
+        </div>
+        <div className="mb-4">
+          <AutresQuestions />
         </div>
 
         <p className="max-w-prose border-t border-border pt-4 text-xs italic text-muted">
@@ -195,7 +276,11 @@ export default function CandidaterLicencesPage() {
           <strong className="text-foreground">Être une personne morale.</strong>{" "}
           C&apos;est la porte d&apos;entrée de l&apos;appel en cours.
         </p>
-        <p className="mb-4 max-w-prose text-muted">
+        <p
+          id="cinq-spectacles"
+          data-surligner=""
+          className="mb-1 max-w-prose scroll-mt-24 text-muted"
+        >
           <strong className="text-foreground">
             Justifier de cinq spectacles déjà organisés sous l&apos;autorité
             d&apos;un licencié.
@@ -206,7 +291,14 @@ export default function CandidaterLicencesPage() {
           licencié, avant d&apos;opérer en autonomie. (Fond : analyse
           juridique de Me Calo Trebissou, Village-Justice.)
         </p>
-        <p className="mb-3 max-w-prose text-muted">
+        <div className="mb-4">
+          <AutresQuestions />
+        </div>
+        <p
+          id="couts"
+          data-surligner=""
+          className="mb-3 max-w-prose scroll-mt-24 text-muted"
+        >
           <strong className="text-foreground">
             Réunir les frais et la caution.
           </strong>{" "}
@@ -235,6 +327,9 @@ export default function CandidaterLicencesPage() {
           ; le ministère ne vérifie que le reçu. Ces montants circulent par
           voie de presse — confirmez-les sur pièce avant de vous engager.
         </p>
+        <div className="mt-2">
+          <AutresQuestions />
+        </div>
       </section>
 
       <section id="preparer" className="scroll-mt-24">
@@ -294,10 +389,13 @@ export default function CandidaterLicencesPage() {
           </strong>
           . C&apos;est le seul interlocuteur qui fait foi.
         </p>
+        <div className="mt-2">
+          <AutresQuestions />
+        </div>
       </section>
 
       <p className="mt-8 max-w-prose border-t border-border pt-4 text-xs italic text-muted">
-        Informations vérifiées en octobre 2026. L&apos;appel à candidatures,
+        Informations vérifiées en {c.dateVerification}. L&apos;appel à candidatures,
         les catégories ouvertes et les montants évoluent avec la réforme :
         confirmez toujours l&apos;état en vigueur et votre cas précis auprès
         du ministère de la Culture.
