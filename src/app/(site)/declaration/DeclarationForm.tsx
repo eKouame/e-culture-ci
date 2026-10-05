@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { LinkButton } from "@/components/ui/Button";
 import { PrintButton } from "@/components/ui/PrintButton";
 import { mesure } from "@/lib/mesure";
-import { COMMUNE_DEMO, deCommune, estCommuneActive } from "@/lib/communes-guichet-config";
+import { COMMUNE_ESSAI, deCommune, estCommuneActive } from "@/lib/communes-guichet-config";
 
 const DISTRICTS_CI = [
   "Abidjan",
@@ -153,10 +153,10 @@ const dateFormat = new Intl.DateTimeFormat("fr-FR", {
   year: "numeric",
 });
 
-function BandeauDemo() {
+function BandeauEssai() {
   return (
     <p className="mb-4 rounded-xl bg-deep px-5 py-3.5 text-sm font-semibold text-on-deep">
-      Démonstration&nbsp;: aucune donnée n&apos;est transmise.
+      Exemple fictif&nbsp;: aucune donnée n&apos;est transmise.
     </p>
   );
 }
@@ -167,13 +167,13 @@ function donneesInitiales(demo: boolean): Record<string, string | boolean> {
     transmettre: false,
     consentTransmission: false,
     consentCartographie: false,
-    ...(demo ? { commune: COMMUNE_DEMO } : {}),
+    ...(demo ? { commune: COMMUNE_ESSAI } : {}),
   };
 }
 
-// `demo` : démonstration pour les mairies, avec une commune clairement fictive. On y
+// `demo` : essai pour les mairies, avec une commune clairement fictive. On y
 // montre ce que verrait un organisateur dont la commune a un guichet actif, mais rien
-// n'est envoyé ni conservé. Hors démonstration, c'est l'état 0 : l'outil produit un
+// n'est envoyé ni conservé. Hors essai, c'est l'état 0 : l'outil produit un
 // récapitulatif à imprimer, et une commune sans guichet actif est dite comme telle.
 export function DeclarationForm({ demo = false }: { demo?: boolean }) {
   const [etape, setEtape] = useState(1);
@@ -230,7 +230,7 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
       return;
     }
     mesure("declaration_produite", {
-      mode: demo ? "demonstration" : "standard",
+      mode: demo ? "essai" : "standard",
       encart: !demo && encartEtat0 ? "oui" : "non",
     });
     setReference(genererReference());
@@ -301,7 +301,7 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
     return (
       <>
         <div ref={docRef}>
-          {demo && <BandeauDemo />}
+          {demo && <BandeauEssai />}
           {demo && donnees.transmettre && (
             <div className="no-print mb-4 rounded-xl border border-border bg-background p-5">
               <p className="text-xs font-bold uppercase tracking-wide text-secondary-dark">
@@ -360,7 +360,7 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
                   {demo && donnees.transmettre
                     ? "Transmission simulée"
                     : demo
-                      ? "Démonstration"
+                      ? "Exemple fictif"
                       : "Récapitulatif prêt"}
                 </p>
               </div>
@@ -438,7 +438,7 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
 
   return (
     <>
-      {demo && <BandeauDemo />}
+      {demo && <BandeauEssai />}
       <div
         ref={cardRef}
         className="flex flex-col gap-6 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6"
@@ -547,7 +547,7 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
                   readOnly={demo && c.cle === "commune"}
                   hint={
                     demo && c.cle === "commune"
-                      ? "Commune fictive, utilisée pour la démonstration."
+                      ? "Commune fictive, utilisée pour l'essai."
                       : undefined
                   }
                 />
@@ -573,7 +573,7 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
         {derniereEtape && demo && (
           <div className="rounded-xl border border-border bg-background px-5 py-4">
             <p className="text-sm leading-relaxed text-foreground">
-              La commune de démonstration reçoit les déclarations via
+              La commune d&apos;essai reçoit les déclarations via
               e-Culture&nbsp;CI. Voici ce que verrait un organisateur dont la
               commune a un guichet actif.
             </p>
@@ -585,8 +585,8 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
                 className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-secondary"
               />
               <span className="text-sm font-medium leading-relaxed text-foreground">
-                Transmettre ma déclaration à la mairie de la commune de
-                démonstration.
+                Transmettre ma déclaration à la mairie de la commune
+                d&apos;essai.
               </span>
             </label>
             {!!donnees.transmettre && (
@@ -600,8 +600,8 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
                   />
                   <span className="text-sm leading-relaxed text-foreground">
                     J&apos;accepte que e-Culture CI transmette les informations
-                    de ma déclaration à la mairie de la commune de
-                    démonstration, à l&apos;adresse qu&apos;elle a désignée.
+                    de ma déclaration à la mairie de la commune
+                    d&apos;essai, à l&apos;adresse qu&apos;elle a désignée.
                   </span>
                 </label>
                 <label className="flex cursor-pointer items-start gap-3">
