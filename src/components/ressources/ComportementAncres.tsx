@@ -34,6 +34,18 @@ export function ComportementAncres({ ressource }: { ressource: string }) {
     function onClick(e: MouseEvent) {
       if (e.defaultPrevented || e.button !== 0) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      const officiel = (e.target as HTMLElement).closest<HTMLElement>(
+        "[data-lien-officiel]",
+      );
+      if (officiel) {
+        mesure("lien_officiel", {
+          ressource,
+          lien: officiel.dataset.lienOfficiel ?? "",
+        });
+        return;
+      }
+
       const lien = (e.target as HTMLElement).closest<HTMLAnchorElement>(
         'a[href^="#"]',
       );
@@ -56,11 +68,22 @@ export function ComportementAncres({ ressource }: { ressource: string }) {
       if (id) activer(id);
     }
 
+    // Ouverture d'une question de la FAQ (l'événement `toggle` ne remonte pas :
+    // on l'écoute en phase de capture).
+    function onToggle(e: Event) {
+      const d = e.target;
+      if (!(d instanceof HTMLDetailsElement) || !d.open) return;
+      const faq = d.dataset.faq;
+      if (faq) mesure("faq_ouverte", { ressource, question: faq });
+    }
+
     document.addEventListener("click", onClick);
+    document.addEventListener("toggle", onToggle, true);
     window.addEventListener("hashchange", onHash);
     if (location.hash) requestAnimationFrame(onHash);
     return () => {
       document.removeEventListener("click", onClick);
+      document.removeEventListener("toggle", onToggle, true);
       window.removeEventListener("hashchange", onHash);
     };
   }, [ressource]);
