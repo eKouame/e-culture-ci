@@ -2,6 +2,8 @@
 // pouvoir être mises à jour à un seul endroit (dates de l'appel, coûts,
 // condition d'accès) sans toucher à la logique d'affichage.
 
+import { CANDIDATER_LICENCES } from "@/lib/candidater-licences-config";
+
 export type ReponseFrequence = "occasionnelle" | "reguliere";
 export type ReponseRole = "produire" | "diffuser" | "exploiter" | "plusieurs";
 export type ReponseForme = "morale" | "physique";
@@ -15,7 +17,9 @@ export interface Reponses {
 export const DATE_VERIFICATION = "18 septembre 2026";
 
 export const LICENCE_CONFIG = {
-  appel: { debut: "15 septembre 2026", fin: "15 octobre 2026", instance: "CODELES" },
+  // La fin de l'appel vient de la configuration de la ressource « Candidater aux
+  // licences » : une seule date à maintenir pour tout le site (voir `appelClos`).
+  appel: { debut: "15 septembre 2026", fin: CANDIDATER_LICENCES.cloture, instance: "CODELES" },
   condition: "Justifier de 5 spectacles déjà organisés sous l'autorité d'un licencié",
   categories: {
     A: { code: "A", nom: "Producteurs", cout: "5 000 000 FCFA", caution: "5 000 000 FCFA" },
@@ -65,6 +69,16 @@ export const QUESTIONS: [
     ],
   },
 ];
+
+// Texte de la question 3 : « vise » devient « visait » une fois l'appel clos.
+export function questionsPour(clos: boolean): typeof QUESTIONS {
+  if (!clos) return QUESTIONS;
+  return [
+    QUESTIONS[0],
+    QUESTIONS[1],
+    { ...QUESTIONS[2], aide: "L'appel visait les personnes morales." },
+  ];
+}
 
 export interface Fait {
   label: string;
@@ -137,13 +151,16 @@ function ligneCategorie(code: "A" | "B" | "C"): Fait[] {
   ];
 }
 
-export function getResultat(reponses: Reponses): Resultat {
+// `clos` : l'appel à candidatures B et C est terminé (voir `appelClos`). Les textes
+// passent alors au passé et ne promettent rien sur la suite : seul un renvoi au
+// ministère. Sans `clos`, les résultats sont exactement ceux de l'appel ouvert.
+export function getResultat(reponses: Reponses, clos = false): Resultat {
   const L = LIENS_BASE;
   const cond: Fait = { label: "Condition d'accès", valeur: LICENCE_CONFIG.condition };
-  const calendrier: Fait = {
-    label: "Appel en cours (B et C)",
-    valeur: `Du ${LICENCE_CONFIG.appel.debut} au ${LICENCE_CONFIG.appel.fin}`,
-  };
+  const periode = `Du ${LICENCE_CONFIG.appel.debut} au ${LICENCE_CONFIG.appel.fin}`;
+  const calendrier: Fait = clos
+    ? { label: "Appel (B et C)", valeur: `${periode} : clos` }
+    : { label: "Appel en cours (B et C)", valeur: periode };
   const examen: Fait = { label: "Examen des dossiers", valeur: `Commission ${LICENCE_CONFIG.appel.instance}` };
 
   if (reponses.frequence === "occasionnelle") {
@@ -179,8 +196,9 @@ export function getResultat(reponses: Reponses): Resultat {
       ton: "orange",
       surtitre: "Votre situation",
       titre: "Catégorie A — Producteurs, dans une phase ultérieure",
-      chapeau:
-        "Une activité régulière de production relève de la licence Producteurs (catégorie A). L'appel actuellement ouvert ne concerne que les catégories B et C : le volet Producteurs viendra dans un second temps.",
+      chapeau: clos
+        ? "Une activité régulière de production relève de la licence Producteurs (catégorie A). L'appel organisé ne concernait que les catégories B et C : le volet Producteurs viendra dans un second temps."
+        : "Une activité régulière de production relève de la licence Producteurs (catégorie A). L'appel actuellement ouvert ne concerne que les catégories B et C : le volet Producteurs viendra dans un second temps.",
       aCategorie: true,
       categorieTitre: "Catégorie A — Producteurs (selon les informations publiques)",
       faits: [...ligneCategorie("A"), cond, { label: "Calendrier de l'appel A", valeur: "Non ouvert à ce jour" }],
@@ -195,8 +213,9 @@ export function getResultat(reponses: Reponses): Resultat {
       notes: [
         {
           titre: "Si vous diffusez aussi",
-          texte:
-            "Si, en plus de produire, vous achetez des spectacles ou exploitez un lieu, l'appel en cours (B et C) peut vous concerner dès aujourd'hui. Refaites le test en choisissant « plusieurs rôles ».",
+          texte: clos
+            ? "Si, en plus de produire, vous achetez des spectacles ou exploitez un lieu, les catégories B et C peuvent vous concerner. L'appel qui les visait est clos : renseignez-vous auprès du ministère. Refaites le test en choisissant « plusieurs rôles »."
+            : "Si, en plus de produire, vous achetez des spectacles ou exploitez un lieu, l'appel en cours (B et C) peut vous concerner dès aujourd'hui. Refaites le test en choisissant « plusieurs rôles ».",
         },
       ],
       liens: [L.fondamentaux, L.payerArtistes, L.budget, L.proprieteIntellectuelle],
@@ -214,11 +233,19 @@ export function getResultat(reponses: Reponses): Resultat {
       ton: "orange",
       surtitre: "Votre situation",
       titre: morale
-        ? "Deux volets vous concernent : B/C maintenant, A plus tard"
-        : "Deux volets vous concernent, mais l'appel vise les personnes morales",
+        ? clos
+          ? "Deux volets vous concernent : B/C (appel clos), A plus tard"
+          : "Deux volets vous concernent : B/C maintenant, A plus tard"
+        : clos
+          ? "Deux volets vous concernent, mais l'appel visait les personnes morales"
+          : "Deux volets vous concernent, mais l'appel vise les personnes morales",
       chapeau: morale
-        ? "Vous cumulez la production et la diffusion ou l'exploitation d'un lieu. Le volet Diffuseurs / Exploitants est ouvert dès maintenant ; le volet Producteurs viendra dans une phase ultérieure."
-        : "Vous cumulez plusieurs rôles, mais vous exercez en nom propre. L'appel en cours s'adresse aux personnes morales : il faudra probablement passer par une structure pour y répondre.",
+        ? clos
+          ? "Vous cumulez la production et la diffusion ou l'exploitation d'un lieu. Le volet Diffuseurs / Exploitants a fait l'objet d'un appel, clos le " + LICENCE_CONFIG.appel.fin + " ; le volet Producteurs viendra dans une phase ultérieure."
+          : "Vous cumulez la production et la diffusion ou l'exploitation d'un lieu. Le volet Diffuseurs / Exploitants est ouvert dès maintenant ; le volet Producteurs viendra dans une phase ultérieure."
+        : clos
+          ? "Vous cumulez plusieurs rôles, mais vous exercez en nom propre. L'appel s'adressait aux personnes morales : il faudra probablement passer par une structure pour candidater."
+          : "Vous cumulez plusieurs rôles, mais vous exercez en nom propre. L'appel en cours s'adresse aux personnes morales : il faudra probablement passer par une structure pour y répondre.",
       aCategorie: true,
       categorieTitre: "Catégories concernées (selon les informations publiques)",
       faits: [
@@ -256,8 +283,12 @@ export function getResultat(reponses: Reponses): Resultat {
     return {
       ton: "orange",
       surtitre: "Votre situation",
-      titre: "Vous êtes concerné, mais l'appel vise les personnes morales",
-      chapeau: `Votre activité régulière relève de la ${nomCatPhrase}. L'appel en cours s'adresse toutefois aux personnes morales : exercer en nom propre ne permet probablement pas d'y répondre en l'état.`,
+      titre: clos
+        ? "Vous êtes concerné, mais l'appel visait les personnes morales"
+        : "Vous êtes concerné, mais l'appel vise les personnes morales",
+      chapeau: clos
+        ? `Votre activité régulière relève de la ${nomCatPhrase}. L'appel, désormais clos, s'adressait toutefois aux personnes morales : exercer en nom propre ne permet probablement pas de candidater en l'état.`
+        : `Votre activité régulière relève de la ${nomCatPhrase}. L'appel en cours s'adresse toutefois aux personnes morales : exercer en nom propre ne permet probablement pas d'y répondre en l'état.`,
       aCategorie: true,
       categorieTitre: `${nomCat} (selon les informations publiques)`,
       faits: [...ligneCategorie(codeCat), cond, calendrier, examen],
@@ -272,8 +303,9 @@ export function getResultat(reponses: Reponses): Resultat {
       notes: [
         {
           titre: "Rien n'est tranché",
-          texte:
-            "Nous ne pouvons pas affirmer qu'une personne physique est exclue : nous constatons seulement que l'appel publié vise les personnes morales. Faites confirmer votre situation par le ministère.",
+          texte: clos
+            ? "Nous ne pouvons pas affirmer qu'une personne physique est exclue : nous constatons seulement que l'appel publié visait les personnes morales. Faites confirmer votre situation par le ministère."
+            : "Nous ne pouvons pas affirmer qu'une personne physique est exclue : nous constatons seulement que l'appel publié vise les personnes morales. Faites confirmer votre situation par le ministère.",
         },
       ],
       liens: [L.fondamentaux, L.budget, L.payerArtistes, L.declaration],
@@ -283,8 +315,12 @@ export function getResultat(reponses: Reponses): Resultat {
   return {
     ton: "orange",
     surtitre: "Votre situation",
-    titre: "Vous êtes probablement concerné par l'appel en cours",
-    chapeau: `Une activité régulière ${estC ? "d'exploitation de lieu" : "de diffusion"}, exercée par une personne morale, relève de la ${nomCatPhrase}. L'appel est ouvert : c'est le moment de préparer votre dossier.`,
+    titre: clos
+      ? "Vous relevez probablement de la licence, mais l'appel est clos"
+      : "Vous êtes probablement concerné par l'appel en cours",
+    chapeau: clos
+      ? `Une activité régulière ${estC ? "d'exploitation de lieu" : "de diffusion"}, exercée par une personne morale, relève de la ${nomCatPhrase}. L'appel, ouvert jusqu'au ${LICENCE_CONFIG.appel.fin}, est clos : renseignez-vous auprès du ministère de la Culture pour savoir si un nouvel appel est prévu.`
+      : `Une activité régulière ${estC ? "d'exploitation de lieu" : "de diffusion"}, exercée par une personne morale, relève de la ${nomCatPhrase}. L'appel est ouvert : c'est le moment de préparer votre dossier.`,
     aCategorie: true,
     categorieTitre: `${nomCat} (selon les informations publiques)`,
     faits: [...ligneCategorie(codeCat), cond, calendrier, examen],
