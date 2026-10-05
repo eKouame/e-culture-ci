@@ -5,11 +5,14 @@ import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { OptionCard } from "@/components/questionnaire/OptionCard";
 import { ProgressBar } from "@/components/questionnaire/ProgressBar";
-import { QUESTIONS, getResultat, Reponses } from "./config";
+import { getResultat, questionsPour, Reponses } from "./config";
 
 const TOTAL_STEPS = 3;
 
-export function Questionnaire() {
+// `clos` : l'appel à candidatures est terminé ; décidé côté serveur pour que le texte
+// du parcours et celui de la page restent identiques.
+export function Questionnaire({ clos = false }: { clos?: boolean }) {
+  const QUESTIONS = questionsPour(clos);
   const [step, setStep] = useState(0);
   const [reponses, setReponses] = useState<Partial<Reponses>>({});
   const [choix, setChoix] = useState<string | null>(null);
@@ -129,7 +132,11 @@ export function Questionnaire() {
 
       <div aria-live="polite">
         {estResultat && (
-          <Resultat reponses={reponses as Reponses} onRestart={recommencer} />
+          <Resultat
+            reponses={reponses as Reponses}
+            clos={clos}
+            onRestart={recommencer}
+          />
         )}
       </div>
     </div>
@@ -138,12 +145,15 @@ export function Questionnaire() {
 
 function Resultat({
   reponses,
+  clos,
   onRestart,
 }: {
   reponses: Reponses;
+  clos: boolean;
   onRestart: () => void;
 }) {
-  const res = getResultat(reponses);
+  const QUESTIONS = questionsPour(clos);
+  const res = getResultat(reponses, clos);
   const resume = [
     QUESTIONS[0].options.find((o) => o.value === reponses.frequence)?.label,
     QUESTIONS[1].options.find((o) => o.value === reponses.role)?.label,

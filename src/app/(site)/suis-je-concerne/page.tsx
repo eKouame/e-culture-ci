@@ -5,6 +5,12 @@ import { DotPill } from "@/components/ui/DotPill";
 import { Questionnaire } from "./Questionnaire";
 import { DATE_VERIFICATION } from "./config";
 import { pageMetadata } from "@/lib/metadata";
+import { BarreOutils } from "@/components/outils/BarreOutils";
+import { appelClos } from "@/lib/candidater-licences-config";
+
+// La page se régénère toutes les heures : les textes « appel clos » apparaissent tout
+// seuls à la date de clôture (voir `appelClos`), sans nouveau déploiement.
+export const revalidate = 3600;
 
 export const metadata: Metadata = pageMetadata({
   title: "Suis-je concerné par la licence de spectacle ? | e-Culture CI",
@@ -14,12 +20,17 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function SuisJeConcernePage() {
+  const clos = appelClos();
+
   return (
     <div>
+      <BarreOutils actif="concerne" />
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
           <nav className="mb-3 flex items-center gap-2 text-sm text-muted">
             <Link href="/">Accueil</Link>
+            <span>›</span>
+            <Link href="/outils">Outils</Link>
             <span>›</span>
             <span className="font-semibold text-foreground">
               Suis-je concerné ?
@@ -42,7 +53,7 @@ export default function SuisJeConcernePage() {
       </section>
 
       <section className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-        <Questionnaire />
+        <Questionnaire clos={clos} />
         <p className="mt-4 text-sm text-muted">
           Informations vérifiées le {DATE_VERIFICATION}. La réglementation
           évolue : vérifiez auprès du ministère avant tout engagement.
