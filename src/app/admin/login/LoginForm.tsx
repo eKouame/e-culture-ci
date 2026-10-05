@@ -29,7 +29,11 @@ export function LoginForm() {
     });
 
     if (!res.ok) {
-      setSubmitError("Identifiants incorrects.");
+      setSubmitError(
+        res.status === 429
+          ? "Trop de tentatives. Réessayez dans quelques minutes."
+          : "Identifiants incorrects.",
+      );
       return;
     }
 
