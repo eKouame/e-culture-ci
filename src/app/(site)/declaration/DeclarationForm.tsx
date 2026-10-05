@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { LinkButton } from "@/components/ui/Button";
 import { PrintButton } from "@/components/ui/PrintButton";
+import { mesure } from "@/lib/mesure";
+import { COMMUNE_DEMO, deCommune, estCommuneActive } from "@/lib/communes-guichet-config";
 
 const DISTRICTS_CI = [
   "Abidjan",
@@ -34,19 +36,6 @@ const TYPES_SPECTACLE = [
   "Exposition",
   "Autre",
 ] as const;
-
-// Point de branchement pour la bascule "partage avec une commune pilote" (cahier des charges §5) :
-// reste désactivé tant qu'aucune commune n'a signé. Le texte de consentement ci-dessous est déjà
-// prêt à être affiché le jour où `actif` passe à true.
-const PARTAGE_COMMUNE: {
-  actif: boolean;
-  commune: string;
-  dureeConservation: string;
-} = {
-  actif: false,
-  commune: "",
-  dureeConservation: "trois ans après l'événement",
-};
 
 type Champ = {
   cle: string;
@@ -164,16 +153,41 @@ const dateFormat = new Intl.DateTimeFormat("fr-FR", {
   year: "numeric",
 });
 
-export function DeclarationForm() {
-  const [etape, setEtape] = useState(1);
-  const [donnees, setDonnees] = useState<Record<string, string | boolean>>({
+function BandeauDemo() {
+  return (
+    <p className="mb-4 rounded-xl bg-deep px-5 py-3.5 text-sm font-semibold text-on-deep">
+      Démonstration&nbsp;: aucune donnée n&apos;est transmise.
+    </p>
+  );
+}
+
+function donneesInitiales(demo: boolean): Record<string, string | boolean> {
+  return {
     payante: false,
-    partage: false,
-  });
+    transmettre: false,
+    consentTransmission: false,
+    consentCartographie: false,
+    ...(demo ? { commune: COMMUNE_DEMO } : {}),
+  };
+}
+
+// `demo` : démonstration pour les mairies, avec une commune clairement fictive. On y
+// montre ce que verrait un organisateur dont la commune a un guichet actif, mais rien
+// n'est envoyé ni conservé. Hors démonstration, c'est l'état 0 : l'outil produit un
+// récapitulatif à imprimer, et une commune sans guichet actif est dite comme telle.
+export function DeclarationForm({ demo = false }: { demo?: boolean }) {
+  const [etape, setEtape] = useState(1);
+  const [donnees, setDonnees] = useState<Record<string, string | boolean>>(() =>
+    donneesInitiales(demo),
+  );
   const [erreur, setErreur] = useState<string | null>(null);
   const [fini, setFini] = useState(false);
   const [reference, setReference] = useState("");
   const [datePreparation, setDatePreparation] = useState<Date | null>(null);
+
+  // État 0 : tant qu'une commune n'a pas de guichet actif, on le dit, sans rien promettre.
+  const commune = String(donnees.commune ?? "").trim();
+  const encartEtat0 = !demo && commune !== "" && !estCommuneActive(commune);
 
   const cardRef = useRef<HTMLDivElement>(null);
   const docRef = useRef<HTMLDivElement>(null);
@@ -209,6 +223,16 @@ export function DeclarationForm() {
       setEtape((e) => e + 1);
       return;
     }
+    if (demo && donnees.transmettre && !donnees.consentTransmission) {
+      setErreur(
+        "Pour simuler la transmission, cochez l'autorisation de transmettre, ou décochez la transmission.",
+      );
+      return;
+    }
+    mesure("declaration_produite", {
+      mode: demo ? "demonstration" : "standard",
+      encart: !demo && encartEtat0 ? "oui" : "non",
+    });
     setReference(genererReference());
     setDatePreparation(new Date());
     setFini(true);
@@ -222,7 +246,7 @@ export function DeclarationForm() {
 
   function recommencer() {
     interacted.current = true;
-    setDonnees({ payante: false, partage: false });
+    setDonnees(donneesInitiales(demo));
     setErreur(null);
     setFini(false);
     setEtape(1);
@@ -277,6 +301,25 @@ export function DeclarationForm() {
     return (
       <>
         <div ref={docRef}>
+          {demo && <BandeauDemo />}
+          {demo && donnees.transmettre && (
+            <div className="no-print mb-4 rounded-xl border border-border bg-background p-5">
+              <p className="text-xs font-bold uppercase tracking-wide text-secondary-dark">
+                Transmission simulée
+              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-foreground">
+                Dans un guichet actif, votre déclaration serait transmise à la
+                mairie : elle recevrait le récapitulatif ci-dessous, avec la
+                mention « Document non officiel ». Ici, rien n&apos;a été
+                envoyé, car la commune est fictive.
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                {donnees.consentCartographie
+                  ? "Cartographie : vous avez accepté que vos informations d'événement, sans vos coordonnées personnelles, soient conservées pour la cartographie de la commune."
+                  : "Cartographie : vous n'avez rien accepté, aucune information ne serait conservée pour la cartographie."}
+              </p>
+            </div>
+          )}
           <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
             <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
               <div>
@@ -314,7 +357,11 @@ export function DeclarationForm() {
                   Statut
                 </p>
                 <p className="mt-0.5 text-lg font-extrabold text-secondary">
-                  Récapitulatif prêt
+                  {demo && donnees.transmettre
+                    ? "Transmission simulée"
+                    : demo
+                      ? "Démonstration"
+                      : "Récapitulatif prêt"}
                 </p>
               </div>
             </div>
@@ -387,10 +434,11 @@ export function DeclarationForm() {
   }
 
   const etapeActuelle = ETAPES[etape - 1];
-  const partageActif = PARTAGE_COMMUNE.actif && etape === ETAPES.length;
+  const derniereEtape = etape === ETAPES.length;
 
   return (
     <>
+      {demo && <BandeauDemo />}
       <div
         ref={cardRef}
         className="flex flex-col gap-6 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6"
@@ -496,40 +544,82 @@ export function DeclarationForm() {
                   placeholder={c.exemple}
                   value={String(donnees[c.cle] ?? "")}
                   onChange={(e) => maj(c.cle, e.target.value)}
+                  readOnly={demo && c.cle === "commune"}
+                  hint={
+                    demo && c.cle === "commune"
+                      ? "Commune fictive, utilisée pour la démonstration."
+                      : undefined
+                  }
                 />
               </div>
             );
           })}
         </div>
 
-        {partageActif && (
-          <div className="rounded-r-lg border border-border border-l-4 border-l-secondary bg-background px-5 py-4">
-            <p className="mb-2.5 text-xs font-bold uppercase tracking-wide text-secondary-dark">
-              Contribuer à la cartographie culturelle
+        {derniereEtape && encartEtat0 && (
+          <div className="rounded-xl border border-border bg-background px-5 py-4">
+            <p className="text-sm leading-relaxed text-foreground">
+              <strong>
+                La mairie {deCommune(commune)} n&apos;utilise pas encore
+                e-Culture&nbsp;CI.
+              </strong>{" "}
+              Imprimez ou enregistrez votre récapitulatif et portez-le à la
+              mairie. Vous voulez que votre commune propose ce service&nbsp;?
+              Parlez-en à votre mairie.
             </p>
-            <label className="flex cursor-pointer items-start gap-3">
+          </div>
+        )}
+
+        {derniereEtape && demo && (
+          <div className="rounded-xl border border-border bg-background px-5 py-4">
+            <p className="text-sm leading-relaxed text-foreground">
+              La commune de démonstration reçoit les déclarations via
+              e-Culture&nbsp;CI. Voici ce que verrait un organisateur dont la
+              commune a un guichet actif.
+            </p>
+            <label className="mt-3 flex cursor-pointer items-start gap-3">
               <input
                 type="checkbox"
-                checked={!!donnees.partage}
-                onChange={(e) => maj("partage", e.target.checked)}
+                checked={!!donnees.transmettre}
+                onChange={(e) => maj("transmettre", e.target.checked)}
                 className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-secondary"
               />
-              <span className="text-sm leading-relaxed text-foreground">
-                J&apos;accepte que les informations de cette déclaration
-                soient transmises à la commune de{" "}
-                <strong>{PARTAGE_COMMUNE.commune}</strong>{" "}
-                pour alimenter la
-                cartographie culturelle de son territoire.
+              <span className="text-sm font-medium leading-relaxed text-foreground">
+                Transmettre ma déclaration à la mairie de la commune de
+                démonstration.
               </span>
             </label>
-            <p className="mt-3 text-xs leading-relaxed text-muted">
-              Sont transmis : votre nom, votre téléphone, la nature, la date
-              et le lieu de votre événement. Conservation :{" "}
-              {PARTAGE_COMMUNE.dureeConservation}. Vous pouvez demander la
-              suppression de ces informations à tout moment. Sans cette case
-              cochée, votre récapitulatif est produit normalement et rien
-              n&apos;est transmis.
-            </p>
+            {!!donnees.transmettre && (
+              <div className="mt-4 flex flex-col gap-3 border-t border-border pt-4">
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={!!donnees.consentTransmission}
+                    onChange={(e) => maj("consentTransmission", e.target.checked)}
+                    className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-secondary"
+                  />
+                  <span className="text-sm leading-relaxed text-foreground">
+                    J&apos;accepte que e-Culture CI transmette les informations
+                    de ma déclaration à la mairie de la commune de
+                    démonstration, à l&apos;adresse qu&apos;elle a désignée.
+                  </span>
+                </label>
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={!!donnees.consentCartographie}
+                    onChange={(e) => maj("consentCartographie", e.target.checked)}
+                    className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-secondary"
+                  />
+                  <span className="text-sm leading-relaxed text-foreground">
+                    <span className="font-semibold">Facultatif.</span> J&apos;accepte
+                    que mes informations d&apos;événement (sans mes coordonnées
+                    personnelles) soient conservées pour alimenter la
+                    cartographie culturelle de ma commune.
+                  </span>
+                </label>
+              </div>
+            )}
           </div>
         )}
 
