@@ -12,9 +12,14 @@ import { TableauRegles } from "@/components/ressources/TableauRegles";
 import { ComportementAncres } from "@/components/ressources/ComportementAncres";
 import {
   CANDIDATER_LICENCES,
-  QUESTIONS,
+  appelClos,
   fcfa,
+  questions,
 } from "@/lib/candidater-licences-config";
+
+// La page se régénère toutes les heures : le texte « appel clos » apparaît tout seul
+// à la date de clôture (voir `appelClos`), sans nouveau déploiement.
+export const revalidate = 3600;
 
 export const metadata: Metadata = pageMetadata({
   title: "Candidater aux licences de spectacle (B et C) en Côte d'Ivoire | e-Culture CI",
@@ -73,13 +78,20 @@ const MONTANTS = [
 ];
 
 export default function CandidaterLicencesPage() {
+  const clos = appelClos();
+  const sommaire = SOMMAIRE.map((s) =>
+    s.id === "appel" && clos
+      ? { ...s, label: "L'appel à candidatures (clos)" }
+      : s,
+  );
+
   return (
     <RessourceArticle
       kicker="Ressource · Être en règle"
       titre="Candidater aux licences B et C"
       dek="Qui est concerné, calendrier de l'appel, conditions d'accès, coûts et caution — pour préparer votre candidature sans vous tromper de guichet."
       meta={{ lecture: "6 min", niveau: "Intermédiaire" }}
-      sommaire={SOMMAIRE}
+      sommaire={sommaire}
       avantCorps={
         <>
           <EssentielBloc
@@ -92,14 +104,25 @@ export default function CandidaterLicencesPage() {
                 <strong>B (diffuseurs)</strong> et{" "}
                 <strong>C (exploitants de lieux)</strong>.
               </>,
-              <>
-                Un <strong>appel à candidatures</strong> est ouvert{" "}
-                <strong>jusqu&apos;au {c.cloture}</strong>, pour les licences{" "}
-                <strong>B et C</strong>{" "}
-                et pour les <strong>personnes morales</strong>{" "}
-                seulement. La licence A n&apos;y entre pas : elle viendra plus
-                tard.
-              </>,
+              clos ? (
+                <>
+                  L&apos;<strong>appel à candidatures</strong>{" "}
+                  ouvert jusqu&apos;au {c.cloture} (licences{" "}
+                  <strong>B et C</strong>,{" "}
+                  <strong>personnes morales</strong>{" "}
+                  seulement) est <strong>clos</strong>. La licence A n&apos;y
+                  entrait pas : elle viendra plus tard.
+                </>
+              ) : (
+                <>
+                  Un <strong>appel à candidatures</strong> est ouvert{" "}
+                  <strong>jusqu&apos;au {c.cloture}</strong>, pour les licences{" "}
+                  <strong>B et C</strong>{" "}
+                  et pour les <strong>personnes morales</strong>{" "}
+                  seulement. La licence A n&apos;y entre pas : elle viendra plus
+                  tard.
+                </>
+              ),
               <>
                 Il faut justifier de <strong>cinq spectacles</strong>{" "}
                 déjà organisés sous l&apos;autorité d&apos;un licencié, et
@@ -118,7 +141,7 @@ export default function CandidaterLicencesPage() {
               </>,
             ]}
           />
-          <QuestionsRapides questions={QUESTIONS} />
+          <QuestionsRapides questions={questions(clos)} />
         </>
       }
     >
@@ -173,7 +196,11 @@ export default function CandidaterLicencesPage() {
         <TableauRegles
           id="categories"
           titre="Les trois catégories d'un coup d'œil"
-          colonnes={["Catégorie", "Vous êtes…", "Appel en cours"]}
+          colonnes={[
+            "Catégorie",
+            "Vous êtes…",
+            clos ? "Appel" : "Appel en cours",
+          ]}
           teteMobile={0}
           lignes={CATEGORIES.map((cat) => ({
             cellules: [
@@ -183,7 +210,9 @@ export default function CandidaterLicencesPage() {
               cat.description,
               cat.code === "A"
                 ? "Pas dans cet appel : phase ultérieure"
-                : `Ouvert jusqu'au ${c.cloture}, personnes morales uniquement`,
+                : clos
+                  ? `Appel clos (ouvert jusqu'au ${c.cloture}, personnes morales uniquement)`
+                  : `Ouvert jusqu'au ${c.cloture}, personnes morales uniquement`,
             ],
           }))}
         />
@@ -205,16 +234,39 @@ export default function CandidaterLicencesPage() {
 
       <section id="appel" className="scroll-mt-24">
         <h2 className="mb-3 text-2xl font-extrabold tracking-tight text-secondary-dark">
-          L&apos;appel à candidatures en cours
+          {clos
+            ? "L'appel à candidatures (clos)"
+            : "L'appel à candidatures en cours"}
         </h2>
-        <p className="mb-4 max-w-prose text-muted">
-          C&apos;est le point d&apos;actualité, et il est daté. Un appel à
-          candidatures est{" "}
-          <strong className="text-foreground">
-            ouvert jusqu&apos;au 15 octobre 2026
-          </strong>
-          , et il concerne uniquement :
-        </p>
+        {clos && (
+          <div className="mb-4">
+            <Callout variant="jour" label="Appel clos">
+              L&apos;appel à candidatures a fermé le {c.cloture}. Pour savoir
+              si un nouvel appel est prévu, renseignez-vous auprès du
+              ministère de la Culture.
+            </Callout>
+          </div>
+        )}
+        {clos ? (
+          <p className="mb-4 max-w-prose text-muted">
+            C&apos;est le point d&apos;actualité, et il est daté.
+            L&apos;appel à candidatures{" "}
+            <strong className="text-foreground">
+              ouvert jusqu&apos;au {c.cloture}
+            </strong>{" "}
+            est <strong className="text-foreground">clos</strong>. Il
+            concernait uniquement :
+          </p>
+        ) : (
+          <p className="mb-4 max-w-prose text-muted">
+            C&apos;est le point d&apos;actualité, et il est daté. Un appel à
+            candidatures est{" "}
+            <strong className="text-foreground">
+              ouvert jusqu&apos;au {c.cloture}
+            </strong>
+            , et il concerne uniquement :
+          </p>
+        )}
         <ul className="mb-4 flex flex-col gap-2 text-sm text-muted">
           <li>
             les licences <strong className="text-foreground">B (diffuseurs)</strong>{" "}
@@ -241,16 +293,17 @@ export default function CandidaterLicencesPage() {
           className="mb-1 flex scroll-mt-24 flex-col gap-3"
         >
           <Callout variant="retenir" label="À retenir si vous êtes producteur">
-            Inutile de vous précipiter sur cet appel, il ne vous concerne pas
-            encore. Surveillez l&apos;ouverture du volet A.
+            {clos
+              ? "Cet appel ne vous concernait pas. Surveillez l'ouverture du volet A."
+              : "Inutile de vous précipiter sur cet appel, il ne vous concerne pas encore. Surveillez l'ouverture du volet A."}
           </Callout>
           <Callout
             variant="retenir"
             label="À retenir si vous êtes une personne physique"
           >
-            L&apos;appel vise les personnes morales. Pour candidater en B ou
-            C, il faudra probablement passer par une structure.
-            Renseignez-vous sur ce point avant la clôture.
+            {clos
+              ? "L'appel visait les personnes morales. Pour candidater en B ou C, il faudra probablement passer par une structure. Renseignez-vous sur ce point auprès du ministère de la Culture."
+              : "L'appel vise les personnes morales. Pour candidater en B ou C, il faudra probablement passer par une structure. Renseignez-vous sur ce point avant la clôture."}
           </Callout>
         </div>
         <div className="mb-4">
@@ -274,7 +327,9 @@ export default function CandidaterLicencesPage() {
         </p>
         <p className="mb-4 max-w-prose text-muted">
           <strong className="text-foreground">Être une personne morale.</strong>{" "}
-          C&apos;est la porte d&apos;entrée de l&apos;appel en cours.
+          {clos
+            ? "C'était la porte d'entrée de l'appel clos."
+            : "C'est la porte d'entrée de l'appel en cours."}
         </p>
         <p
           id="cinq-spectacles"
