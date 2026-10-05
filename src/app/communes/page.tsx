@@ -235,6 +235,10 @@ export default function CommunesPage() {
               </div>
             ))}
           </div>
+          <p className="mt-6 max-w-prose rounded-xl border border-white/15 bg-white/5 px-6 py-5 text-base font-semibold leading-relaxed">
+            Ce n&apos;est pas un enregistrement officiel : la mairie reçoit une
+            information, elle reste l&apos;autorité.
+          </p>
         </div>
       </section>
 
