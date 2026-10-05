@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/metadata";
 import { BarreCommunes } from "@/components/outils/BarreCommunes";
+import { LienOutil } from "@/components/outils/LienOutil";
+import { LienRencontre } from "@/components/outils/LienRencontre";
+import { COMMUNES_GUICHET } from "@/lib/communes-guichet-config";
 
 const TITLE = "e-Culture CI pour les communes | e-Culture CI";
 const DESCRIPTION =
@@ -24,11 +27,11 @@ export const metadata: Metadata = {
   },
 };
 
-// Tant qu'aucune commune n'a signé, cette valeur reste `null` — ne jamais
-// nommer une commune comme partenaire acquis (règle non négociable du
-// cahier des charges). Le jour où une commune signe, renseigner son nom
-// ici active automatiquement le bandeau de preuve sociale ci-dessous.
-const COMMUNE_PILOTE: string | null = null;
+// La preuve sociale se branche sur la configuration des communes (`communes-guichet-config`) :
+// elle reste vide, donc masquée, tant qu'aucune commune n'est active. Ne jamais nommer une
+// commune comme partenaire sans convention signée et accord écrit sur le texte.
+const COMMUNE_PILOTE: string | null =
+  COMMUNES_GUICHET.find((c) => c.statut === "actif")?.nom ?? null;
 
 const CONTACT_EMAIL = "servicemonde77@gmail.com";
 const SUJET_RENCONTRE = "Partenariat e-Culture CI — commune de ";
@@ -91,6 +94,11 @@ const ETAPES = [
     texte: "Un accord simple précise le rôle de chacun, sans lourdeur administrative.",
   },
   {
+    titre: "La mise en service du guichet",
+    texte:
+      "Vous désignez une adresse de réception, nous faisons un test d'envoi, puis le guichet de déclaration ouvre à vos administrés.",
+  },
+  {
     titre: "Le déploiement",
     texte: "Votre commune devient une commune pilote de la structuration culturelle en Côte d'Ivoire.",
   },
@@ -125,12 +133,13 @@ export default function CommunesPage() {
             )}
 
             <div className="mt-7 flex flex-wrap gap-3">
-              <a
+              <LienRencontre
                 href={LIEN_EMAIL}
+                emplacement="haut"
                 className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-primary px-6 py-3.5 text-base font-bold text-[#241403] transition-colors hover:brightness-95"
               >
                 Demander une rencontre
-              </a>
+              </LienRencontre>
               <a
                 href="#valeur"
                 className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-white/40 bg-white/5 px-6 py-3.5 text-base font-bold text-on-deep transition-colors hover:bg-white/10"
@@ -207,6 +216,21 @@ export default function CommunesPage() {
               </div>
             ))}
           </div>
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-border bg-surface p-6">
+            <p className="max-w-prose flex-1 basis-72 text-base font-semibold text-foreground">
+              Un guichet de déclaration prêt à l&apos;emploi pour vos
+              administrés.
+            </p>
+            <LienOutil
+              href="/declaration/demonstration"
+              depuis="communes"
+              outil="demonstration"
+              emplacement="appel"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-secondary px-6 py-3.5 text-base font-bold text-secondary-dark transition-colors hover:bg-black/5"
+            >
+              Essayer la démonstration →
+            </LienOutil>
+          </div>
         </div>
       </section>
 
@@ -252,9 +276,9 @@ export default function CommunesPage() {
             <h2 className="text-2xl font-extrabold tracking-tight text-secondary-dark sm:text-3xl">
               Comment ça marche
             </h2>
-            <p className="mt-2 text-muted">Trois étapes simples, à votre rythme.</p>
+            <p className="mt-2 text-muted">Quatre étapes simples, à votre rythme.</p>
           </div>
-          <div className="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div className="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {ETAPES.map((e, i) => (
               <div
                 key={e.titre}
@@ -284,12 +308,13 @@ export default function CommunesPage() {
               autour d&apos;une rencontre — sans engagement.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-4">
-              <a
+              <LienRencontre
                 href={LIEN_EMAIL}
+                emplacement="bas"
                 className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-primary px-6 py-3.5 text-base font-bold text-[#241403] transition-colors hover:brightness-95"
               >
                 Écrire à e-Culture CI
-              </a>
+              </LienRencontre>
               <span className="text-sm text-on-deep-muted">
                 Aucun formulaire, aucune inscription.
               </span>
