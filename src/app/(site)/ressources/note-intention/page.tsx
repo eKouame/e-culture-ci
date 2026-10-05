@@ -5,6 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { RessourceArticle } from "@/components/ressources/RessourceArticle";
 import { ExampleCard } from "@/components/ressources/ExampleCard";
 import { NextCards } from "@/components/ressources/NextCards";
+import { OutilsLies } from "@/components/ressources/OutilsLies";
 
 export const metadata: Metadata = pageMetadata({
   title: "De l'idée à la note d'intention | e-Culture CI",
@@ -287,6 +288,8 @@ export default function NoteIntentionPage() {
         </Link>
         , équipe, lieu, autorisations — découlera de là.
       </p>
+
+      <OutilsLies depuis="note-intention" outils={[{ id: "budget" }]} />
 
       <NextCards
         liens={[

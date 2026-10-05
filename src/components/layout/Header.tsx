@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: "/suis-je-concerne", label: "Suis-je concerné ?" },
   { href: "/declaration", label: "Ma déclaration" },
   { href: "/ressources", label: "Ressources" },
+  { href: "/outils", label: "Outils" },
 ];
 
 export function Header() {
@@ -28,12 +29,12 @@ export function Header() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-black/5 ${
+              className={`whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-black/5 ${
                 pathname?.startsWith(item.href)
                   ? "text-primary-dark"
                   : "text-foreground"
@@ -44,13 +45,13 @@ export function Header() {
           ))}
           <Link
             href="/communes"
-            className="ml-2 rounded-lg px-3 py-2 text-sm font-medium text-primary-dark hover:bg-primary-light"
+            className="ml-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-primary-dark hover:bg-primary-light"
           >
             Vous êtes une mairie ? →
           </Link>
           <Link
             href="/admin"
-            className="rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
+            className="whitespace-nowrap rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted hover:bg-black/5"
           >
             Espace admin
           </Link>
@@ -59,7 +60,7 @@ export function Header() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-border md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-border lg:hidden"
           aria-label="Ouvrir le menu"
           aria-expanded={open}
         >
@@ -69,7 +70,7 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-border px-4 py-3 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-border px-4 py-3 lg:hidden">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}

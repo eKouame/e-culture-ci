@@ -10,6 +10,8 @@ const PATHS = [
   "/ressources/fondamentaux",
   "/ressources/note-intention",
   "/ressources/budget",
+  "/outils",
+  "/outils/budget",
   "/ressources/payer-artistes",
   "/ressources/candidater-licences",
   "/ressources/propriete-intellectuelle",
