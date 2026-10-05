@@ -153,7 +153,15 @@ body {
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
 }
 
+/* Contenu réservé à l'impression (récapitulatif du calculateur de budget) */
+.print-only {
+  display: none;
+}
+
 @media print {
+  .print-only {
+    display: block;
+  }
   .no-print {
     display: none !important;
   }

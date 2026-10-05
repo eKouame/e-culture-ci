@@ -41,6 +41,13 @@ const ETAPES = [
         titre: "Bâtir votre budget",
         description: "Les postes de dépense à ne pas oublier et comment les chiffrer.",
       },
+      {
+        href: "/ressources/budget/calculateur",
+        label: "Outil",
+        titre: "Calculateur de budget",
+        description: "Votre point d'équilibre en une minute. Gratuit, sans compte.",
+        outil: true,
+      },
     ],
   },
   {
@@ -149,9 +156,17 @@ export default function RessourcesPage() {
                   <Link
                     key={r.href}
                     href={r.href}
-                    className="flex flex-col gap-1.5 rounded-xl border border-border border-l-4 border-l-primary bg-surface p-5 transition-colors hover:bg-black/[0.02]"
+                    className={
+                      r.outil
+                        ? "flex flex-col gap-1.5 rounded-xl border border-secondary/40 bg-secondary-light p-5 transition-colors hover:bg-secondary-light/70"
+                        : "flex flex-col gap-1.5 rounded-xl border border-border border-l-4 border-l-primary bg-surface p-5 transition-colors hover:bg-black/[0.02]"
+                    }
                   >
-                    <span className="text-xs font-bold uppercase tracking-wide text-primary-dark">
+                    <span
+                      className={`text-xs font-bold uppercase tracking-wide ${
+                        r.outil ? "text-secondary-dark" : "text-primary-dark"
+                      }`}
+                    >
                       {r.label}
                     </span>
                     <span className="text-lg font-bold text-foreground">
@@ -159,7 +174,7 @@ export default function RessourcesPage() {
                     </span>
                     <span className="text-sm text-muted">{r.description}</span>
                     <span className="mt-1.5 text-sm font-bold text-secondary">
-                      Lire la ressource →
+                      {r.outil ? "Ouvrir l'outil →" : "Lire la ressource →"}
                     </span>
                   </Link>
                 ))}

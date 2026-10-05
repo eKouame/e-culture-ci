@@ -44,6 +44,12 @@ export const RESSOURCES: RessourceRegistre[] = [
     etiquettes: ["projet"],
   },
   {
+    href: "/ressources/budget/calculateur",
+    titre: "Calculateur de budget (outil)",
+    description: "Votre point d'équilibre en une minute. Gratuit, sans compte.",
+    etiquettes: ["projet"],
+  },
+  {
     href: "/ressources/propriete-intellectuelle",
     titre: "Propriété intellectuelle",
     description: "Droits d'auteur et droits voisins : qui doit quoi, et quand.",
