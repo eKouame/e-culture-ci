@@ -23,7 +23,7 @@ const FAQ = [
   },
   {
     q: "Mes chiffres sont-ils conservés ?",
-    a: "Non. Tout se calcule dans votre navigateur : aucun montant n'est envoyé, enregistré ni stocké, ni sur un serveur, ni dans votre appareil. Si vous rechargez la page, les champs sont vides. Seuls deux événements anonymes, sans aucun montant, nous indiquent qu'un calcul a été fait et qu'un récapitulatif a été copié.",
+    a: "Non. Tout se calcule dans votre navigateur : aucun montant n'est envoyé, enregistré ni stocké, ni sur un serveur, ni dans votre appareil. Si vous rechargez la page, les champs sont vides. Seuls trois événements anonymes, sans aucun montant, nous indiquent qu'un calcul a été fait, qu'un récapitulatif a été copié et que le bouton « Enregistrer ce budget » a été touché : l'enregistrement n'existe pas encore, nous mesurons seulement l'envie.",
   },
 ];
 
