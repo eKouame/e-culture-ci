@@ -164,3 +164,16 @@ model AdminSession {
 
   adminUser AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
 }
+
+// Échecs de connexion à l'administration, pour limiter les tentatives répétées.
+// Seuls des empreintes (SHA-256) de l'e-mail saisi et de l'adresse IP sont gardées,
+// et les lignes de plus de 24 h sont supprimées à chaque connexion.
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  emailHash String
+  ipHash    String
+  createdAt DateTime @default(now())
+
+  @@index([emailHash, createdAt])
+  @@index([ipHash, createdAt])
+}
