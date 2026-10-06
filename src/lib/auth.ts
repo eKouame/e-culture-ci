@@ -41,7 +41,11 @@ export async function getAdminSession() {
 
   const session = await prisma.adminSession.findUnique({
     where: { token },
-    include: { adminUser: true },
+    // Sélection explicite : n'expose jamais l'empreinte du mot de passe ni le secret
+    // de double vérification, et reste valable avant la migration des colonnes TOTP.
+    include: {
+      adminUser: { select: { id: true, email: true, nom: true, createdAt: true } },
+    },
   });
 
   if (!session || session.expiresAt < new Date()) {

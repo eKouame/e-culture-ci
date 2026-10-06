@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/Button";
 export function LoginForm() {
   const router = useRouter();
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // Deuxième étape : le compte a activé la double vérification.
+  const [codeRequis, setCodeRequis] = useState(false);
 
   const {
     register,
@@ -20,7 +22,7 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  async function onSubmit(data: { email: string; password: string }) {
+  async function onSubmit(data: { email: string; password: string; code?: string }) {
     setSubmitError(null);
     const res = await fetch("/api/auth/login", {
       method: "POST",
@@ -29,6 +31,14 @@ export function LoginForm() {
     });
 
     if (!res.ok) {
+      const json: { error?: string; codeRequis?: boolean } = await res
+        .json()
+        .catch(() => ({}));
+      if (json.codeRequis) {
+        setCodeRequis(true);
+        setSubmitError(json.error ?? "Code de vérification requis.");
+        return;
+      }
       setSubmitError(
         res.status === 429
           ? "Trop de tentatives. Réessayez dans quelques minutes."
@@ -57,6 +67,15 @@ export function LoginForm() {
         error={errors.password?.message}
         {...register("password")}
       />
+      {codeRequis && (
+        <Input
+          label="Code de vérification (application d'authentification)"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          autoFocus
+          {...register("code")}
+        />
+      )}
       <Button type="submit" size="lg" disabled={isSubmitting} className="mt-2">
         {isSubmitting ? "Connexion…" : "Se connecter"}
       </Button>

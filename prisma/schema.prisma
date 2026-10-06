@@ -149,6 +149,9 @@ model AdminUser {
   email        String   @unique
   passwordHash String
   nom          String?
+  // Double vérification (TOTP). Elle ne s'impose qu'une fois activée par l'administrateur.
+  totpSecret   String?
+  totpEnabled  Boolean  @default(false)
   createdAt    DateTime @default(now())
 
   sessions AdminSession[]
