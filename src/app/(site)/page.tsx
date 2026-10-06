@@ -5,6 +5,8 @@ import { DotPill } from "@/components/ui/DotPill";
 import { pageMetadata } from "@/lib/metadata";
 import { AccueilMobile } from "@/components/parcours/AccueilParcours";
 import { HeroAccueil } from "@/components/parcours/HeroAccueil";
+import { BlocActualites } from "@/components/parcours/BlocActualites";
+import { lireActualites } from "@/lib/actualites";
 
 export const metadata: Metadata = pageMetadata({
   title: "e-Culture CI — Comprendre et préparer vos démarches du spectacle vivant",
@@ -76,10 +78,14 @@ const RESSOURCES = [
 const FACEBOOK_URL =
   "https://www.facebook.com/profile.php?id=61592840133412&sk=about";
 
-export default function Home() {
+export default async function Home() {
+  const actualites = await lireActualites();
+
   return (
     <div>
       <HeroAccueil />
+
+      <BlocActualites items={actualites} />
 
       {/* Mobile (moins de 768 px) : la suite de l'accueil, par parcours. */}
       <AccueilMobile ressources={RESSOURCES} facebookUrl={FACEBOOK_URL} />

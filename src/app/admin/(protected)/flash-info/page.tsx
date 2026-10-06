@@ -25,8 +25,9 @@ export default async function AdminFlashInfoPage() {
     <div>
       <h1 className="text-2xl font-extrabold text-foreground">Flash info</h1>
       <p className="mt-1.5 max-w-prose text-sm text-muted">
-        Jusqu&apos;à 3 ou 4 flash infos actifs en même temps : ils défilent
-        automatiquement dans la bannière, en haut des pages citoyennes.
+        Jusqu&apos;à 4 flash infos actifs en même temps : ils s&apos;affichent
+        dans le bloc « Actualités » de la page d&apos;accueil, sous l&apos;en-tête
+        (il n&apos;y a plus de bannière en haut des pages).
         Marquez chacun <strong>Interne</strong>{" "}
         (ressources, nouveautés du
         site) ou <strong>Externe</strong>{" "}
@@ -35,9 +36,9 @@ export default async function AdminFlashInfoPage() {
       </p>
       {actifsCount > 4 && (
         <p className="mt-2 max-w-prose text-sm font-medium text-primary-dark">
-          {actifsCount} flash infos sont actifs en ce moment — au-delà de 4,
-          la bannière devient longue à parcourir. Pensez à en désactiver
-          quelques-uns.
+          {actifsCount} flash infos sont actifs en ce moment — seuls les 4
+          modifiés le plus récemment s&apos;affichent sur l&apos;accueil. Pensez à
+          en désactiver quelques-uns.
         </p>
       )}
 
