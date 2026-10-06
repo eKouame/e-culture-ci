@@ -4,6 +4,8 @@ import { SITE_URL } from "@/lib/metadata";
 const PATHS = [
   "",
   "/suis-je-concerne",
+  "/parcours/idee",
+  "/parcours/evenement",
   "/declaration",
   "/ressources",
   "/ressources/toutes",

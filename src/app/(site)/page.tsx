@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LinkButton } from "@/components/ui/Button";
 import { DotPill } from "@/components/ui/DotPill";
 import { pageMetadata } from "@/lib/metadata";
+import { AccueilMobile, BandeauPortes } from "@/components/parcours/AccueilParcours";
 
 export const metadata: Metadata = pageMetadata({
   title: "e-Culture CI — Comprendre et préparer vos démarches du spectacle vivant",
@@ -77,6 +78,12 @@ const FACEBOOK_URL =
 export default function Home() {
   return (
     <div>
+      {/* Mobile (moins de 768 px) : le nouvel accueil, par parcours. */}
+      <AccueilMobile ressources={RESSOURCES} facebookUrl={FACEBOOK_URL} />
+
+      {/* Ordinateur (768 px et plus) : l'accueil actuel, inchangé, plus le bandeau des deux portes. */}
+      <div className="hidden md:block">
+        <BandeauPortes />
       <section className="relative overflow-hidden bg-deep-strong text-on-deep">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -357,6 +364,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }
