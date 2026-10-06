@@ -3,7 +3,8 @@ import Link from "next/link";
 import { LinkButton } from "@/components/ui/Button";
 import { DotPill } from "@/components/ui/DotPill";
 import { pageMetadata } from "@/lib/metadata";
-import { AccueilMobile, BandeauPortes } from "@/components/parcours/AccueilParcours";
+import { AccueilMobile } from "@/components/parcours/AccueilParcours";
+import { HeroAccueil } from "@/components/parcours/HeroAccueil";
 
 export const metadata: Metadata = pageMetadata({
   title: "e-Culture CI — Comprendre et préparer vos démarches du spectacle vivant",
@@ -78,137 +79,13 @@ const FACEBOOK_URL =
 export default function Home() {
   return (
     <div>
-      {/* Mobile (moins de 768 px) : le nouvel accueil, par parcours. */}
+      <HeroAccueil />
+
+      {/* Mobile (moins de 768 px) : la suite de l'accueil, par parcours. */}
       <AccueilMobile ressources={RESSOURCES} facebookUrl={FACEBOOK_URL} />
 
-      {/* Ordinateur (768 px et plus) : l'accueil actuel, inchangé, plus le bandeau des deux portes. */}
+      {/* Ordinateur (768 px et plus) : la suite de l'accueil actuelle. */}
       <div className="hidden md:block">
-        <BandeauPortes />
-      <section className="relative overflow-hidden bg-deep-strong text-on-deep">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/hero-e-mark.svg"
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute right-0 top-1/2 hidden h-[85%] w-auto -translate-y-1/2 translate-x-1/4 opacity-10 md:block"
-        />
-        <div className="relative mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
-          <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-on-deep">
-              Service culturel de proximité
-            </p>
-            <h1 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
-              Le spectacle vivant, expliqué simplement — partout en Côte
-              d&apos;Ivoire.
-            </h1>
-            <p className="mt-5 max-w-prose text-lg leading-relaxed text-on-deep-muted">
-              Comprenez la réglementation et préparez vos démarches, où que
-              vous soyez. Des informations fiables, des ressources claires,
-              un accompagnement. Gratuit et indépendant.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <LinkButton href="/suis-je-concerne" size="lg">
-                Suis-je concerné ?
-              </LinkButton>
-              <LinkButton href="/ressources" variant="outlineOnDeep" size="lg">
-                Parcourir les ressources
-              </LinkButton>
-            </div>
-            <p className="mt-7 max-w-md border-t border-white/15 pt-4 text-sm text-on-deep-muted">
-              Service d&apos;information indépendant, sans lien officiel avec
-              le ministère de la Culture.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-surface">
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 px-4 py-6 sm:grid-cols-3 sm:px-6">
-          <div className="flex items-start gap-3">
-            <span
-              aria-hidden="true"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-light"
-            >
-              <svg
-                width="19"
-                height="19"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-primary-dark"
-              >
-                <circle cx="12" cy="12" r="9" />
-                <path d="M8.5 12.5l2.5 2.5 4.5-5" />
-              </svg>
-            </span>
-            <p className="pt-1 text-sm">
-              <strong className="font-bold text-foreground">Gratuit</strong>{" "}
-              <span className="text-muted">
-                — aucun compte, aucun paiement.
-              </span>
-            </p>
-          </div>
-          <div className="flex items-start gap-3">
-            <span
-              aria-hidden="true"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-light"
-            >
-              <svg
-                width="19"
-                height="19"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-primary-dark"
-              >
-                <path d="M12 3l7 3v5.5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z" />
-              </svg>
-            </span>
-            <p className="pt-1 text-sm">
-              <strong className="font-bold text-foreground">Indépendant</strong>{" "}
-              <span className="text-muted">
-                — nous expliquons, nous ne délivrons rien.
-              </span>
-            </p>
-          </div>
-          <div className="flex items-start gap-3">
-            <span
-              aria-hidden="true"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-light"
-            >
-              <svg
-                width="19"
-                height="19"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-primary-dark"
-              >
-                <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
-                <path d="M11 18.5h2" />
-              </svg>
-            </span>
-            <p className="pt-1 text-sm">
-              <strong className="font-bold text-foreground">
-                Conçu pour le mobile
-              </strong>{" "}
-              <span className="text-muted">
-                — léger, jusque dans le pays profond.
-              </span>
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
         <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
           Par où commencer ?

@@ -18,6 +18,8 @@
   --color-on-deep: #e6efe9;
   --color-on-deep-muted: #c7d8ce;
   --color-accent-on-deep: #ffa84f;
+  /* Orange du héro et du menu : un cran plus foncé que primary-dark, pour un texte blanc lisible. */
+  --color-hero-accent: #b04e0c;
 }
 
 @theme inline {
@@ -38,6 +40,7 @@
   --color-on-deep: var(--color-on-deep);
   --color-on-deep-muted: var(--color-on-deep-muted);
   --color-accent-on-deep: var(--color-accent-on-deep);
+  --color-hero-accent: var(--color-hero-accent);
 }
 
 *:focus-visible {

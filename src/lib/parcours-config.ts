@@ -24,12 +24,10 @@ export interface Question {
 
 export const PARCOURS: Record<
   ParcoursId,
-  { titre: string; porte: string; question: string; questions: Question[] }
+  { titre: string; questions: Question[] }
 > = {
   idee: {
     titre: "J'ai une idée de spectacle",
-    porte: "Je démarre",
-    question: "Trois questions pour savoir par où commencer et ce qui vous attend.",
     questions: [
       {
         cle: "type",
@@ -66,8 +64,6 @@ export const PARCOURS: Record<
   },
   evenement: {
     titre: "Je prépare un événement",
-    porte: "Je suis lancé",
-    question: "Quatre questions pour obtenir votre feuille de route : démarches, contacts, budget.",
     questions: [
       {
         cle: "type",
