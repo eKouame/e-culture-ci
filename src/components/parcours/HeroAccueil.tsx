@@ -25,13 +25,13 @@ const PORTES = [
 export function HeroAccueil() {
   return (
     <section className="border-b border-border bg-background">
-      <div className="mx-auto flex max-w-[1264px] flex-col px-5 pb-8 pt-6 md:px-8 md:py-14 lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-20 lg:py-24">
+      <div className="mx-auto flex max-w-5xl flex-col px-4 pb-8 pt-6 sm:px-6 md:py-14 lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-12 lg:py-20">
         <div className="flex flex-col gap-3.5 md:gap-7">
           <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-secondary md:gap-2.5 md:text-[13px]">
             <span aria-hidden="true" className="h-[7px] w-[7px] rounded-full bg-hero-accent md:h-2 md:w-2" />
             Service culturel de proximité
           </p>
-          <h1 className="text-[34px] font-extrabold leading-[1.08] tracking-[-0.03em] text-foreground md:text-5xl md:leading-[1.04] lg:text-[64px]">
+          <h1 className="text-[34px] font-extrabold leading-[1.08] tracking-[-0.03em] text-foreground md:text-5xl md:leading-[1.04] lg:text-[56px]">
             Le spectacle vivant, expliqué simplement.
           </h1>
           <p className="max-w-[540px] text-base leading-normal text-secondary md:text-xl md:leading-[1.55]">
@@ -45,7 +45,7 @@ export function HeroAccueil() {
           </ul>
         </div>
 
-        <div className="mt-2 flex flex-col gap-3 md:mt-8 md:max-w-xl lg:mt-0 lg:max-w-none rounded-[14px] border border-border bg-surface p-5 shadow-[0_16px_32px_-20px_rgba(11,42,32,0.2)] md:gap-5 md:rounded-2xl md:p-10 md:shadow-[0_24px_48px_-24px_rgba(11,42,32,0.18)]">
+        <div className="mt-2 flex flex-col gap-3 md:mt-8 md:max-w-xl lg:mt-0 lg:max-w-none rounded-[14px] border border-border bg-surface p-5 shadow-[0_16px_32px_-20px_rgba(11,42,32,0.2)] md:gap-5 md:rounded-2xl md:p-8 md:shadow-[0_24px_48px_-24px_rgba(11,42,32,0.18)]">
           <h2 className="text-lg font-bold text-foreground md:text-[22px]">Où en êtes-vous&nbsp;?</h2>
           <p className="hidden text-base leading-normal text-secondary md:block">
             Dites-le-nous, vous repartez avec vos prochaines étapes.
@@ -95,7 +95,7 @@ export function HeroAccueil() {
       </div>
 
       <div className="border-t border-border">
-        <p className="mx-auto max-w-[1264px] px-5 py-3.5 text-xs leading-snug text-muted md:px-8 md:py-5 md:text-[13px]">
+        <p className="mx-auto max-w-5xl px-4 py-3.5 text-xs leading-snug text-muted sm:px-6 md:py-5 md:text-[13px]">
           Service d&apos;information indépendant, sans lien officiel avec le ministère de la Culture.
         </p>
       </div>

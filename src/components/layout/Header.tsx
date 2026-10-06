@@ -77,7 +77,7 @@ export function Header() {
   return (
     <>
       <header className="no-print sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto flex h-[60px] max-w-[1264px] items-center justify-between px-5 md:h-[76px] md:px-8">
+        <div className="mx-auto flex h-[60px] max-w-5xl items-center justify-between px-4 sm:px-6 md:h-[76px]">
           <Link href="/" className="flex items-center gap-2" onClick={fermer}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
