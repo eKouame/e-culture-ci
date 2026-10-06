@@ -9,6 +9,8 @@ import {
   effacerEchecs,
   enregistrerEchec,
 } from "@/lib/limite-connexion";
+import { etatTotp } from "@/lib/totp-admin";
+import { verifierCode } from "@/lib/totp";
 
 // Empreinte d'un mot de passe quelconque : sert à passer le même temps de calcul quand
 // l'e-mail est inconnu, pour ne pas révéler quels comptes existent.
@@ -22,7 +24,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Données invalides" }, { status: 400 });
   }
 
-  const { email, password } = parsed.data;
+  const { email, password, code } = parsed.data;
   const ip = adresseIp(request);
 
   // Trop d'échecs récents : on refuse sans même tester le mot de passe, et sans ajouter
@@ -34,7 +36,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const admin = await prisma.adminUser.findUnique({ where: { email } });
+  // Sélection explicite : valable avant comme après la migration des colonnes TOTP.
+  const admin = await prisma.adminUser.findUnique({
+    where: { email },
+    select: { id: true, passwordHash: true },
+  });
   const valid = await bcrypt.compare(
     password,
     admin?.passwordHash ?? EMPREINTE_FICTIVE,
@@ -46,6 +52,26 @@ export async function POST(request: Request) {
       { error: "Identifiants incorrects" },
       { status: 401 },
     );
+  }
+
+  // Double vérification, seulement pour un compte qui l'a activée. Un code absent n'est
+  // pas un échec (c'est la deuxième étape) ; un code faux en est un, donc il compte dans
+  // la limitation de tentatives.
+  const totp = await etatTotp(admin.id);
+  if (totp.migree && totp.active && totp.secret) {
+    if (!code) {
+      return NextResponse.json(
+        { error: "Code de vérification requis.", codeRequis: true },
+        { status: 401 },
+      );
+    }
+    if (!verifierCode(totp.secret, code)) {
+      await enregistrerEchec(email, ip);
+      return NextResponse.json(
+        { error: "Code incorrect.", codeRequis: true },
+        { status: 401 },
+      );
+    }
   }
 
   await effacerEchecs(email);

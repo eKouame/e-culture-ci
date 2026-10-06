@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: "/admin/immatriculations", label: "Immatriculations" },
   { href: "/admin/mentorat", label: "Mentorat" },
   { href: "/admin/flash-info", label: "Flash info" },
+  { href: "/admin/securite", label: "Sécurité" },
 ];
 
 export function AdminNav({ adminNom }: { adminNom: string | null }) {
