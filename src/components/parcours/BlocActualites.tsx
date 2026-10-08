@@ -3,11 +3,11 @@ import type { Actualite } from "@/lib/actualites";
 
 const ETIQUETTE = {
   EXTERNE: { texte: "Actu secteur", style: "bg-primary-light text-primary-dark" },
-  INTERNE: { texte: "Sur le site", style: "bg-secondary-light text-secondary-dark" },
+  INTERNE: { texte: "Actu e-Culture CI", style: "bg-secondary-light text-secondary-dark" },
 } as const;
 
 // Bande « Actualités » de l'accueil : les flash infos actifs, sous le héro (maquette du
-// 8 octobre). N'affiche rien s'il n'y en a pas. Le type (« Actu secteur » ou « Sur le site »)
+// 8 octobre). N'affiche rien s'il n'y en a pas. Le type (« Actu secteur » ou « Actu e-Culture CI »)
 // se lit d'un coup d'œil. Le lien « Toutes les actus » viendra avec la page Actualités,
 // aujourd'hui mise de côté : pas de lien mort.
 export function BlocActualites({ items }: { items: Actualite[] }) {
