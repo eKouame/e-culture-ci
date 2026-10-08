@@ -1,117 +1,87 @@
+import Link from "next/link";
 import { INDEPENDENCE_DISCLAIMER } from "@/lib/disclaimer";
 
-const MODULE_LINKS = [
-  { href: "/suis-je-concerne", label: "Suis-je concerné ?" },
-  { href: "/declaration", label: "Ma déclaration" },
-  { href: "/ressources", label: "Ressources" },
+// Pied de page complet (cahier d'intégration) : la marque, quatre colonnes de liens, et la
+// mention d'indépendance. Aucun lien vers une page qui n'est pas publiée.
+const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61592840133412&sk=about";
+
+const COLONNES = [
+  {
+    titre: "Commencer",
+    liens: [
+      { href: "/suis-je-concerne", label: "Suis-je concerné ?" },
+      { href: "/ressources", label: "Centre de ressources" },
+      { href: "/ressources/faq", label: "Questions fréquentes" },
+    ],
+  },
+  {
+    titre: "Espace communal",
+    liens: [
+      { href: "/declaration", label: "Ma déclaration" },
+      { href: "/communes", label: "Pour les autorités locales" },
+    ],
+  },
+  {
+    titre: "Informations",
+    liens: [
+      { href: "/mentions-legales", label: "Mentions légales" },
+      { href: "/confidentialite", label: "Confidentialité" },
+      { href: "/conditions-utilisation", label: "Conditions d'utilisation" },
+    ],
+  },
 ];
 
-const LEGAL_LINKS = [
-  { href: "/mentions-legales", label: "Mentions légales" },
-  { href: "/confidentialite", label: "Politique de confidentialité" },
-  { href: "/conditions-utilisation", label: "Conditions d'utilisation" },
-];
+const lienStyle =
+  "inline-flex min-h-[44px] items-center text-sm text-muted transition-colors hover:text-foreground";
 
 export function Footer() {
   return (
-    <footer className="no-print mt-12 bg-deep text-on-deep">
+    <footer className="no-print mt-12 border-t border-border bg-surface text-foreground">
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
-          <div className="col-span-2 sm:col-span-1">
-            <div className="flex items-center gap-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo-wordmark.svg"
-                alt="e-Culture CI"
-                className="h-10 w-auto"
-                width={288}
-                height={100}
-              />
-            </div>
-            <p className="mt-3 text-sm text-on-deep-muted">
-              Service culturel de proximité pour comprendre et préparer vos
-              démarches du spectacle vivant, partout en Côte d&apos;Ivoire.
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-[1.4fr_1fr_1fr_1fr_0.8fr]">
+          <div className="col-span-2 md:col-span-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-wordmark-dark.svg" alt="e-Culture CI" className="h-10 w-auto" width={346} height={120} />
+            <p className="mt-3 max-w-[260px] text-sm leading-relaxed text-muted">
+              Le spectacle vivant, expliqué simplement — partout en Côte d&apos;Ivoire.
             </p>
-            <a
-              href="https://www.facebook.com/profile.php?id=61592840133412&sk=about"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-on-deep hover:text-on-deep"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-                className="shrink-0"
-              >
-                <path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.522 1.492-3.915 3.777-3.915 1.094 0 2.238.197 2.238.197v2.475h-1.26c-1.243 0-1.63.775-1.63 1.57v1.888h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94Z" />
-              </svg>
-              Suivez-nous sur Facebook
-            </a>
           </div>
 
-          <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
-              Modules
-            </p>
-            <ul className="mt-3 flex flex-col gap-2 text-sm">
-              {MODULE_LINKS.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    className="text-on-deep hover:text-accent-on-deep"
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {COLONNES.map((c) => (
+            <nav key={c.titre} aria-label={c.titre}>
+              <p className="text-xs font-bold uppercase tracking-[0.12em] text-foreground">{c.titre}</p>
+              <ul className="mt-2 flex flex-col">
+                {c.liens.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className={lienStyle}>
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
-              Légal
-            </p>
-            <ul className="mt-3 flex flex-col gap-2 text-sm">
-              {LEGAL_LINKS.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    className="text-on-deep hover:text-accent-on-deep"
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-accent-on-deep">
-              Aide
-            </p>
-            <ul className="mt-3 flex flex-col gap-2 text-sm">
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-foreground">Suivre</p>
+            <ul className="mt-2 flex flex-col">
               <li>
-                <a
-                  href="/ressources/faq"
-                  className="text-on-deep hover:text-accent-on-deep"
-                >
-                  Centre de ressources
+                <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={lienStyle}>
+                  Facebook
+                  <span aria-hidden="true">&nbsp;↗</span>
+                  <span className="sr-only"> (s&apos;ouvre dans un nouvel onglet)</span>
                 </a>
               </li>
             </ul>
-            <p className="mt-4 text-xs text-on-deep-muted">
-              Les résultats du module &laquo;&nbsp;Suis-je
-              concerné&nbsp;?&nbsp;&raquo; sont indicatifs et ne constituent
-              pas une décision administrative.
-            </p>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/15 pt-6 text-xs text-on-deep-muted">
-          {INDEPENDENCE_DISCLAIMER}
+        <div className="mt-8 border-t border-border pt-5 text-xs leading-relaxed text-muted">
+          <p>{INDEPENDENCE_DISCLAIMER}</p>
+          <p className="mt-2">
+            Les résultats de « Suis-je concerné&nbsp;? » sont indicatifs et ne constituent pas une
+            décision administrative.
+          </p>
         </div>
       </div>
     </footer>

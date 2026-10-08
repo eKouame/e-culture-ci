@@ -2,66 +2,99 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { LienMesure } from "@/components/parcours/LienMesure";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ESPACE_COMMUNAL, RUBRIQUES } from "@/lib/navigation-config";
+import { IconeInstitution, MenuMobile, PanneauOutils, PanneauRessources } from "./MegaMenu";
 
-// Menu principal : Ressources, Outils, et l'« Espace communal » mis en avant par un
-// bouton. Le libellé vit ici, pas dans les routes. `actifs` : les chemins qui relèvent de
-// l'entrée (« Suis-je concerné ? » vit sous Outils, « Ma déclaration » sous l'espace
-// communal ; leurs routes ne changent pas). Aucun lien d'administration dans la
-// navigation publique (l'administration s'ouvre par son adresse, derrière une connexion).
-const NAV_ITEMS = [
-  { href: "/ressources", label: "Ressources", actifs: ["/ressources"] },
-  { href: "/outils", label: "Outils", actifs: ["/outils", "/suis-je-concerne"] },
-];
-const ESPACE_COMMUNAL = {
-  href: "/communes",
-  label: "Espace communal",
-  sousTitre: "Pour les autorités locales",
-  actifs: ["/communes", "/declaration"],
-};
+// En-tête : trois entrées (cahier de navigation). Ressources (méga-menu) et Outils (panneau)
+// sont des boutons ; « Espace communal » est un bouton-lien séparé par un trait. Le logo
+// ramène à l'accueil. Aucun lien d'administration dans la navigation publique.
+//
+// Ordinateur (960 px et plus) : le panneau s'ouvre au clic et au survol (intention ~90 ms),
+// se ferme en quittant l'en-tête (~180 ms), avec Échap (le focus revient au bouton), en
+// cliquant le fond assombri, ou quand le focus sort de l'en-tête. Un seul panneau à la fois.
+// Mobile et tablette étroite : menu plein écran avec accordéons.
 
-const SERVICE_INDEPENDANT =
-  "Service d'information indépendant, sans lien officiel avec le ministère de la Culture.";
+type Panneau = "ressources" | "outils";
 
-function IconeInstitution({ taille }: { taille: number }) {
+const DELAI_OUVERTURE = 90;
+const DELAI_FERMETURE = 180;
+
+function Chevron({ ouvert }: { ouvert: boolean }) {
   return (
     <svg
-      width={taille}
-      height={taille}
+      width="14"
+      height="14"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="2.2"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
+      className={`transition-transform ${ouvert ? "rotate-180" : ""}`}
     >
-      <path d="M12 3L3 8h18z" />
-      <path d="M6 11v7M10 11v7M14 11v7M18 11v7" />
-      <path d="M3 21h18" />
+      <path d="M6 9l6 6 6-6" />
     </svg>
   );
 }
 
 export function Header() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const estActif = (actifs: string[]) =>
-    actifs.some((p) => pathname === p || pathname?.startsWith(`${p}/`));
-  const communalActif = estActif(ESPACE_COMMUNAL.actifs);
+  // L'état d'ouverture est lié au chemin où il a été ouvert : dès qu'on navigue, tout est
+  // refermé, sans effet de bord.
+  const [etat, setEtat] = useState<{ panneau: Panneau | null; mobile: boolean; chemin: string | null }>({
+    panneau: null,
+    mobile: false,
+    chemin: null,
+  });
+  const valide = etat.chemin === pathname;
+  const ouvert = valide ? etat.panneau : null;
+  const menuMobile = valide ? etat.mobile : false;
+  const setOuvert = useCallback(
+    (panneau: Panneau | null) => setEtat((c) => ({ panneau, mobile: false, chemin: panneau ? pathname : c.chemin })),
+    [pathname],
+  );
+  const setMenuMobile = useCallback(
+    (mobile: boolean) => setEtat({ panneau: null, mobile, chemin: pathname }),
+    [pathname],
+  );
+  const refEntete = useRef<HTMLElement>(null);
+  const boutons = useRef<Record<Panneau, HTMLButtonElement | null>>({ ressources: null, outils: null });
+  const minuterie = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const ouvertParSurvol = useRef(0);
+
+  const rubriqueActive = (chemins: string[]) =>
+    chemins.some((p) => pathname === p || pathname?.startsWith(`${p}/`));
+
+  const annuler = useCallback(() => {
+    if (minuterie.current) clearTimeout(minuterie.current);
+    minuterie.current = null;
+  }, []);
+
+  const fermer = useCallback(() => {
+    annuler();
+    setOuvert(null);
+  }, [annuler, setOuvert]);
+
+  const fermerTout = useCallback(() => {
+    annuler();
+    setEtat({ panneau: null, mobile: false, chemin: null });
+  }, [annuler]);
+
+  useEffect(() => () => annuler(), [annuler]);
 
   // Menu plein écran : défilement de la page bloqué, Échap pour fermer, et fermeture si
   // l'écran devient assez large pour le menu de bureau.
   useEffect(() => {
-    if (!open) return;
+    if (!menuMobile) return;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") setMenuMobile(false);
     };
-    const large = window.matchMedia("(min-width: 768px)");
+    const large = window.matchMedia("(min-width: 960px)");
     const onLarge = () => {
-      if (large.matches) setOpen(false);
+      if (large.matches) setMenuMobile(false);
     };
     window.addEventListener("keydown", onKey);
     large.addEventListener("change", onLarge);
@@ -70,47 +103,102 @@ export function Header() {
       window.removeEventListener("keydown", onKey);
       large.removeEventListener("change", onLarge);
     };
-  }, [open]);
+  }, [menuMobile, setMenuMobile]);
 
-  const fermer = () => setOpen(false);
+  function surveillerOuverture(p: Panneau) {
+    annuler();
+    if (ouvert === p) return;
+    minuterie.current = setTimeout(() => {
+      ouvertParSurvol.current = performance.now();
+      setOuvert(p);
+    }, DELAI_OUVERTURE);
+  }
+
+  function surveillerFermeture() {
+    annuler();
+    if (!ouvert) return;
+    minuterie.current = setTimeout(() => setOuvert(null), DELAI_FERMETURE);
+  }
+
+  function auClic(p: Panneau, e: React.MouseEvent) {
+    annuler();
+    // Un clic juste après une ouverture au survol ne referme pas le panneau.
+    if (ouvert === p && e.timeStamp - ouvertParSurvol.current > 500) setOuvert(null);
+    else setOuvert(p);
+  }
+
+  function auClavier(e: React.KeyboardEvent) {
+    if (e.key === "Escape" && ouvert) {
+      const p = ouvert;
+      fermer();
+      boutons.current[p]?.focus();
+    }
+  }
+
+  function quandFocusSort(e: React.FocusEvent) {
+    if (!ouvert) return;
+    const cible = e.relatedTarget as Node | null;
+    if (cible && refEntete.current?.contains(cible)) return;
+    fermer();
+  }
+
+  const communalActif = rubriqueActive(RUBRIQUES.communal);
+
+  function declencheur(id: Panneau, label: string, chemins: string[]) {
+    const actif = rubriqueActive(chemins);
+    return (
+      <button
+        type="button"
+        ref={(el) => {
+          boutons.current[id] = el;
+        }}
+        aria-expanded={ouvert === id}
+        aria-controls={`panneau-${id}`}
+        onClick={(e) => auClic(id, e)}
+        onMouseEnter={() => surveillerOuverture(id)}
+        className={`inline-flex min-h-[44px] items-center gap-1.5 whitespace-nowrap rounded-lg border-b-2 px-3.5 text-[15px] font-semibold transition-colors ${
+          ouvert === id ? "bg-surface-2 text-foreground" : "text-foreground hover:bg-surface-2"
+        } ${actif ? "border-hero-accent" : "border-transparent"}`}
+      >
+        {label}
+        <Chevron ouvert={ouvert === id} />
+      </button>
+    );
+  }
 
   return (
     <>
-      <header className="no-print sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto flex h-[60px] max-w-5xl items-center justify-between px-4 sm:px-6 md:h-[76px]">
-          <Link href="/" className="flex items-center gap-2" onClick={fermer}>
+      <header
+        ref={refEntete}
+        onMouseLeave={surveillerFermeture}
+        onMouseEnter={annuler}
+        onKeyDown={auClavier}
+        onBlur={quandFocusSort}
+        className="no-print sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur"
+      >
+        <div className="mx-auto flex h-[60px] max-w-5xl items-center justify-between px-4 sm:px-6 min-[960px]:h-[76px]">
+          <Link href="/" className="flex items-center gap-2" onClick={fermerTout}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo-wordmark-dark.svg"
               alt="e-Culture CI"
-              className="h-9 w-auto md:h-12"
+              className="h-9 w-auto min-[960px]:h-12"
               width={346}
               height={120}
             />
           </Link>
 
           {/* Ordinateur */}
-          <nav aria-label="Menu principal" className="hidden items-center gap-9 md:flex">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={estActif(item.actifs) ? "true" : undefined}
-                className={`whitespace-nowrap text-[15px] font-medium transition-colors hover:text-hero-accent ${
-                  estActif(item.actifs) ? "text-hero-accent" : "text-foreground"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <span aria-hidden="true" className="-mx-3 h-6 w-px bg-border" />
+          <nav aria-label="Menu principal" className="hidden items-center gap-1.5 min-[960px]:flex">
+            {declencheur("ressources", "Ressources", RUBRIQUES.ressources)}
+            {declencheur("outils", "Outils", RUBRIQUES.outils)}
+            <span aria-hidden="true" className="mx-2 h-6 w-px bg-border" />
             <Link
               href={ESPACE_COMMUNAL.href}
               aria-current={communalActif ? "true" : undefined}
-              className={`inline-flex min-h-[40px] items-center gap-2 whitespace-nowrap rounded-lg border-[1.5px] px-3.5 text-[15px] font-bold transition-colors hover:border-hero-accent hover:text-hero-accent ${
-                communalActif
-                  ? "border-hero-accent text-hero-accent"
-                  : "border-foreground text-foreground"
+              onMouseEnter={fermer}
+              className={`inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap rounded-lg border-[1.5px] px-3.5 text-[15px] font-bold transition-colors hover:border-hero-accent hover:text-hero-accent ${
+                communalActif ? "border-hero-accent text-hero-accent" : "border-secondary text-foreground"
               }`}
             >
               <IconeInstitution taille={18} />
@@ -119,8 +207,8 @@ export function Header() {
           </nav>
 
           {/* Mobile : l'espace communal reste à portée, le reste est dans le menu. */}
-          <div className="flex items-center gap-1 md:hidden">
-            {!open && (
+          <div className="flex items-center gap-1 min-[960px]:hidden">
+            {!menuMobile && (
               <Link
                 href={ESPACE_COMMUNAL.href}
                 aria-current={communalActif ? "true" : undefined}
@@ -128,7 +216,7 @@ export function Header() {
               >
                 <span
                   className={`inline-flex h-[34px] items-center gap-1.5 rounded-lg border-[1.5px] px-2.5 ${
-                    communalActif ? "border-hero-accent text-hero-accent" : "border-foreground"
+                    communalActif ? "border-hero-accent text-hero-accent" : "border-secondary"
                   }`}
                 >
                   <IconeInstitution taille={16} />
@@ -138,10 +226,10 @@ export function Header() {
             )}
             <button
               type="button"
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => setMenuMobile(!menuMobile)}
               className="flex h-11 w-11 items-center justify-center text-foreground"
-              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-              aria-expanded={open}
+              aria-label={menuMobile ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-expanded={menuMobile}
               aria-controls="menu-mobile"
             >
               <svg
@@ -154,89 +242,33 @@ export function Header() {
                 strokeLinecap="round"
                 aria-hidden="true"
               >
-                {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+                {menuMobile ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
               </svg>
             </button>
           </div>
         </div>
+
+        {ouvert === "ressources" && <PanneauRessources id="panneau-ressources" onNavigate={fermer} />}
+        {ouvert === "outils" && <PanneauOutils id="panneau-outils" onNavigate={fermer} />}
       </header>
+
+      {/* Fond assombri derrière un panneau (ordinateur). Cliquer dessus referme. */}
+      {ouvert && (
+        <div
+          aria-hidden="true"
+          onClick={fermer}
+          className="fixed inset-x-0 bottom-0 top-[76px] z-30 hidden bg-foreground/30 min-[960px]:block"
+        />
+      )}
 
       {/* Menu mobile plein écran. Hors de l'en-tête : le flou de l'en-tête casserait le
           positionnement fixe. */}
-      {open && (
+      {menuMobile && (
         <div
           id="menu-mobile"
-          className="no-print fixed inset-x-0 bottom-0 top-[60px] z-30 flex flex-col overflow-y-auto bg-background md:hidden"
+          className="no-print fixed inset-x-0 bottom-0 top-[60px] z-30 flex flex-col overflow-y-auto bg-background min-[960px]:hidden"
         >
-          <nav aria-label="Menu principal" className="flex flex-col px-5 py-2">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={fermer}
-                aria-current={estActif(item.actifs) ? "true" : undefined}
-                className={`flex min-h-[64px] items-center justify-between border-b border-border text-2xl font-bold tracking-tight ${
-                  estActif(item.actifs) ? "text-hero-accent" : "text-foreground"
-                }`}
-              >
-                {item.label}
-                <span aria-hidden="true" className="text-lg text-muted">
-                  →
-                </span>
-              </Link>
-            ))}
-            <Link
-              href={ESPACE_COMMUNAL.href}
-              onClick={fermer}
-              aria-current={communalActif ? "true" : undefined}
-              className={`mt-5 flex min-h-[72px] items-center gap-3.5 rounded-xl border-[1.5px] px-4 ${
-                communalActif ? "border-hero-accent text-hero-accent" : "border-foreground text-foreground"
-              }`}
-            >
-              <IconeInstitution taille={26} />
-              <span className="flex flex-1 flex-col gap-0.5">
-                <span className="text-xl font-bold tracking-tight">{ESPACE_COMMUNAL.label}</span>
-                <span className="text-[13px] text-muted">{ESPACE_COMMUNAL.sousTitre}</span>
-              </span>
-              <span aria-hidden="true" className="text-lg">
-                →
-              </span>
-            </Link>
-          </nav>
-
-          <div className="flex-1" />
-
-          <div className="flex flex-col gap-2.5 p-5">
-            <p className="pb-1 text-xs font-bold uppercase tracking-[0.12em] text-secondary">
-              Où en êtes-vous ?
-            </p>
-            <LienMesure
-              href="/parcours/idee"
-              evenement="porte_cliquee"
-              donnees={{ porte: "idee", depuis: "menu" }}
-              onClick={fermer}
-              className="flex min-h-[52px] items-center justify-between rounded-[10px] border border-border bg-surface px-4 text-base font-bold text-foreground"
-            >
-              J&apos;ai une idée de spectacle
-              <span aria-hidden="true" className="text-hero-accent">
-                →
-              </span>
-            </LienMesure>
-            <LienMesure
-              href="/parcours/evenement"
-              evenement="porte_cliquee"
-              donnees={{ porte: "evenement", depuis: "menu" }}
-              onClick={fermer}
-              className="flex min-h-[52px] items-center justify-between rounded-[10px] bg-hero-accent px-4 text-base font-bold text-white"
-            >
-              Je prépare un événement
-              <span aria-hidden="true">→</span>
-            </LienMesure>
-          </div>
-
-          <p className="border-t border-border px-5 pb-5 pt-3.5 text-xs leading-snug text-muted">
-            {SERVICE_INDEPENDANT}
-          </p>
+          <MenuMobile onNavigate={fermerTout} />
         </div>
       )}
     </>
