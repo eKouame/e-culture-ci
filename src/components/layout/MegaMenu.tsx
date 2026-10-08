@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId, useState } from "react";
 import { BadgeEtat } from "@/components/ui/BadgeEtat";
 import { LienMesure } from "@/components/parcours/LienMesure";
+import { IconeInstitution } from "@/components/ui/IconeInstitution";
 import {
   COLONNES_OUTILS,
   COLONNES_RESSOURCES,
@@ -22,26 +23,7 @@ import {
 const SERVICE_INDEPENDANT =
   "Service d'information indépendant, sans lien officiel avec le ministère de la Culture.";
 
-function IconeInstitution({ taille }: { taille: number }) {
-  return (
-    <svg
-      width={taille}
-      height={taille}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M12 3L3 8h18z" />
-      <path d="M6 11v7M10 11v7M14 11v7M18 11v7" />
-      <path d="M3 21h18" />
-    </svg>
-  );
-}
-export { IconeInstitution };
+
 
 function LienElement({
   e,

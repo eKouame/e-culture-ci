@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ESPACE_COMMUNAL, RUBRIQUES } from "@/lib/navigation-config";
-import { IconeInstitution, MenuMobile, PanneauOutils, PanneauRessources } from "./MegaMenu";
+import { IconeInstitution } from "@/components/ui/IconeInstitution";
+import { MenuMobile, PanneauOutils, PanneauRessources } from "./MegaMenu";
 
 // En-tête : trois entrées (cahier de navigation). Ressources (méga-menu) et Outils (panneau)
 // sont des boutons ; « Espace communal » est un bouton-lien séparé par un trait. Le logo
