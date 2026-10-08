@@ -26,10 +26,6 @@ export function HeroAccueil() {
     <section className="border-b border-border bg-background">
       <div className="mx-auto flex max-w-5xl flex-col px-4 pb-8 pt-6 sm:px-6 md:py-14 lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-12 lg:py-20">
         <div className="flex flex-col gap-3.5 md:gap-7">
-          <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-secondary md:gap-2.5 md:text-[13px]">
-            <span aria-hidden="true" className="h-[7px] w-[7px] rounded-full bg-hero-accent md:h-2 md:w-2" />
-            Information indépendante sur le spectacle vivant
-          </p>
           <h1 className="text-[34px] font-extrabold leading-[1.08] tracking-[-0.03em] text-foreground md:text-5xl md:leading-[1.04] lg:text-[56px]">
             Le spectacle vivant, expliqué simplement.
           </h1>
