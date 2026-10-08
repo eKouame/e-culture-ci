@@ -13,6 +13,7 @@ export function LienMesure({
   donnees,
   className,
   onClick,
+  externe = false,
   children,
 }: {
   href: string;
@@ -20,12 +21,16 @@ export function LienMesure({
   donnees?: Record<string, string | number>;
   className?: string;
   onClick?: () => void;
+  // Lien vers un autre site : s'ouvre dans un nouvel onglet.
+  externe?: boolean;
   children: ReactNode;
 }) {
   return (
     <Link
       href={href}
       className={className}
+      target={externe ? "_blank" : undefined}
+      rel={externe ? "noopener noreferrer" : undefined}
       onClick={() => {
         mesure(evenement, { ...donnees, appareil: appareil() });
         onClick?.();
