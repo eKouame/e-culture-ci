@@ -252,23 +252,3 @@ export function texteCopie(etapes: Etape[], faites: Record<string, boolean>): st
       .join("\n")
   );
 }
-
-// ---------------------------------------------------------------------------
-// « Comment faire ? » : liste de départ, à remplacer par les vraies questions du groupe
-// et des appels reçus (cahier des charges, §6 et décision 7).
-
-export const COMMENT_FAIRE: { question: string; href: string }[] = [
-  { question: "Ai-je besoin d'une licence pour mon spectacle ?", href: "/ressources/candidater-licences" },
-  { question: "Combien coûte un spectacle, en gros ?", href: "/ressources/budget" },
-  { question: "À qui m'adresser dans ma commune ?", href: "/declaration" },
-  { question: "Que dois-je payer pour la musique jouée ?", href: "/ressources/propriete-intellectuelle" },
-  { question: "Comment m'immatriculer comme producteur ?", href: "/ressources/faq" },
-  { question: "Quelle différence entre licence B et C ?", href: "/ressources/candidater-licences" },
-];
-
-export const OUTILS_ACCUEIL: { label: string; href: string }[] = [
-  { label: "Suis-je concerné ?", href: "/suis-je-concerne" },
-  { label: "Calculateur de budget", href: "/outils/budget" },
-  { label: "Toutes les ressources", href: "/ressources" },
-  { label: "Pour les mairies", href: "/communes" },
-];

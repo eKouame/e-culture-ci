@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { LienMesure } from "@/components/parcours/LienMesure";
 
 // Héro de l'accueil, « A — Portail d'orientation » : à gauche la promesse, à droite (en
@@ -10,14 +9,14 @@ const PORTES = [
     id: "idee",
     href: "/parcours/idee",
     titre: "J'ai une idée de spectacle",
-    description: "Statut, droits, création : par où commencer.",
+    description: "Par où commencer.",
     principale: false,
   },
   {
     id: "evenement",
     href: "/parcours/evenement",
     titre: "Je prépare un événement",
-    description: "Autorisations, lieu, sécurité : la check-list.",
+    description: "Les étapes dans l'ordre, avec qui contacter.",
     principale: true,
   },
 ];
@@ -27,10 +26,6 @@ export function HeroAccueil() {
     <section className="border-b border-border bg-background">
       <div className="mx-auto flex max-w-5xl flex-col px-4 pb-8 pt-6 sm:px-6 md:py-14 lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-12 lg:py-20">
         <div className="flex flex-col gap-3.5 md:gap-7">
-          <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-secondary md:gap-2.5 md:text-[13px]">
-            <span aria-hidden="true" className="h-[7px] w-[7px] rounded-full bg-hero-accent md:h-2 md:w-2" />
-            Service culturel de proximité
-          </p>
           <h1 className="text-[34px] font-extrabold leading-[1.08] tracking-[-0.03em] text-foreground md:text-5xl md:leading-[1.04] lg:text-[56px]">
             Le spectacle vivant, expliqué simplement.
           </h1>
@@ -79,12 +74,17 @@ export function HeroAccueil() {
               </LienMesure>
             ))}
           </div>
-          <Link
-            href="/ressources"
-            className="flex min-h-[44px] items-center justify-center text-sm font-semibold text-foreground underline underline-offset-2 hover:text-hero-accent md:justify-start md:pt-1 md:text-[15px]"
-          >
-            Ou parcourir toutes les ressources
-          </Link>
+          <p className="flex min-h-[44px] flex-wrap items-center justify-center gap-x-2 border-t border-border pt-3 text-sm text-muted md:justify-start md:text-[15px]">
+            Pas sûr d&apos;être concerné&nbsp;?
+            <LienMesure
+              href="/suis-je-concerne"
+              evenement="outil_clique"
+              donnees={{ depuis: "hero", outil: "concerne", emplacement: "appel" }}
+              className="inline-flex min-h-[44px] items-center font-bold text-foreground underline underline-offset-2 hover:text-hero-accent"
+            >
+              Faites le point
+            </LienMesure>
+          </p>
         </div>
 
         <ul className="mt-4 flex justify-between px-0.5 text-[13px] font-semibold text-foreground md:hidden">
@@ -94,11 +94,6 @@ export function HeroAccueil() {
         </ul>
       </div>
 
-      <div className="border-t border-border">
-        <p className="mx-auto max-w-5xl px-4 py-3.5 text-xs leading-snug text-muted sm:px-6 md:py-5 md:text-[13px]">
-          Service d&apos;information indépendant, sans lien officiel avec le ministère de la Culture.
-        </p>
-      </div>
     </section>
   );
 }
