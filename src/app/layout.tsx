@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
+import { Public_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/metadata";
 import "./globals.css";
+
+// Public Sans, graisses 400 à 800 : la typographie des maquettes (cahier d'intégration).
+const publicSans = Public_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-public-sans",
+  display: "swap",
+});
 
 const SITE_TITLE = "e-Culture CI | Comprendre et préparer vos démarches du spectacle vivant";
 const SITE_DESCRIPTION =
@@ -32,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="h-full antialiased">
+    <html lang="fr" className={`${publicSans.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <div
           style={{ display: "contents" }}
