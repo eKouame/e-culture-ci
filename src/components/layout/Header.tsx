@@ -199,7 +199,9 @@ export function Header() {
               aria-current={communalActif ? "true" : undefined}
               onMouseEnter={fermer}
               className={`inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap rounded-lg border-[1.5px] px-3.5 text-[15px] font-bold transition-colors hover:border-hero-accent hover:text-hero-accent ${
-                communalActif ? "border-hero-accent text-hero-accent" : "border-secondary text-foreground"
+                communalActif
+                  ? "border-secondary bg-secondary text-white hover:border-secondary-dark hover:bg-secondary-dark hover:text-white"
+                  : "border-secondary text-foreground"
               }`}
             >
               <IconeInstitution taille={18} />
@@ -217,7 +219,7 @@ export function Header() {
               >
                 <span
                   className={`inline-flex h-[34px] items-center gap-1.5 rounded-lg border-[1.5px] px-2.5 ${
-                    communalActif ? "border-hero-accent text-hero-accent" : "border-secondary"
+                    communalActif ? "border-secondary bg-secondary text-white" : "border-secondary"
                   }`}
                 >
                   <IconeInstitution taille={16} />

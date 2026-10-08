@@ -4,15 +4,18 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
   hint?: string;
+  // Champ non requis : « facultatif » s'affiche sous le libellé, en petit.
+  facultatif?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, hint, id, className = "", ...props }, ref) => {
+  ({ label, error, hint, facultatif, id, className = "", ...props }, ref) => {
     const inputId = id ?? props.name;
     return (
       <div className="flex flex-col gap-1.5">
         <label htmlFor={inputId} className="text-sm font-medium text-foreground">
           {label}
+          {facultatif && <span className="mt-0.5 block text-xs font-normal text-muted">facultatif</span>}
         </label>
         <input
           ref={ref}

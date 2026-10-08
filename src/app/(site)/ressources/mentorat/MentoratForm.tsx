@@ -82,10 +82,12 @@ export function MentoratForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-      <div className="dog-ear ledger-lines flex flex-col gap-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-7">
+        <h2 className="text-xl font-extrabold tracking-tight text-foreground">Demander un mentor</h2>
         <Input
           label="Nom complet"
+          className="bg-background"
           error={errors.nomComplet?.message}
           {...register("nomComplet")}
         />
@@ -93,11 +95,14 @@ export function MentoratForm() {
           <Input
             label="Téléphone"
             type="tel"
+            className="bg-background"
             error={errors.telephone?.message}
             {...register("telephone")}
           />
           <Input
-            label="Email (facultatif)"
+            label="Email"
+            facultatif
+            className="bg-background"
             type="email"
             error={errors.email?.message}
             {...register("email")}
@@ -107,12 +112,14 @@ export function MentoratForm() {
           <Select
             label="Région"
             placeholder="Sélectionnez votre région"
+            className="bg-background"
             options={regionOptions}
             error={errors.region?.message}
             {...register("region")}
           />
           <Input
             label="Commune / Localité"
+            className="bg-background"
             error={errors.commune?.message}
             {...register("commune")}
           />
@@ -120,29 +127,39 @@ export function MentoratForm() {
         <Select
           label="Type de spectacle qui vous intéresse"
           placeholder="Choisissez un type"
+          className="bg-background"
           options={typeSpectacleOptions}
           error={errors.typeSpectacleInteret?.message}
           {...register("typeSpectacleInteret")}
         />
         <Textarea
           label="Votre profil actuel"
+          className="bg-background"
           hint="Votre expérience, les événements déjà organisés, votre niveau de départ..."
           error={errors.profilActuel?.message}
           {...register("profilActuel")}
         />
         <Textarea
-          label="Disponibilité (facultatif)"
+          label="Disponibilité"
+          facultatif
+          className="bg-background"
           hint="À partir de quand pourriez-vous commencer à être accompagné(e) ?"
           error={errors.disponibilite?.message}
           {...register("disponibilite")}
         />
+        <Button type="submit" size="lg" disabled={isSubmitting} className="mt-2 w-full">
+          {isSubmitting ? "Envoi en cours…" : "Envoyer ma demande de mentorat"}
+        </Button>
+        {submitError && (
+          <p className="text-sm font-medium text-danger">{submitError}</p>
+        )}
+        <p className="text-xs leading-relaxed text-muted">
+          Vos coordonnées servent uniquement à vous mettre en relation avec un mentor.{" "}
+          <a href="/confidentialite" className="underline underline-offset-2">
+            Confidentialité
+          </a>
+        </p>
       </div>
-      <Button type="submit" size="lg" disabled={isSubmitting}>
-        {isSubmitting ? "Envoi en cours…" : "Envoyer ma demande de mentorat"}
-      </Button>
-      {submitError && (
-        <p className="text-sm font-medium text-danger">{submitError}</p>
-      )}
     </form>
   );
 }
