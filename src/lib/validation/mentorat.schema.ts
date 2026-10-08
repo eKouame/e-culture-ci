@@ -12,7 +12,10 @@ export const mentoratSchema = z.object({
     .string()
     .trim()
     .min(10, "Décrivez brièvement votre expérience actuelle"),
-  typeSpectacleInteret: z.enum(TYPE_SPECTACLE_VALUES),
+  // Message en français quand aucun type n'est choisi (sinon l'erreur de zod s'affiche en anglais).
+  typeSpectacleInteret: z.enum(TYPE_SPECTACLE_VALUES, {
+    errorMap: () => ({ message: "Choisissez un type de spectacle" }),
+  }),
   disponibilite: z.string().trim().optional().or(z.literal("")),
 });
 

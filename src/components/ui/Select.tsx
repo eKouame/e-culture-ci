@@ -18,7 +18,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         <select
           ref={ref}
           id={inputId}
-          className={`w-full rounded-lg border bg-surface px-3.5 py-2.5 text-base outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary ${
+          className={`w-full rounded-lg border ${className.includes("bg-") ? "" : "bg-surface"} px-3.5 py-2.5 text-base outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary ${
             error ? "border-danger" : "border-border"
           } ${className}`}
           aria-invalid={!!error}

@@ -444,30 +444,47 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
         className="flex flex-col gap-6 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6"
       >
         <div>
-          <div className="mb-2.5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <span className="text-xs font-bold uppercase tracking-wide text-primary-dark">
-              Étape {etape} sur {ETAPES.length}
-            </span>
-            <span className="text-sm text-muted">Deux minutes environ</span>
+          {/* Mobile : le titre de l'étape et une barre de progression. */}
+          <div className="sm:hidden">
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-base font-extrabold text-foreground">{etapeActuelle.titre}</span>
+              <span className="text-sm text-muted">
+                Étape {etape} sur {ETAPES.length}
+              </span>
+            </div>
+            <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-surface-2" aria-hidden="true">
+              <div
+                className="h-full rounded-full bg-hero-accent transition-all"
+                style={{ width: `${(etape / ETAPES.length) * 100}%` }}
+              />
+            </div>
           </div>
-          <ol className="grid grid-cols-3 gap-2" aria-hidden="true">
-            {ETAPES.map((e, i) => {
+          {/* Ordinateur : les étapes en onglets numérotés, la dernière annonce le récapitulatif. */}
+          <ol
+            className="-mx-5 -mt-5 hidden grid-cols-4 border-b border-border sm:-mx-6 sm:-mt-6 sm:grid"
+            aria-label={`Étape ${etape} sur ${ETAPES.length}`}
+          >
+            {[...ETAPES.map((e) => e.titre), "Récapitulatif"].map((titre, i) => {
               const n = i + 1;
-              const atteint = n <= etape;
+              const courant = n === etape;
+              const fait = n < etape;
               return (
-                <li key={e.titre} className="flex flex-col gap-1.5">
+                <li
+                  key={titre}
+                  aria-current={courant ? "step" : undefined}
+                  className={`flex min-h-[56px] items-center gap-2.5 border-b-2 px-4 text-[15px] font-semibold ${
+                    courant ? "border-hero-accent text-foreground" : "border-transparent text-muted"
+                  }`}
+                >
                   <span
-                    className={`block h-1.5 rounded-full ${
-                      atteint ? "bg-primary" : "bg-border"
-                    }`}
-                  />
-                  <span
-                    className={`text-xs font-bold leading-tight ${
-                      atteint ? "text-foreground" : "text-muted"
+                    aria-hidden="true"
+                    className={`flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                      courant ? "bg-hero-accent text-white" : fait ? "bg-secondary text-white" : "bg-surface-2 text-muted"
                     }`}
                   >
-                    {n}. {e.titre}
+                    {fait ? "✓" : n}
                   </span>
+                  {titre}
                 </li>
               );
             })}
@@ -518,11 +535,14 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
                 <div key={c.cle} className={`flex flex-col gap-1.5 ${enveloppe}`}>
                   <label className="text-sm font-medium text-foreground">
                     {c.label}
+                    {!c.requis && (
+                      <span className="mt-0.5 block text-xs font-normal text-muted">facultatif</span>
+                    )}
                   </label>
                   <select
                     value={String(donnees[c.cle] ?? "")}
                     onChange={(e) => maj(c.cle, e.target.value)}
-                    className="w-full rounded-lg border border-border bg-surface px-3.5 py-2.5 text-base outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary"
+                    className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-base outline-none transition-colors focus:border-primary focus:ring-1 focus:ring-primary"
                   >
                     <option value="" disabled>
                       {c.vide}
@@ -539,7 +559,9 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
             return (
               <div key={c.cle} className={enveloppe}>
                 <Input
-                  label={c.requis ? c.label : `${c.label} (facultatif)`}
+                  label={c.label}
+                  facultatif={!c.requis}
+                  className="bg-background"
                   type={c.type ?? "text"}
                   placeholder={c.exemple}
                   value={String(donnees[c.cle] ?? "")}
@@ -623,29 +645,21 @@ export function DeclarationForm({ demo = false }: { demo?: boolean }) {
           </div>
         )}
 
-        <div className="flex flex-col-reverse gap-2 sm:flex-row">
-          {etape > 1 && (
-            <Button type="button" variant="outline" size="lg" onClick={retour}>
-              ← Retour
+        <div className="flex flex-col gap-3 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-muted">Deux minutes environ</p>
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center">
+            {etape > 1 && (
+              <Button type="button" variant="outline" size="lg" onClick={retour}>
+                ← Retour
+              </Button>
+            )}
+            <Button type="button" size="lg" onClick={suivant}>
+              {etape === ETAPES.length ? "Produire mon récapitulatif" : "Continuer →"}
             </Button>
-          )}
-          <Button type="button" size="lg" className="sm:ml-auto" onClick={suivant}>
-            {etape === ETAPES.length ? "Produire mon récapitulatif" : "Continuer →"}
-          </Button>
+          </div>
         </div>
-
-        <p className="text-xs text-muted">
-          Seuls le nom, le téléphone, la date et la commune sont nécessaires.
-          Le reste est facultatif : nous ne demandons rien dont vous n&apos;avez
-          pas besoin.
-        </p>
       </div>
 
-      <p className="mt-6 text-sm text-muted">
-        Aucune donnée n&apos;est envoyée ni conservée : le récapitulatif et sa
-        référence sont produits dans votre navigateur. Si vous quittez la page
-        sans imprimer, tout est perdu.
-      </p>
     </>
   );
 }
