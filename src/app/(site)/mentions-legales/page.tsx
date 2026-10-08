@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
+import { PageTexte } from "@/components/texte/PageTexte";
 
 export const metadata: Metadata = pageMetadata({
   title: "Mentions légales | e-Culture CI",
@@ -10,13 +11,8 @@ export const metadata: Metadata = pageMetadata({
 
 export default function MentionsLegalesPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary-dark">e-Culture CI</p>
-      <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        Mentions légales
-      </h1>
+    <PageTexte actif="mentions" titre="Mentions légales" enBref="e-Culture CI est un service d'information indépendant. Il ne délivre aucun document officiel et n'effectue aucune démarche auprès des autorités à votre place.">
 
-      <div className="mt-8 flex flex-col gap-8 text-sm leading-relaxed text-muted">
         <section>
           <h2 className="text-lg font-bold text-foreground">
             Éditeur du site
@@ -102,7 +98,6 @@ export default function MentionsLegalesPage() {
             obligations auprès des autorités compétentes.
           </p>
         </section>
-      </div>
-    </div>
+    </PageTexte>
   );
 }
