@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
+import { PageTexte } from "@/components/texte/PageTexte";
 
 export const metadata: Metadata = pageMetadata({
   title: "Conditions d'utilisation | e-Culture CI",
@@ -10,13 +11,8 @@ export const metadata: Metadata = pageMetadata({
 
 export default function ConditionsUtilisationPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary-dark">e-Culture CI</p>
-      <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        Conditions d&apos;utilisation
-      </h1>
+    <PageTexte actif="conditions" titre="Conditions d'utilisation">
 
-      <div className="mt-8 flex flex-col gap-8 text-sm leading-relaxed text-muted">
         <section>
           <h2 className="text-lg font-bold text-foreground">
             Objet du service
@@ -108,7 +104,6 @@ export default function ConditionsUtilisationPage() {
             </a>
           </p>
         </section>
-      </div>
-    </div>
+    </PageTexte>
   );
 }

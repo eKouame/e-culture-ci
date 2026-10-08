@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
+import { PageTexte } from "@/components/texte/PageTexte";
 
 export const metadata: Metadata = pageMetadata({
   title: "Politique de confidentialité | e-Culture CI",
@@ -10,13 +11,8 @@ export const metadata: Metadata = pageMetadata({
 
 export default function ConfidentialitePage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary-dark">e-Culture CI</p>
-      <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        Politique de confidentialité
-      </h1>
+    <PageTexte actif="confidentialite" titre="Politique de confidentialité">
 
-      <div className="mt-8 flex flex-col gap-8 text-sm leading-relaxed text-muted">
         <section>
           <h2 className="text-lg font-bold text-foreground">
             Responsable du traitement
@@ -154,7 +150,6 @@ export default function ConfidentialitePage() {
             publicitaire ou de profilage.
           </p>
         </section>
-      </div>
-    </div>
+    </PageTexte>
   );
 }
