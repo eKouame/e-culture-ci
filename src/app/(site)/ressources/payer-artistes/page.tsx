@@ -29,6 +29,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const SOMMAIRE = [
+  { id: "essentiel-titre", label: "L'essentiel en 30 secondes" },
   { id: "pourquoi", label: "Pourquoi cette question est mal comprise" },
   { id: "casquette-1", label: "L'artiste, travailleur indépendant" },
   { id: "casquette-2", label: "Ce que ça change pour vous" },
@@ -179,7 +180,9 @@ export default function PayerArtistesPage() {
 
   return (
     <RessourceArticle
-      kicker="Ressource · Être en règle"
+      slug="payer-artistes"
+      verifie={c.dateVerification}
+      outilLie={{ id: "budget", phrase: "Calculez le point d'équilibre de votre spectacle" }}
       titre="Déclarer et payer vos artistes correctement"
       dek="Comment déclarer et payer un artiste sans se tromper : retenue à la source (7,5 % ou 20 %), cotisations CNPS, statut de l'artiste."
       meta={{ lecture: "8 min", niveau: "Intermédiaire" }}
@@ -189,12 +192,17 @@ export default function PayerArtistesPage() {
           <div
             className={
               audio
-                ? "grid gap-5 md:grid-cols-[minmax(0,1fr)_320px] md:items-start"
+                ? "flex flex-col gap-5"
                 : undefined
             }
           >
             <EssentielBloc
               verifie={c.dateVerification}
+              chiffres={[
+                { valeur: pct(c.tauxResident), legende: "de retenue pour un artiste résident" },
+                { valeur: pct(c.tauxNonResident), legende: "pour un artiste non résident" },
+                { valeur: "0 %", legende: "si l'artiste relève du régime réel" },
+              ]}
               items={[
                 "Payer un artiste, c'est deux sujets distincts : sa protection sociale (il s'en charge lui-même, via la CNPS) et la retenue d'impôt sur son cachet (c'est vous qui la prélevez).",
                 <>

@@ -98,6 +98,14 @@ body {
   }
 }
 
+/* Sur le bloc « L'essentiel » (fond vert profond), le chiffre clé se lit en orange clair. */
+.essentiel-sombre .surligne {
+  background: none;
+  color: var(--color-accent-on-deep);
+  font-weight: 800;
+  padding: 0;
+}
+
 /* Chiffre clé surligné au marqueur, comme annoté dans un carnet */
 .surligne {
   background-image: linear-gradient(

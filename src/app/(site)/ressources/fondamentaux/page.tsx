@@ -174,7 +174,7 @@ const FAMILLES: {
 export default function FondamentauxPage() {
   return (
     <RessourceArticle
-      kicker="Ressource · Comprendre le secteur"
+      slug="fondamentaux"
       titre="Les fondamentaux du spectacle vivant"
       dek="Le vocabulaire, les acteurs et les règles de base, sans jargon."
       meta={{ lecture: "6 min", niveau: "Débutant" }}

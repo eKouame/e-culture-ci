@@ -31,6 +31,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const SOMMAIRE = [
+  { id: "essentiel-titre", label: "L'essentiel en 30 secondes" },
   { id: "de-quoi", label: "De quoi parle-t-on exactement ?" },
   { id: "categorie", label: "Votre catégorie : A, B ou C" },
   { id: "appel", label: "L'appel à candidatures en cours" },
@@ -89,7 +90,9 @@ export default function CandidaterLicencesPage() {
 
   return (
     <RessourceArticle
-      kicker="Ressource · Être en règle"
+      slug="candidater-licences"
+      verifie={c.dateVerification}
+      outilLie={{ id: "concerne", phrase: "Suis-je concerné ? Faites le test en trois questions" }}
       titre="Candidater aux licences B et C"
       dek="Qui est concerné, calendrier de l'appel, conditions d'accès, coûts et caution — pour préparer votre candidature sans vous tromper de guichet."
       meta={{ lecture: "6 min", niveau: "Intermédiaire" }}
