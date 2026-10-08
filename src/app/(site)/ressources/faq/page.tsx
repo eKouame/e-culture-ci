@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { EnteteListe } from "@/components/liste/EnteteListe";
+import { FaqListe } from "@/components/liste/FaqListe";
+import { CarteLaterale, CarteSombre } from "@/components/liste/CartesLaterales";
 import { pageMetadata } from "@/lib/metadata";
-import { LienOutil } from "@/components/outils/LienOutil";
 
 export const metadata: Metadata = pageMetadata({
   title: "FAQ | e-Culture CI",
@@ -9,74 +11,42 @@ export const metadata: Metadata = pageMetadata({
   path: "/ressources/faq",
 });
 
-const FAQ = [
-  {
-    q: "Qui est exempté de licence et de caution bancaire ?",
-    a: "D'après l'article 10 du décret de 2021, les organisateurs occasionnels dont l'événement a un but socio-éducatif, sportif, philanthropique ou de promotion de la culture locale (mariage, funérailles, fête de quartier, tournoi, festival régional, sensibilisation, etc.) sont exemptés de licence et de caution bancaire. C'est le cas de la majorité des promoteurs du pays profond.",
-  },
-  {
-    q: "Si je suis exempté, dois-je quand même faire quelque chose ?",
-    a: "Oui : une déclaration gratuite et rapide (3 minutes) via le module « Préparer ma déclaration ». Elle permet à l'État de disposer de statistiques fiables sur le secteur informel, et vous obtenez un récapitulatif clair à conserver pour effectuer votre déclaration officielle.",
-  },
-  {
-    q: "Combien coûte la licence pour les professionnels ?",
-    a: "5 000 000 FCFA pour la licence, plus 5 000 000 FCFA de caution bancaire de garantie, soit 10 000 000 FCFA au total. La caution est versée à un établissement bancaire, pas directement au ministère — c'est une garantie, pas une taxe.",
-  },
-  {
-    q: "Est-ce vrai que tout le monde doit payer jusqu'à 10 millions de FCFA ?",
-    a: "Non, c'est une rumeur infondée. Ce montant ne concerne que les 10 à 30 % d'acteurs dont le spectacle est l'activité professionnelle principale. Les organisateurs occasionnels à but socio-éducatif ou culturel en sont exemptés.",
-  },
-  {
-    q: "Licence et immatriculation, est-ce la même chose ?",
-    a: "Non, ce sont deux choses différentes. La licence d'entrepreneur de spectacles est une autorisation d'exercer comme professionnel (voir la ressource « Candidater aux licences B et C »). L'immatriculation au registre national des artistes relève du statut de l'artiste et se met encore en place séparément.",
-  },
-  {
-    q: "Qu'est-ce que le parrainage (Licence B) ?",
-    a: "Un promoteur qui débute doit réaliser 5 spectacles sous la supervision d'un professionnel déjà titulaire d'une licence, avant de pouvoir opérer en toute autonomie. Le module Mentorat vous met en relation avec un professionnel licencié pour vous accompagner.",
-  },
-  {
-    q: "Les résultats du test « Suis-je concerné ? » sont-ils officiels ?",
-    a: "Non, ils sont indicatifs. Ils vous donnent une orientation rapide basée sur vos réponses, mais seule l'administration peut rendre une décision officielle sur votre dossier.",
-  },
-];
-
 export default function FaqPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <p className="text-sm font-semibold text-primary-dark">Centre de ressources</p>
-      <h1 className="mt-1 text-3xl font-extrabold text-foreground">
-        Questions fréquentes
-      </h1>
-      <p className="mt-3 text-sm text-foreground">
-        Pas sûr d&apos;être concerné ?{" "}
-        <LienOutil
-          href="/suis-je-concerne"
-          depuis="faq"
-          outil="concerne"
-          emplacement="appel"
-          className="font-medium text-primary-dark underline"
-        >
-          Faites le test « Suis-je concerné ? »
-        </LienOutil>
-      </p>
+    <div>
+      <EnteteListe
+        maillons={[
+          { label: "Accueil", href: "/" },
+          { label: "Ressources", href: "/ressources" },
+          { label: "Questions fréquentes" },
+        ]}
+        surtitre="Centre de ressources"
+        titre="Questions fréquentes"
+        intro="Licences, exemptions, déclaration, immatriculation : les réponses courtes aux questions qu'on nous pose le plus."
+      />
 
-      <div className="mt-6 flex flex-col gap-3">
-        {FAQ.map((item) => (
-          <details
-            key={item.q}
-            className="group rounded-xl border border-border bg-surface p-4 open:shadow-sm"
-          >
-            <summary className="cursor-pointer list-none text-sm font-semibold text-foreground marker:content-none">
-              <span className="flex items-center justify-between gap-3">
-                {item.q}
-                <span className="shrink-0 text-primary-dark transition-transform group-open:rotate-45">
-                  +
-                </span>
-              </span>
-            </summary>
-            <p className="mt-2.5 max-w-prose text-sm text-muted">{item.a}</p>
-          </details>
-        ))}
+      <div className="mx-auto grid max-w-5xl gap-8 px-4 pb-12 pt-2 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
+        <div>
+          <FaqListe />
+          <p className="mt-6 max-w-prose text-sm leading-relaxed text-muted">
+            Réponses indicatives, établies à partir des textes en vigueur. Seule l&apos;administration peut
+            rendre une décision officielle sur votre dossier.
+          </p>
+        </div>
+
+        <aside className="flex flex-col gap-4 lg:pt-[3.75rem]">
+          <CarteSombre
+            surtitre="Pas sûr d'être concerné ?"
+            titre="Faites le test « Suis-je concerné ? »"
+            texte="Trois questions, une minute."
+            href="/suis-je-concerne"
+          />
+          <CarteLaterale
+            titre="Vous débutez sous licence B ou C ?"
+            texte="Trouvez un professionnel licencié pour superviser vos 5 premiers spectacles."
+            lien={{ href: "/ressources/mentorat", label: "Mentorat →" }}
+          />
+        </aside>
       </div>
     </div>
   );

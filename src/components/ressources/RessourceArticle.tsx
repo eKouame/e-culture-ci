@@ -46,13 +46,13 @@ export function RessourceArticle({
           <nav aria-label="Fil d'Ariane" className="text-sm text-muted">
             <ol className="flex flex-wrap items-center gap-x-2">
               <li>
-                <Link href="/" className="underline underline-offset-2 hover:text-foreground">
+                <Link href="/" className="inline-flex min-h-[44px] items-center underline underline-offset-2 hover:text-foreground">
                   Accueil
                 </Link>
               </li>
               <li aria-hidden="true">›</li>
               <li>
-                <Link href="/ressources" className="underline underline-offset-2 hover:text-foreground">
+                <Link href="/ressources" className="inline-flex min-h-[44px] items-center underline underline-offset-2 hover:text-foreground">
                   Ressources
                 </Link>
               </li>
