@@ -1,47 +1,7 @@
 import Link from "next/link";
+import { RESSOURCES, hrefRessource } from "@/lib/ressources-config";
 
-// Frise des six ressources, de l'idée à la mise en règle. Les titres sont ceux du site
-// actuel : « Bâtir » / « Construire votre budget » et « Candidater aux licences B et C » /
-// « Demander une licence B ou C » restent à trancher (décision 3 du cahier d'intégration).
-// Quand une ressource change de titre, on le corrige ici, à un seul endroit.
-const RESSOURCES = [
-  {
-    numero: "01",
-    href: "/ressources/fondamentaux",
-    titre: "Les fondamentaux du spectacle vivant",
-    description: "Le vocabulaire, les acteurs et les règles de base, sans jargon.",
-  },
-  {
-    numero: "02",
-    href: "/ressources/note-intention",
-    titre: "De l'idée à la note d'intention",
-    description: "Mettre votre projet par écrit, clairement, en une page.",
-  },
-  {
-    numero: "03",
-    href: "/ressources/budget",
-    titre: "Bâtir votre budget",
-    description: "Les postes de dépense à ne pas oublier et comment les chiffrer.",
-  },
-  {
-    numero: "04",
-    href: "/ressources/propriete-intellectuelle",
-    titre: "Propriété intellectuelle",
-    description: "Droits d'auteur et droits voisins : qui doit quoi, et quand.",
-  },
-  {
-    numero: "05",
-    href: "/ressources/payer-artistes",
-    titre: "Déclarer et payer vos artistes",
-    description: "Retenue à la source, cotisations et paiements : la marche à suivre.",
-  },
-  {
-    numero: "06",
-    href: "/ressources/candidater-licences",
-    titre: "Candidater aux licences B et C",
-    description: "Qui est concerné, calendrier de l'appel, conditions et coûts.",
-  },
-];
+// Frise des six ressources, de l'idée à la mise en règle (liste dans `ressources-config`).
 
 export function FriseRessources() {
   return (
@@ -66,9 +26,9 @@ export function FriseRessources() {
 
       <ol className="mt-8 grid grid-cols-1 border-t-2 border-secondary sm:grid-cols-2 lg:grid-cols-6">
         {RESSOURCES.map((r, i) => (
-          <li key={r.href} className="border-b border-border lg:border-b-0 lg:border-l lg:first:border-l-0">
+          <li key={r.slug} className="border-b border-border lg:border-b-0 lg:border-l lg:first:border-l-0">
             <Link
-              href={r.href}
+              href={hrefRessource(r.slug)}
               className="group flex h-full flex-col gap-2 px-0 py-5 transition-colors hover:bg-black/[0.02] lg:px-4 lg:first:pl-0 lg:last:pr-0"
             >
               <span

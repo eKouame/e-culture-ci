@@ -31,7 +31,7 @@ export function TableauRegles({
               <th
                 key={c}
                 scope="col"
-                className="border-b-2 border-border bg-black/[0.03] px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-muted"
+                className="border-b border-border bg-surface-2 px-3 py-2.5 text-left text-xs font-bold uppercase tracking-wide text-muted"
               >
                 {c}
               </th>

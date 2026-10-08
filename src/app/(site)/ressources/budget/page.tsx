@@ -123,7 +123,8 @@ const PIEGES = [
 export default function BudgetPage() {
   return (
     <RessourceArticle
-      kicker="Ressource · Monter votre projet"
+      slug="budget"
+      outilLie={{ id: "budget", phrase: "Calculez le point d'équilibre de votre spectacle" }}
       titre="Bâtir votre budget"
       dek="Chiffrer votre spectacle, l'équilibrer, et savoir s'il tient debout — avant le soir J, pas après."
       meta={{ lecture: "6 min", niveau: "Débutant" }}

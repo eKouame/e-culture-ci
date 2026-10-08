@@ -18,7 +18,7 @@ export function LienOutil({
   href: string;
   depuis: string;
   outil: string;
-  emplacement: "appel" | "outils-lies" | "page-outils";
+  emplacement: "appel" | "outils-lies" | "page-outils" | "lateral";
   className?: string;
   children: ReactNode;
 }) {

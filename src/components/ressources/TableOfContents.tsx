@@ -29,15 +29,15 @@ export function TableOfContents({ items }: { items: Item[] }) {
   const linkClass = (id: string) =>
     `-ml-0.5 block border-l-2 py-1.5 pl-4 text-sm font-medium transition-colors ${
       active === id
-        ? "border-primary text-secondary-dark"
+        ? "border-hero-accent font-bold text-foreground"
         : "border-transparent text-muted hover:text-secondary-dark"
     }`;
 
   return (
     <>
-      <nav aria-label="Sommaire" className="hidden md:sticky md:top-24 md:block">
-        <p className="mb-3 text-xs font-bold uppercase tracking-wide text-muted">
-          Dans cette page
+      <nav aria-label="Sommaire" className="hidden md:block">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-muted">
+          Sommaire
         </p>
         <ol className="flex flex-col gap-0.5 border-l-2 border-border">
           {items.map((item) => (
@@ -53,7 +53,7 @@ export function TableOfContents({ items }: { items: Item[] }) {
       <details className="mb-2 rounded-xl border border-border bg-black/[0.02] md:hidden">
         <summary className="cursor-pointer list-none px-4 py-3 text-sm font-bold text-secondary-dark marker:content-none">
           <span className="flex items-center justify-between">
-            Dans cette page
+            Sommaire
             <span aria-hidden="true">▾</span>
           </span>
         </summary>

@@ -21,6 +21,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const SOMMAIRE = [
+  { id: "essentiel-titre", label: "L'essentiel en 30 secondes" },
   { id: "familles", label: "Deux grandes familles" },
   { id: "faq", label: "Questions fréquentes" },
   { id: "contacts", label: "Liens et contacts officiels" },
@@ -227,7 +228,8 @@ export default function ProprieteIntellectuellePage() {
 
   return (
     <RessourceArticle
-      kicker="Ressource · Être en règle"
+      slug="propriete-intellectuelle"
+      verifie={PROPRIETE_INTELLECTUELLE.dateVerification}
       titre="Propriété intellectuelle"
       dek="Droit d'auteur, droits voisins, droit à l'image, marques : comprenez vos droits et vers qui vous tourner."
       meta={{ lecture: "5 min", niveau: "Intermédiaire" }}
@@ -236,7 +238,7 @@ export default function ProprieteIntellectuellePage() {
         <div
           className={
             audio
-              ? "grid gap-5 md:grid-cols-[minmax(0,1fr)_320px] md:items-start"
+              ? "flex flex-col gap-5"
               : undefined
           }
         >

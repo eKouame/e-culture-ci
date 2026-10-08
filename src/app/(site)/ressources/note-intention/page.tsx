@@ -63,7 +63,8 @@ const FRAMEWORK = [
 export default function NoteIntentionPage() {
   return (
     <RessourceArticle
-      kicker="Ressource · Monter votre projet"
+      slug="note-intention"
+      outilLie={{ id: "budget", phrase: "Calculez le point d'équilibre de votre spectacle" }}
       titre="De l'idée à la note d'intention"
       dek="Un framework simple en 5 questions pour transformer votre idée en une note claire, prête à montrer à un partenaire."
       meta={{ lecture: "5 min", niveau: "Débutant" }}
