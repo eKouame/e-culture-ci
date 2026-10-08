@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LinkButton } from "@/components/ui/Button";
+import { LienOutil } from "@/components/outils/LienOutil";
+import { EnteteListe } from "@/components/liste/EnteteListe";
+import {
+  CarteLaterale,
+  CarteSombre,
+  IconePersonnes,
+  IconeQuestion,
+} from "@/components/liste/CartesLaterales";
 import { pageMetadata } from "@/lib/metadata";
+import { appelClos } from "@/lib/candidater-licences-config";
+import { RESSOURCES, hrefRessource, type GroupeRessource } from "@/lib/ressources-config";
 
 export const metadata: Metadata = pageMetadata({
   title: "Centre de ressources — e-Culture CI",
@@ -10,201 +19,134 @@ export const metadata: Metadata = pageMetadata({
   path: "/ressources",
 });
 
-const ETAPES = [
-  {
-    numero: 1,
-    titre: "Comprendre le secteur",
-    description: "De quoi on parle exactement, et qui fait quoi dans le spectacle vivant.",
-    ressources: [
-      {
-        href: "/ressources/fondamentaux",
-        label: "Ressource 01",
-        titre: "Les fondamentaux du spectacle vivant",
-        description: "Le vocabulaire, les acteurs et les règles de base, sans jargon.",
-      },
-    ],
-  },
-  {
-    numero: 2,
-    titre: "Monter votre projet",
-    description: "Passer de l'idée à un projet écrit, chiffré, présentable à un partenaire.",
-    ressources: [
-      {
-        href: "/ressources/note-intention",
-        label: "Ressource 02",
-        titre: "De l'idée à la note d'intention",
-        description: "Mettre votre projet par écrit, clairement, en une page.",
-      },
-      {
-        href: "/ressources/budget",
-        label: "Ressource 03",
-        titre: "Bâtir votre budget",
-        description: "Les postes de dépense à ne pas oublier et comment les chiffrer.",
-      },
-      {
-        href: "/outils/budget",
-        label: "Outil",
-        titre: "Calculateur de budget",
-        description: "Votre point d'équilibre en une minute. Gratuit, sans compte.",
-        outil: true,
-      },
-    ],
-  },
-  {
-    numero: 3,
-    titre: "Être en règle",
-    description: "Les obligations à connaître avant, pendant et après votre événement.",
-    ressources: [
-      {
-        href: "/ressources/propriete-intellectuelle",
-        label: "Ressource 04",
-        titre: "Propriété intellectuelle",
-        description: "Droits d'auteur et droits voisins : qui doit quoi, et quand.",
-      },
-      {
-        href: "/ressources/payer-artistes",
-        label: "Ressource 05",
-        titre: "Déclarer et payer vos artistes",
-        description: "Retenue à la source, cotisations et paiements : la marche à suivre.",
-      },
-      {
-        href: "/ressources/candidater-licences",
-        label: "Ressource 06",
-        titre: "Candidater aux licences B et C",
-        description: "Qui est concerné, calendrier de l'appel, conditions et coûts.",
-      },
-      {
-        href: "/ressources/faq",
-        label: "Questions fréquentes",
-        titre: "FAQ",
-        description: "Toutes les réponses sur les licences, la déclaration et l'immatriculation.",
-      },
-      {
-        href: "/ressources/mentorat",
-        label: "Mentorat",
-        titre: "Mentorat & parrainage (Licence B)",
-        description: "Vous débutez ? Trouvez un professionnel licencié pour vous superviser.",
-      },
-    ],
-  },
+// La pastille « Appel en cours » disparaît seule à la clôture de l'appel : la page est
+// régénérée toutes les heures, comme les autres bascules de date du site.
+export const revalidate = 3600;
+
+const ETAPES: { numero: number; groupe: GroupeRessource }[] = [
+  { numero: 1, groupe: "Comprendre le secteur" },
+  { numero: 2, groupe: "Monter votre projet" },
+  { numero: 3, groupe: "Être en règle" },
 ];
 
+function IconeCalculette() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="5" y="3" width="14" height="18" rx="2" />
+      <path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01" />
+    </svg>
+  );
+}
+
 export default function RessourcesPage() {
+  const clos = appelClos();
+
   return (
     <div>
-      <section className="border-b border-border bg-surface">
-        <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-          <nav className="mb-3 flex items-center gap-2 text-sm text-muted">
-            <Link href="/">Accueil</Link>
-            <span>›</span>
-            <span className="font-semibold text-foreground">Ressources</span>
-          </nav>
-          <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-            Centre de ressources
-          </h1>
-          <p className="mt-3 max-w-prose text-muted">
-            Cinq ressources qui se lisent dans l&apos;ordre ou séparément :
-            comprendre le secteur, monter votre projet, être en règle.
-            Gratuit, sans compte.
-          </p>
+      <EnteteListe
+        maillons={[{ label: "Accueil", href: "/" }, { label: "Ressources" }]}
+        titre="Centre de ressources"
+        intro="Comprendre le secteur, monter votre projet, être en règle. Six ressources à lire dans l'ordre ou séparément. Gratuit, sans compte."
+        encart={
+          <CarteSombre
+            surtitre="Vous débutez ?"
+            titre="Commencez par les fondamentaux du spectacle vivant"
+            texte="Le vocabulaire, les acteurs et les règles de base, sans jargon."
+            href={hrefRessource("fondamentaux")}
+          />
+        }
+      />
+
+      <div className="border-t border-border" />
+
+      <div className="mx-auto grid max-w-5xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
+        <div className="flex flex-col gap-10">
+          {ETAPES.map(({ numero, groupe }) => (
+            <section key={numero} className="grid gap-3 md:grid-cols-[180px_minmax(0,1fr)] md:gap-8">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-secondary">Étape {numero}</p>
+                <h2 className="mt-1 text-xl font-extrabold leading-tight tracking-tight text-foreground">{groupe}</h2>
+              </div>
+              <ol className="border-t-2 border-secondary">
+                {RESSOURCES.filter((r) => r.groupe === groupe).map((r) => {
+                  const appel = r.slug === "candidater-licences" && !clos;
+                  return (
+                    <li key={r.slug} className="border-b border-border">
+                      <Link
+                        href={hrefRessource(r.slug)}
+                        className="group flex items-start gap-4 py-4 transition-colors hover:bg-black/[0.02]"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={`w-9 shrink-0 text-2xl font-extrabold tabular-nums tracking-tight ${
+                            r.numero === "01" ? "text-hero-accent" : "text-border-strong"
+                          }`}
+                        >
+                          {r.numero}
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                            <span className="text-lg font-bold leading-snug text-foreground group-hover:text-primary-dark">
+                              {r.titre}
+                            </span>
+                            {appel && (
+                              <span className="rounded-md bg-primary-light px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-primary-dark">
+                                Appel en cours
+                              </span>
+                            )}
+                          </span>
+                          <span className="mt-0.5 block text-sm leading-relaxed text-muted">{r.description}</span>
+                        </span>
+                        <span aria-hidden="true" className="pt-1 text-lg text-hero-accent">
+                          →
+                        </span>
+                      </Link>
+                      {r.slug === "budget" && (
+                        <div className="pb-4 pl-[3.25rem]">
+                          <LienOutil
+                            href="/outils/budget"
+                            depuis="ressources"
+                            outil="budget"
+                            emplacement="outils-lies"
+                            className="inline-flex min-h-[44px] items-center gap-2 rounded-lg bg-primary-light px-3.5 text-sm font-bold text-primary-dark transition-colors hover:brightness-95"
+                          >
+                            <IconeCalculette />
+                            Outil lié&nbsp;: calculez votre point d&apos;équilibre&nbsp;→
+                          </LienOutil>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+          ))}
+        </div>
+
+        <aside className="flex flex-col gap-4 lg:pt-1">
+          <CarteLaterale
+            icone={IconeQuestion}
+            titre="Questions fréquentes"
+            texte="Toutes les réponses sur les licences, la déclaration et l'immatriculation."
+            lien={{ href: "/ressources/faq", label: "Voir la FAQ →" }}
+          />
+          <CarteLaterale
+            icone={IconePersonnes}
+            titre="Mentorat"
+            texte="Vous débutez ? Trouvez un professionnel licencié pour vous superviser."
+            lien={{ href: "/ressources/mentorat", label: "Trouver un mentor →" }}
+          />
           <Link
             href="/ressources/toutes"
-            className="mt-2 inline-block text-sm font-medium text-primary-dark underline"
+            className="inline-flex min-h-[44px] items-center px-1 text-sm font-bold text-primary-dark hover:underline"
           >
             Voir toutes les ressources en un coup d&apos;œil →
           </Link>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-5xl px-4 pt-6 sm:px-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border border-l-4 border-l-primary bg-surface p-5">
-          <div className="max-w-prose">
-            <h2 className="text-lg font-extrabold text-foreground">
-              Vous débutez ?
-            </h2>
-            <p className="mt-1 text-sm text-muted">
-              Commencez par les fondamentaux : le vocabulaire, les acteurs et
-              les règles de base, expliqués sans jargon.
-            </p>
-          </div>
-          <LinkButton href="/ressources/fondamentaux">
-            Commencer ici
-          </LinkButton>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-        {ETAPES.map((etape, i) => (
-          <div key={etape.numero} className="flex gap-4">
-            <div className="flex flex-none flex-col items-center self-stretch">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary text-base font-extrabold text-white">
-                {etape.numero}
-              </span>
-              {i < ETAPES.length - 1 && (
-                <span className="my-2 w-0.5 flex-1 bg-border" />
-              )}
-            </div>
-            <div className="min-w-0 flex-1 pb-9">
-              <h2 className="text-xl font-extrabold text-foreground sm:text-2xl">
-                {etape.titre}
-              </h2>
-              <p className="mt-1.5 max-w-prose text-muted">
-                {etape.description}
-              </p>
-              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {etape.ressources.map((r) => (
-                  <Link
-                    key={r.href}
-                    href={r.href}
-                    className={
-                      r.outil
-                        ? "flex flex-col gap-1.5 rounded-xl border border-secondary/40 bg-secondary-light p-5 transition-colors hover:bg-secondary-light/70"
-                        : "flex flex-col gap-1.5 rounded-xl border border-border border-l-4 border-l-primary bg-surface p-5 transition-colors hover:bg-black/[0.02]"
-                    }
-                  >
-                    <span
-                      className={`text-xs font-bold uppercase tracking-wide ${
-                        r.outil ? "text-secondary-dark" : "text-primary-dark"
-                      }`}
-                    >
-                      {r.label}
-                    </span>
-                    <span className="text-lg font-bold text-foreground">
-                      {r.titre}
-                    </span>
-                    <span className="text-sm text-muted">{r.description}</span>
-                    <span className="mt-1.5 text-sm font-bold text-secondary">
-                      {r.outil ? "Ouvrir l'outil →" : "Lire la ressource →"}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      <section className="-mb-12 bg-secondary text-on-deep">
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-20 sm:px-6 md:grid-cols-2 md:items-center">
-          <div>
-            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-              Prêt à passer à l&apos;action ?
-            </h2>
-            <p className="mt-3 max-w-md text-on-deep-muted">
-              Les ressources expliquent ; les modules vous font avancer,
-              étape par étape, à votre rythme.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2.5">
-            <LinkButton href="/suis-je-concerne" size="lg">
-              Suis-je concerné ?
-            </LinkButton>
-            <LinkButton href="/declaration" variant="outlineOnDeep" size="lg">
-              Ma déclaration
-            </LinkButton>
-          </div>
-        </div>
-      </section>
+          <p className="px-1 text-xs leading-relaxed text-muted">
+            e-Culture CI explique et oriente, mais ne délivre aucun document officiel.
+          </p>
+        </aside>
+      </div>
     </div>
   );
 }

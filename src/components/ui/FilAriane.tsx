@@ -28,7 +28,7 @@ export function FilAriane({ maillons }: { maillons: MaillonAriane[] }) {
           return (
             <li key={`${m.label}-${i}`} className="flex items-center gap-2">
               {m.href && !dernier ? (
-                <Link href={m.href} className="hover:text-foreground hover:underline">
+                <Link href={m.href} className="inline-flex min-h-[44px] items-center hover:text-foreground hover:underline">
                   {m.label}
                 </Link>
               ) : (
