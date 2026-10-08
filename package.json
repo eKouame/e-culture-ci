@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && tsx scripts/valider-contenu.ts && next build",
+    "valider:contenu": "tsx scripts/valider-contenu.ts",
+    "test:contenu": "tsx scripts/test-contenu.ts",
     "db:migrate": "prisma migrate deploy",
     "start": "next start",
     "lint": "eslint",

@@ -20,6 +20,13 @@
   --color-accent-on-deep: #ffa84f;
   /* Orange du héro et du menu : un cran plus foncé que primary-dark, pour un texte blanc lisible. */
   --color-hero-accent: #b04e0c;
+  /* Jetons du cahier d'intégration (lot 0) : teinte de fond secondaire, bordure forte,
+     et l'alerte « À valider » (visible en prévisualisation seulement). */
+  --color-surface-2: #efe9de;
+  --color-border-strong: #d6cdbd;
+  --color-avalider: #fff4c2;
+  --color-avalider-border: #e8d27a;
+  --color-avalider-text: #8a3b08;
 }
 
 @theme inline {
@@ -41,6 +48,12 @@
   --color-on-deep-muted: var(--color-on-deep-muted);
   --color-accent-on-deep: var(--color-accent-on-deep);
   --color-hero-accent: var(--color-hero-accent);
+  --color-surface-2: var(--color-surface-2);
+  --color-border-strong: var(--color-border-strong);
+  --color-avalider: var(--color-avalider);
+  --color-avalider-border: var(--color-avalider-border);
+  --color-avalider-text: var(--color-avalider-text);
+  --font-sans: var(--font-public-sans), system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 *:focus-visible {
@@ -52,6 +65,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family:
+    var(--font-public-sans),
     system-ui,
     -apple-system,
     "Segoe UI",
