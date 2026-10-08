@@ -157,9 +157,9 @@ export function Header() {
         aria-controls={`panneau-${id}`}
         onClick={(e) => auClic(id, e)}
         onMouseEnter={() => surveillerOuverture(id)}
-        className={`inline-flex min-h-[44px] items-center gap-1.5 whitespace-nowrap rounded-lg border-b-2 px-3.5 text-[15px] font-semibold transition-colors ${
+        className={`relative inline-flex min-h-[44px] items-center gap-1.5 whitespace-nowrap rounded-lg px-3.5 text-[15px] font-semibold transition-colors ${
           ouvert === id ? "bg-surface-2 text-foreground" : "text-foreground hover:bg-surface-2"
-        } ${actif ? "border-hero-accent" : "border-transparent"}`}
+        } ${actif ? "after:absolute after:inset-x-3.5 after:bottom-0 after:h-0.5 after:bg-hero-accent" : ""}`}
       >
         {label}
         <Chevron ouvert={ouvert === id} />
