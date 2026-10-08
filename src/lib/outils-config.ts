@@ -9,6 +9,10 @@ export interface Outil {
   id: OutilId;
   nom: string;
   phrase: string; // reprise des pages et textes existants, sans promesse nouvelle
+  // Rubrique de la page d'ensemble (« Je m'oriente », « Je chiffre », « Je garde ») et phrase
+  // plus complète pour la carte de cette page ; les blocs « Outils liés » gardent `phrase`.
+  rubrique: string;
+  description: string;
   etat: EtatOutil;
   href: string | null; // null = pas de lien (jamais de lien mort)
 }
@@ -17,6 +21,9 @@ export const OUTILS: Outil[] = [
   {
     id: "concerne",
     nom: "Suis-je concerné ?",
+    rubrique: "Je m'oriente",
+    description:
+      "Quelques questions pour savoir si votre événement relève d'une déclaration, et lesquelles vous concernent.",
     phrase:
       "Quelques questions pour savoir si votre événement relève d'une déclaration, et lesquelles vous concernent.",
     etat: "disponible",
@@ -25,6 +32,9 @@ export const OUTILS: Outil[] = [
   {
     id: "budget",
     nom: "Calculateur de budget",
+    rubrique: "Je chiffre",
+    description:
+      "Votre point d'équilibre en une minute : combien de places vendre pour couvrir vos frais. Gratuit, sans compte.",
     phrase: "Votre point d'équilibre en une minute. Gratuit, sans compte.",
     etat: "nouveau",
     href: "/outils/budget",
@@ -32,6 +42,8 @@ export const OUTILS: Outil[] = [
   {
     id: "mes-budgets",
     nom: "Mes budgets",
+    rubrique: "Je garde",
+    description: "Retrouver vos budgets enregistrés.",
     phrase: "Retrouver vos budgets enregistrés.",
     etat: "bientot",
     href: null, // tant que les comptes n'existent pas
