@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BarreCommunes } from "@/components/outils/BarreCommunes";
 import { DotPill } from "@/components/ui/DotPill";
 import { DECLARATIONS_EXEMPLE } from "@/lib/espace-communal-exemple";
 
@@ -38,16 +37,14 @@ export default function EspaceCommunalExemplePage() {
 
   return (
     <div>
-      <BarreCommunes actif="espace" />
-
       <section className="border-b border-border bg-surface">
         <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
           <nav className="mb-3 flex items-center gap-2 text-sm text-muted">
             <Link href="/">Accueil</Link>
             <span>›</span>
-            <Link href="/communes">Communes</Link>
+            <Link href="/communes">Espace communal</Link>
             <span>›</span>
-            <span className="font-semibold text-foreground">Espace communal</span>
+            <span className="font-semibold text-foreground">Exemple de tableau de bord</span>
           </nav>
           <p className="text-sm font-semibold text-primary-dark">Pour les mairies</p>
           <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
